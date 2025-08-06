@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://dy3ixs8rdyggl"]
+
+[ext_resource type="Script" uid="uid://byqe5wn1xrayo" path="res://Code/room_tile.gd" id="1_ybmaj"]
+[ext_resource type="PackedScene" uid="uid://nigb4a1xrqcc" path="res://Rooms/models/room1.fbx" id="2_2v8x0"]
+
+[node name="Room1" type="Node3D"]
+script = ExtResource("1_ybmaj")
+exits = Array[Vector2i]([Vector2i(0, -1), Vector2i(1, 0), Vector2i(0, 1), Vector2i(-1, 0)])
+
+[node name="Room1" parent="." instance=ExtResource("2_2v8x0")]
