@@ -5,12 +5,14 @@ var tile: Tile
 var grid_list: Array[Vector2i] = []
 var exits: Array[RoomExit] = []
 var unused_exits: Array[RoomExit] = []
+var model: Node3D = null
 
 var grid_pos: Vector2i:
 	get:
 		return grid_list[0]
 
-func _init(tile: Tile, pos: Vector2i):
+func _init(index:int, tile: Tile, pos: Vector2i):
+	name = "Room"+str(index)
 	self.tile = tile
 	grid_list.append(pos)
 	position = Vector3i(pos.x, 0, pos.y)
@@ -22,12 +24,18 @@ func set_angle(angle: int):
 	unused_exits = []
 	for src in tile.exits:
 		var e = RoomExit.new()
+		e.name = src.name
 		e.position = grid_pos + src.position
 		e.direction = src.direction
 		unused_exits.append(e)
 
+func build_model():
+	if tile.get_child_count() > 0:
+		model = tile.get_child(0)
+	else:
+		pass # todo build fbx
+
 func find_unused_exit(pos: Vector2i, dir: Vector2i) -> int:
-	#for e in unused_exits:
 	for i in range(unused_exits.size()):
 		var e = unused_exits[i]
 		if e.position == pos and e.direction == dir:
@@ -39,3 +47,11 @@ func use_exit(index: int, room: Room):
 	exit.room = room
 	exits.append(exit)
 	unused_exits.remove_at(index)
+	if model == null:
+		build_model()
+	var nodes: Array[Node] = model.find_children("Wall"+exit.name+"_*", "", false, false)
+	for n in nodes:
+		n.visible = false
+
+func is_in_grid(pos: Vector2i) -> bool:
+	return grid_list.find(pos) != -1

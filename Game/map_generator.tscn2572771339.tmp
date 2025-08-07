@@ -5,7 +5,8 @@
 [node name="MapGenerator" type="Node3D" node_paths=PackedStringArray("_holder")]
 script = ExtResource("1_rke63")
 _room_set = "uid://cog72dhiny1ck"
-_extend_odds = 1.5
+_seed = 1
+_extend_odds = 1.25
 _holder = NodePath("Room Holder")
 
 [node name="Room Holder" type="Node3D" parent="."]
