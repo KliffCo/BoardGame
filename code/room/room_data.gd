@@ -1,5 +1,5 @@
 @tool
-class_name Tile
+class_name RoomData
 extends Node3D
 
 @export_subgroup("Model")
@@ -7,7 +7,6 @@ extends Node3D
 
 @export_subgroup("Shape")
 @export var size: Vector2i = Vector2i.ONE
-#@export var exits: Array[Vector2i] = []
 
 @export var exits: Array[RoomExit] = []:
 	set(new_value):

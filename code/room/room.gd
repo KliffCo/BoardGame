@@ -1,7 +1,7 @@
 class_name Room
 extends Node3D
 
-var tile: Tile
+var data: RoomData
 var grid_list: Array[Vector2i] = []
 var exits: Array[RoomExit] = []
 var unused_exits: Array[RoomExit] = []
@@ -11,18 +11,18 @@ var grid_pos: Vector2i:
 	get:
 		return grid_list[0]
 
-func _init(index:int, tile: Tile, pos: Vector2i):
+func _init(index:int, data: RoomData, pos: Vector2i):
 	name = "Room"+str(index)
-	self.tile = tile
+	self.data = data
 	grid_list.append(pos)
 	position = Vector3i(pos.x, 0, pos.y)
-	add_child(tile)
+	add_child(data)
 	set_angle(0)
 
 func set_angle(angle: int):
 	exits = []
 	unused_exits = []
-	for src in tile.exits:
+	for src in data.exits:
 		var e = RoomExit.new()
 		e.name = src.name
 		e.position = grid_pos + src.position
@@ -30,8 +30,8 @@ func set_angle(angle: int):
 		unused_exits.append(e)
 
 func build_model():
-	if tile.get_child_count() > 0:
-		model = tile.get_child(0)
+	if data.get_child_count() > 0:
+		model = data.get_child(0)
 	else:
 		pass # todo build fbx
 

@@ -1,11 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://dt1o7iqt5tfub"]
 
-[ext_resource type="Script" uid="uid://bw58ov2jqjv5v" path="res://code/map_generator.gd" id="1_rke63"]
+[ext_resource type="Script" uid="uid://bw58ov2jqjv5v" path="res://code/map/map_generator.gd" id="1_rke63"]
 
-[node name="MapGenerator" type="Node3D" node_paths=PackedStringArray("_holder")]
+[node name="MapGenerator" type="Node3D"]
 script = ExtResource("1_rke63")
 _room_set = "uid://cog72dhiny1ck"
+_seed = 3
+_rooms = 12
 _extend_odds = 1.5
-_holder = NodePath("Room Holder")
-
-[node name="Room Holder" type="Node3D" parent="."]

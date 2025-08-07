@@ -7,7 +7,6 @@ extends Node3D
 @export var _seed: int
 @export var _rooms: int = 10
 @export_range(1, 10) var _extend_odds: float = 1
-@export var _holder: Node3D
 @export_tool_button("Generate") var btn_generate: Callable = generate
 
 func _ready() -> void:
@@ -15,22 +14,31 @@ func _ready() -> void:
 		return
 	generate()
 
-func try_add_room(tile: Tile, pos: Vector2i, rooms: Array[Room]) -> Room:
-	var room = Room.new(rooms.size(), tile, pos)
+func clear():
+	if RoomManager.main != null:
+		RoomManager.main.clear()
+	else:
+		for child in get_children():
+			child.queue_free()
+
+func try_add_room(data: RoomData, pos: Vector2i, rooms: Array[Room]) -> Room:
+	var room = Room.new(rooms.size(), data, pos)
 	for g in room.grid_list:
 		if find_room_at_pos(g, rooms):
-			tile.free()
+			data.free()
 			room.free()
 			return null
 	rooms.append(room)
-	_holder.add_child(room)
+	if RoomManager.main != null:
+		RoomManager.main.add_child(room)
+	else:
+		add_child(room)
 	return room
 
 func find_room_at_pos(pos: Vector2i, rooms: Array[Room]) -> Room:
 	for r in rooms:
 		if r.is_in_grid(pos):
 			return r
-	#if grid.find(pos) != -1:
 	return null
 
 func generate():
@@ -43,8 +51,8 @@ func generate():
 		rng.set_seed(_seed)
 	
 	var rooms: Array[Room] = []
-	var tile: Tile = room_set.get_random_tile(rng)
-	try_add_room(tile, Vector2i.ZERO, rooms)
+	var data: RoomData = room_set.get_random_room_data(rng)
+	try_add_room(data, Vector2i.ZERO, rooms)
 	rooms[0].build_model()
 	
 	while rooms.size() < _rooms:
@@ -60,8 +68,8 @@ func generate():
 		if dst_room != null:
 			try_connect_rooms(src_room, exit_pos, dst_room, entry_pos)
 		else:
-			tile = room_set.get_random_tile(rng)
-			dst_room = try_add_room(tile, entry_pos, rooms)
+			data = room_set.get_random_room_data(rng)
+			dst_room = try_add_room(data, entry_pos, rooms)
 			if dst_room == null:
 				continue
 			if not try_connect_rooms(src_room, exit_pos, dst_room, entry_pos):
@@ -80,7 +88,3 @@ func try_connect_rooms(a_room: Room, a_pos: Vector2i, b_room: Room, b_pos: Vecto
 	a_room.use_exit(a_index, b_room)
 	b_room.use_exit(b_index, a_room)
 	return true
-
-func clear():
-	for child in _holder.get_children():
-		child.queue_free()
