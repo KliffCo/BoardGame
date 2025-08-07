@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://dy3ixs8rdyggl"]
+
+[ext_resource type="Script" uid="uid://byqe5wn1xrayo" path="res://code/tile.gd" id="1_o3nhg"]
+[ext_resource type="Script" uid="uid://cr0u2peptestq" path="res://code/room_exit.gd" id="2_3ng42"]
+[ext_resource type="PackedScene" uid="uid://nigb4a1xrqcc" path="res://rooms/models/room1.fbx" id="2_wpkv0"]
+
+[sub_resource type="Resource" id="Resource_3ng42"]
+script = ExtResource("2_3ng42")
+position = Vector2i(0, 0)
+direction = Vector2i(0, -1)
+
+[sub_resource type="Resource" id="Resource_4hjvw"]
+script = ExtResource("2_3ng42")
+position = Vector2i(0, 0)
+direction = Vector2i(1, 0)
+
+[sub_resource type="Resource" id="Resource_q3jjr"]
+script = ExtResource("2_3ng42")
+position = Vector2i(0, 0)
+direction = Vector2i(0, 1)
+
+[sub_resource type="Resource" id="Resource_mhtgy"]
+script = ExtResource("2_3ng42")
+position = Vector2i(0, 0)
+direction = Vector2i(-1, 0)
+
+[node name="Room1" type="Node3D"]
+script = ExtResource("1_o3nhg")
+file = "uid://nigb4a1xrqcc"
+exits = Array[ExtResource("2_3ng42")]([SubResource("Resource_3ng42"), SubResource("Resource_4hjvw"), SubResource("Resource_q3jjr"), SubResource("Resource_mhtgy")])
+
+[node name="Room1" parent="." instance=ExtResource("2_wpkv0")]

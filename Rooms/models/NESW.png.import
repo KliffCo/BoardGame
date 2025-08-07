@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cy6xbl04epevh"
-path.s3tc="res://.godot/imported/NESW.png-95d6f13bfc4141723c255c29ede1fd86.s3tc.ctex"
+path.s3tc="res://.godot/imported/NESW.png-824605e59f83d6e3c87c8a173be438a2.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Rooms/models/NESW.png"
-dest_files=["res://.godot/imported/NESW.png-95d6f13bfc4141723c255c29ede1fd86.s3tc.ctex"]
+source_file="res://rooms/models/NESW.png"
+dest_files=["res://.godot/imported/NESW.png-824605e59f83d6e3c87c8a173be438a2.s3tc.ctex"]
 
 [params]
 

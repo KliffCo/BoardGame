@@ -1,6 +1,6 @@
 @tool
 class_name MapGenerator
-extends Node
+extends Node3D
 
 @export_file("*.tscn") var _room_set: String
 #@export var room_set: RoomSet
@@ -8,30 +8,18 @@ extends Node
 @export var _rooms: int = 10
 @export_range(1, 10) var _extend_odds: float = 1
 @export var _holder: Node3D
-@export_tool_button("Generate")
-var _btn_generate: Callable = generate
-
-class RoomLinks:
-	var room: Room
-	var exits: Array[Vector2i] = []
-	func _init(room: Room):
-		self.room = room
-		for i in room.room_tile.exits.size():
-			self.exits.append(i)
-		#self.exits.append_array(room.exits)
+@export_tool_button("Generate") var btn_generate: Callable = generate
 
 func _ready() -> void:
 	generate()
 
-func try_add_room(room_tile: RoomTile, pos: Vector2i, rooms: Array[Room], links: Array[RoomLinks]) -> Room:
+func try_add_room(tile: Tile, pos: Vector2i, rooms: Array[Room]) -> Room:
 	#if grid.find(pos) != -1:
-		#room_tile.free()
+		#tile.free()
 		#return null
-	var room = Room.new(room_tile, pos)
+	var room = Room.new(tile, pos)
 	rooms.append(room)
 	_holder.add_child(room)
-	links.append(RoomLinks.new(room))
-	#grid.append(pos)
 	return room
 
 func find_room_at_pos(pos: Vector2i, rooms: Array[Room]) -> Room:
@@ -44,40 +32,47 @@ func find_room_at_pos(pos: Vector2i, rooms: Array[Room]) -> Room:
 func generate():
 	clear()
 	var room_set: RoomSet = load(_room_set).instantiate()
-	var rng = RandomNumberGenerator.new()
+	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	rng.set_seed(_seed)
 	
 	var rooms: Array[Room] = []
-	var links: Array[RoomLinks] = []
-	#var grid: Array[Vector2i] = []
-	var room_tile: RoomTile = room_set.get_random_room(rng)
-	try_add_room(room_tile, Vector2i.ZERO, rooms, links)
+	var tile: Tile = room_set.get_random_tile(rng)
+	try_add_room(tile, Vector2i.ZERO, rooms)
 	
 	if rooms.size() < _rooms:
-		var link_id = min(rng.randi() % (int)(links.size() * _extend_odds), links.size()-1)
-		var link: RoomLinks = links[link_id]
-		var exit_id = rng.randi() % (link.exits.size()-1)
-		var exit_offset: Vector2i = link.exits[exit_id]
-		var new_pos: Vector2i = link.room.grid_pos + exit_offset
+		var room_id: int = min(rng.randi() % (int)(rooms.size() * _extend_odds), rooms.size()-1)
+		var src_room: Room = rooms[room_id]
+		if src_room.unused_exits.size() == 0:
+			return #### continue
+		var exit_id: int = rng.randi() % (src_room.unused_exits.size()-1)
+		var exit: RoomExit = src_room.unused_exits[exit_id]
+		var exit_pos: Vector2i = src_room.grid_pos + exit.position
+		var entry_pos: Vector2i = exit_pos + exit.direction
 		#if grid.find(pos):
 			#return false
-		var room: Room = find_room_at_pos(new_pos, rooms)
-		if room != null:
-			try_connect_rooms(link.room, room, exit_offset)
+		var dst_room: Room = find_room_at_pos(entry_pos, rooms)
+		if dst_room != null:
+			try_connect_rooms(src_room, exit_pos, dst_room, entry_pos)
 		else:
-			room_tile = room_set.get_random_room(rng)
-			if try_add_room(room_tile, new_pos, rooms, links):
-				link.exits.remove_at(exit_id)
-				if link.exits.size() == 0:
-					links.remove_at(link_id)
+			tile = room_set.get_random_tile(rng)
+			dst_room = try_add_room(tile, entry_pos, rooms)
+			if dst_room == null:
+				return #### continue
+			if not try_connect_rooms(src_room, exit_pos, dst_room, entry_pos):
+				rooms.remove_at(rooms.find(dst_room))
+				dst_room.free()
 
-func try_connect_rooms(a: Room, b: Room, a_offset: Vector2i):
-	var b_offset: Vector2i = Vector2i(-a_offset.x, -a_offset.y)
-	var b_index = b.room_tile.exits.find(b_offset)
+func try_connect_rooms(a_room: Room, a_pos: Vector2i, b_room: Room, b_pos: Vector2i):
+	var b_dir = a_pos - b_pos
+	var b_index = b_room.find_unused_exit(b_pos, b_dir)
 	if b_index == -1:
 		return false
-	#b.exit_list.append(b_index)
-	b.exits
+	var a_dir = b_pos - a_pos
+	var a_index = a_room.find_unused_exit(a_pos, a_dir)
+	if a_index == -1:
+		return false
+	a_room.use_exit(a_index, b_room)
+	b_room.use_exit(b_index, a_room)
 	return true
 
 func clear():

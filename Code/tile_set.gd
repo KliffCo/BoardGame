@@ -17,12 +17,12 @@ func init():
 	print_debug(str(total_count))
 	return total_count != 0
 
-func get_random_room(rng:RandomNumberGenerator) -> RoomTile:
+func get_random_tile(rng:RandomNumberGenerator) -> Tile:
 	var i: int = rng.randi_range(0, total_count)
 	var j: int = 0
 	for r in list:
 		if r.odds != 0:
 			j += r.odds
 			if i < j:
-				return load(r.file).instantiate() as RoomTile
+				return load(r.file).instantiate() as Tile
 	return null
