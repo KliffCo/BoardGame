@@ -1,13 +1,12 @@
-@tool
 class_name RoomTileSet
-extends Node
+extends Resource
 
 var total_count:int = 0
-@export var list: Array[RoomSetElement]:
+@export var list: Array[TileSetElement]:
 	set(new_value):
 		for i in range(new_value.size()):
-			if new_value[i] is not RoomSetElement:
-				new_value[i] = RoomSetElement.new()
+			if new_value[i] is not TileSetElement:
+				new_value[i] = TileSetElement.new()
 		list = new_value
 
 func init():

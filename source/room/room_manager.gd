@@ -9,3 +9,7 @@ func _ready() -> void:
 func clear():
 	for child in get_children():
 		child.queue_free()
+
+func load(settings: MapSettings):
+	MapGenerator.generate(settings)
+	pass

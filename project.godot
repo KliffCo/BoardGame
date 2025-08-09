@@ -11,13 +11,9 @@ config_version=5
 [application]
 
 config/name="BoardGame"
-run/main_scene="uid://dt1o7iqt5tfub"
+run/main_scene="uid://d1mp6fgrsmrxw"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
-
-[autoload]
-
-Game="*res://game/game.tscn"
 
 [dotnet]
 

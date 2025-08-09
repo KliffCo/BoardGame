@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="RoomTileSet" load_steps=4 format=3 uid="uid://bpvghkmuv5sm4"]
+
+[ext_resource type="Script" uid="uid://nuvluga7j3nv" path="res://source/room/room_tile_set_element.gd" id="1_06uu1"]
+[ext_resource type="Script" uid="uid://cgl12rgg4m1tk" path="res://source/room/room_tile_set.gd" id="2_7vqm2"]
+
+[sub_resource type="Resource" id="Resource_06uu1"]
+script = ExtResource("1_06uu1")
+file = "uid://dy3ixs8rdyggl"
+odds = 100
+
+[resource]
+script = ExtResource("2_7vqm2")
+list = Array[ExtResource("1_06uu1")]([SubResource("Resource_06uu1")])
+metadata/_custom_type_script = "uid://cgl12rgg4m1tk"

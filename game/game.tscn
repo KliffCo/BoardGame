@@ -6,6 +6,7 @@
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_h7iqs")
+_level = "uid://btewcncgyn2qg"
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.898626, 0.438716, 0, -0.438716, 0.898626, 0, 1.43587, 3)
