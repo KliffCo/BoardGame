@@ -18,13 +18,14 @@ func _init(name: String) -> void:
 	var dir = DirAccess.open(path)
 	if dir:
 		for file in dir.get_files():
-			var tex: Texture2D = load(path+"/"+file)
-			if tex != null:
-				for i in range(_keys.size()):
-					if file.begins_with(_keys[i]):
-						_textures[i].append(tex)
-				if file.begins_with("shadow"):
-					_shadow = tex
+			if file.ends_with(".png"):
+				var tex: Texture2D = load(path+"/"+file)
+				if tex != null:
+					for i in range(_keys.size()):
+						if file.begins_with(_keys[i]):
+							_textures[i].append(tex)
+					if file.begins_with("shadow"):
+						_shadow = tex
 
 func get_frame_count(action: Char.Action) -> int:
 	var a = int(action)

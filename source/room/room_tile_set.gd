@@ -1,5 +1,5 @@
 @tool
-class_name RoomSet
+class_name RoomTileSet
 extends Node
 
 var total_count:int = 0
@@ -17,12 +17,12 @@ func init():
 	print_debug(str(total_count))
 	return total_count != 0
 
-func get_random_room_data(rng:RandomNumberGenerator) -> RoomData:
+func get_random_room_data(rng:RandomNumberGenerator) -> RoomTile:
 	var i: int = rng.randi_range(0, total_count)
 	var j: int = 0
 	for r in list:
 		if r.odds != 0:
 			j += r.odds
 			if i < j:
-				return load(r.file).instantiate() as RoomData
+				return load(r.file).instantiate() as RoomTile
 	return null

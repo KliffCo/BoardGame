@@ -1,7 +1,7 @@
 class_name MeshGen
 extends Node
 
-static func plane(offset: Vector2, rotate: int) -> ArrayMesh:
+static func plane(offset:= Vector2(0.5, 0.5), rotate:= 1) -> ArrayMesh:
 	rotate = clamp(rotate, 0, 2)
 	
 	var verticies: PackedVector3Array
@@ -57,3 +57,12 @@ static func plane(offset: Vector2, rotate: int) -> ArrayMesh:
 	var mesh := ArrayMesh.new()
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, array)
 	return mesh
+
+static func new_material(mesh: MeshInstance3D) -> StandardMaterial3D:
+	var material: StandardMaterial3D = mesh.mesh.surface_get_material(0)
+	if material == null:
+		material = StandardMaterial3D.new()
+	#material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	mesh.mesh.surface_set_material(0, material)
+	return material

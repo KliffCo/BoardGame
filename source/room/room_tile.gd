@@ -1,5 +1,5 @@
 @tool
-class_name RoomData
+class_name RoomTile
 extends Node3D
 
 @export_subgroup("Model")

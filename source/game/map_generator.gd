@@ -2,8 +2,7 @@
 class_name MapGenerator
 extends Node3D
 
-@export_file("*.tscn") var _room_set: String
-#@export var room_set: RoomSet
+@export_file("*.tscn") var _tile_set: String
 @export var _seed: int
 @export var _rooms: int = 10
 @export_range(1, 10) var _extend_odds: float = 1
@@ -21,7 +20,7 @@ func clear():
 		for child in get_children():
 			child.queue_free()
 
-func try_add_room(data: RoomData, pos: Vector2i, rooms: Array[Room]) -> Room:
+func try_add_room(data: RoomTile, pos: Vector2i, rooms: Array[Room]) -> Room:
 	var room = Room.new(rooms.size(), data, pos)
 	for g in room.grid_list:
 		if find_room_at_pos(g, rooms):
@@ -43,7 +42,7 @@ func find_room_at_pos(pos: Vector2i, rooms: Array[Room]) -> Room:
 
 func generate():
 	clear()
-	var room_set: RoomSet = load(_room_set).instantiate()
+	var tile_set: RoomTileSet = load(_tile_set).instantiate()
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
 	if _seed == 0:
 		rng.randomize()
@@ -51,7 +50,7 @@ func generate():
 		rng.set_seed(_seed)
 	
 	var rooms: Array[Room] = []
-	var data: RoomData = room_set.get_random_room_data(rng)
+	var data: RoomTile = tile_set.get_random_room_data(rng)
 	try_add_room(data, Vector2i.ZERO, rooms)
 	rooms[0].build_model()
 	
@@ -68,7 +67,7 @@ func generate():
 		if dst_room != null:
 			try_connect_rooms(src_room, exit_pos, dst_room, entry_pos)
 		else:
-			data = room_set.get_random_room_data(rng)
+			data = tile_set.get_random_room_data(rng)
 			dst_room = try_add_room(data, entry_pos, rooms)
 			if dst_room == null:
 				continue

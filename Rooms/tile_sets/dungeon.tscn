@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cog72dhiny1ck"]
 
-[ext_resource type="Script" uid="uid://cgl12rgg4m1tk" path="res://code/room/room_set.gd" id="1_r2tk7"]
-[ext_resource type="Script" uid="uid://nuvluga7j3nv" path="res://code/room/room_set_element.gd" id="2_ae25i"]
+[ext_resource type="Script" uid="uid://cgl12rgg4m1tk" path="res://source/room/room_tile_set.gd" id="1_r2tk7"]
+[ext_resource type="Script" uid="uid://nuvluga7j3nv" path="res://source/room/room_set_element.gd" id="2_ae25i"]
 
 [sub_resource type="Resource" id="Resource_kud00"]
 script = ExtResource("2_ae25i")

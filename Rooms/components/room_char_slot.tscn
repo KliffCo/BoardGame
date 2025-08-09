@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dsiothaij81ep"]
+
+[ext_resource type="Script" uid="uid://dvv83t3potbn5" path="res://source/room/room_char_slot.gd" id="1_sqxml"]
+
+[node name="MeshInstance3D" type="MeshInstance3D"]
+script = ExtResource("1_sqxml")
