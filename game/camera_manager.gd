@@ -8,6 +8,7 @@ var _desired_pan: Vector3
 var _actual_zoom: float = 0.5
 var _desired_zoom: float = 0.5
 var _zoom_offset: Vector3
+
 @export var min_zoom_offset: Vector3 = Vector3(0, 3, 1)
 @export var max_zoom_offset: Vector3 = Vector3(0, 1, 1)
 @export_range(-180, 180) var min_zoom_angle: float = -80
@@ -27,6 +28,9 @@ func get_desired_zoom() -> float:
 	
 func _ready() -> void:
 	main = self
+	_zoom_offset = min_zoom_offset.lerp(max_zoom_offset, _actual_zoom)
+	position = _actual_pan + _zoom_offset
+	rotation_degrees = Vector3(lerp(min_zoom_angle, max_zoom_angle, _actual_zoom), 0, 0)
 
 func set_actual_zoom(zoom: float):
 	_actual_zoom = clamp(zoom, 0, 1)
@@ -50,8 +54,19 @@ func _process(delta: float) -> void:
 			_actual_zoom = _desired_zoom
 		_zoom_offset = min_zoom_offset.lerp(max_zoom_offset, _actual_zoom)
 	if _actual_pan != _desired_pan:
-		_actual_pan = _actual_pan.lerp(_desired_pan, 0.2)
-		if (_actual_pan - _desired_pan).length_squared() < 0.01:
+		_actual_pan = _actual_pan.lerp(_desired_pan, 0.25)
+		if (_actual_pan - _desired_pan).length_squared() < 0.001:
 			_actual_pan = _desired_pan
 	position = _actual_pan + _zoom_offset
 	rotation_degrees = Vector3(lerp(min_zoom_angle, max_zoom_angle, _actual_zoom), 0, 0)
+
+
+func screen_to_world_pos(screen_pos: Vector2) -> Vector3:
+	var origin = project_ray_origin(screen_pos)
+	var direction = project_ray_normal(screen_pos)
+	var ray_length = abs(origin.y/direction.y)
+	var end = origin + direction * ray_length
+	return end
+
+func world_to_screen_pos(world_pos: Vector3) -> Vector2:
+	return unproject_position(world_pos)
