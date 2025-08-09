@@ -25,7 +25,7 @@ static func generate(s: MapSettings):
 	if s.map_seed == 0:
 		rng.randomize()
 	else:
-		rng.set_seed(s.seed)
+		rng.set_seed(s.map_seed)
 	
 	var rooms: Array[Room] = []
 	var data: RoomTile = tile_set.get_random_room_data(rng)

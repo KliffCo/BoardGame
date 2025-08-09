@@ -9,8 +9,6 @@ var _grip_position: Vector3
 func _ready() -> void:
 	main = self
 
-#func _process(delta: float) -> void:
-
 func _input(e: InputEvent) -> void:
 	if e is InputEventMouse:
 		mouse_input(e)
@@ -22,13 +20,15 @@ func mouse_input(e: InputEventMouse):
 		elif e.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			CameraManager.main.set_desired_zoom(CameraManager.main.get_desired_zoom()-0.1)
 		elif e.button_index == MOUSE_BUTTON_RIGHT or e.button_index == MOUSE_BUTTON_MIDDLE:
-			_is_panning = e.pressed
 			if e.pressed:
-				_grip_position = CameraManager.main.screen_to_world_pos(e.position)
-				#var b = CameraManager.main.world_to_screen_pos(a)
+				var world_pos = CameraManager.main.screen_to_world_pos(e.position)
+				if world_pos is Vector3:
+					_is_panning = true
+					_grip_position = world_pos
+			else:
+				_is_panning = false
 	elif e is InputEventMouseMotion:
 		if _is_panning:
 			var world_pos = CameraManager.main.screen_to_world_pos(e.position)
-			CameraManager.main.set_desired_pan(CameraManager.main.get_actual_pan()-world_pos+_grip_position)
-			pass
-		pass
+			if world_pos is Vector3:
+				CameraManager.main.set_desired_pan(CameraManager.main.get_actual_pan()-world_pos+_grip_position)
