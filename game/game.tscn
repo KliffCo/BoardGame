@@ -1,15 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://d1mp6fgrsmrxw"]
+[gd_scene load_steps=6 format=3 uid="uid://d1mp6fgrsmrxw"]
 
 [ext_resource type="Script" uid="uid://bqea3vgu1idh1" path="res://source/game/game_control.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://p7bergsb7t2p" path="res://source/chars/character_manager.gd" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://bnuijdbm3307i" path="res://source/room/room_manager.gd" id="1_vasa2"]
+[ext_resource type="Script" uid="uid://br4hmohaqxuvj" path="res://game/camera_manager.gd" id="2_dxrkv"]
+[ext_resource type="Script" uid="uid://bna7lhqviwq2f" path="res://game/input_manager.gd" id="4_4fuuu"]
 
 [node name="Game" type="Node3D"]
 script = ExtResource("1_h7iqs")
 _level = "uid://btewcncgyn2qg"
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.898626, 0.438716, 0, -0.438716, 0.898626, 0, 1.43587, 3)
+transform = Transform3D(1, 0, 0, 0, 0.104528, 0.994522, 0, -0.994522, 0.104528, 0, 1.43587, 3)
+script = ExtResource("2_dxrkv")
+min_zoom_offset = Vector3(0, 3, 0.5)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.302869, -0.736127, 0.6053, 0.474971, 0.667222, 0.573775, -0.82624, 0.113722, 0.55172, 0, 0, 0)
@@ -19,3 +23,6 @@ script = ExtResource("1_vasa2")
 
 [node name="Characters" type="Node3D" parent="."]
 script = ExtResource("1_l1rk1")
+
+[node name="InputMan" type="Node3D" parent="."]
+script = ExtResource("4_4fuuu")

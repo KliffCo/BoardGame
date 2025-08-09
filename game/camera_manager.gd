@@ -1,0 +1,57 @@
+class_name CameraManager
+extends Camera3D
+
+static var main: CameraManager
+
+var _actual_pan: Vector3
+var _desired_pan: Vector3
+var _actual_zoom: float = 0.5
+var _desired_zoom: float = 0.5
+var _zoom_offset: Vector3
+@export var min_zoom_offset: Vector3 = Vector3(0, 3, 1)
+@export var max_zoom_offset: Vector3 = Vector3(0, 1, 1)
+@export_range(-180, 180) var min_zoom_angle: float = -80
+@export_range(-180, 180) var max_zoom_angle: float = -20
+
+func get_actual_pan() -> Vector3:
+	return _actual_pan
+
+func get_desired_pan() -> Vector3:
+	return _desired_pan
+
+func get_actual_zoom() -> float:
+	return _actual_zoom
+
+func get_desired_zoom() -> float:
+	return _desired_zoom
+	
+func _ready() -> void:
+	main = self
+
+func set_actual_zoom(zoom: float):
+	_actual_zoom = clamp(zoom, 0, 1)
+	_desired_zoom = _actual_zoom
+	_zoom_offset = min_zoom_offset.lerp(max_zoom_offset, _actual_zoom)
+
+func set_desired_zoom(zoom: float):
+	_desired_zoom = clamp(zoom, 0, 1)
+
+func set_actual_pan(pan: Vector3):
+	_actual_pan = pan
+	_desired_pan = pan
+
+func set_desired_pan(pan: Vector3):
+	_desired_pan = pan
+
+func _process(delta: float) -> void:
+	if _actual_zoom != _desired_zoom:
+		_actual_zoom = lerp(_actual_zoom, _desired_zoom, 0.2)
+		if abs(_actual_zoom-_desired_zoom) < 0.001:
+			_actual_zoom = _desired_zoom
+		_zoom_offset = min_zoom_offset.lerp(max_zoom_offset, _actual_zoom)
+	if _actual_pan != _desired_pan:
+		_actual_pan = _actual_pan.lerp(_desired_pan, 0.2)
+		if (_actual_pan - _desired_pan).length_squared() < 0.01:
+			_actual_pan = _desired_pan
+	position = _actual_pan + _zoom_offset
+	rotation_degrees = Vector3(lerp(min_zoom_angle, max_zoom_angle, _actual_zoom), 0, 0)

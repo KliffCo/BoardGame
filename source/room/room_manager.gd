@@ -10,6 +10,6 @@ func clear():
 	for child in get_children():
 		child.queue_free()
 
-func load(settings: MapSettings):
+func load(file: String):
+	var settings: MapSettings = load(file)
 	MapGenerator.generate(settings)
-	pass

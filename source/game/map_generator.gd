@@ -1,8 +1,6 @@
 class_name MapGenerator
 extends Resource
 
-@export_file("*.tres") var _settings: String
-
 static func try_add_room(data: RoomTile, pos: Vector2i, rooms: Array[Room]) -> Room:
 	var room = Room.new(rooms.size(), data, pos)
 	for g in room.grid_list:
@@ -24,7 +22,7 @@ static func generate(s: MapSettings):
 	RoomManager.main.clear()
 	var tile_set: RoomTileSet = load(s.tile_set)
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-	if s.seed == 0:
+	if s.map_seed == 0:
 		rng.randomize()
 	else:
 		rng.set_seed(s.seed)

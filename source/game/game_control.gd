@@ -10,10 +10,4 @@ func _ready() -> void:
 	main = self
 	
 	if _level:
-		var settings: MapSettings = load(_level)
-		RoomManager.main.load(settings)
-
-#func _init_map():
-	#for child in get_parent().get_children():
-		#if child is MapGenerator:
-			#return
+		RoomManager.main.load(_level)
