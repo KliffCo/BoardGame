@@ -20,6 +20,7 @@ func load(file: String):
 	var settings: MapSettings = load(file)
 	MapGenerator.generate(settings)
 	update_range()
+	GameMode.main.on_map_loaded()
 
 func update_range():
 	var min: Vector2

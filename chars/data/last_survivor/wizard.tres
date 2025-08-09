@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CharData" load_steps=2 format=3 uid="uid://yxr5k6tc8weh"]
+
+[ext_resource type="Script" uid="uid://kdheiaahier2" path="res://source/chars/char_data.gd" id="1_o04io"]
+
+[resource]
+script = ExtResource("1_o04io")
+name = "Wizard"
+file = "wizard"
+actions = Array[String](["uid://cb74emu6o42cb"])
+metadata/_custom_type_script = "uid://kdheiaahier2"

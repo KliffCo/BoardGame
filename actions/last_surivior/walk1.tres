@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="GameActionWalk" load_steps=2 format=3 uid="uid://cb74emu6o42cb"]
+
+[ext_resource type="Script" uid="uid://ceowpvc4ncwn0" path="res://source/actions/walk.gd" id="1_qyssx"]
+
+[resource]
+script = ExtResource("1_qyssx")
+metadata/_custom_type_script = "uid://ceowpvc4ncwn0"
