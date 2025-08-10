@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="GameModeLastSurvivor" load_steps=2 format=3 uid="uid://sav2rxd100lq"]
+
+[ext_resource type="Script" uid="uid://btm6j7gut2ya2" path="res://source/modes/last_survivor.gd" id="1_73i1k"]
+
+[resource]
+script = ExtResource("1_73i1k")
+metadata/_custom_type_script = "uid://btm6j7gut2ya2"

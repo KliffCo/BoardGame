@@ -10,7 +10,8 @@ func _ready() -> void:
 	main = self
 	new_char()
 
-func new_char() -> Character:
-	var chr: Character = prefab.instantiate()
+func new_char() -> Char:
+	#var chr: Character = prefab.instantiate()
+	var chr: Char = Char.new("goblin")
 	add_child(chr)
 	return chr

@@ -4,7 +4,7 @@ extends Resource
 const FPS := 10
 const FRAME_TIME := 1.0/FPS
 
-var _char: Character = null
+var _char: Char = null
 var _frames: CharFrames = null
 var _action: Char.Action = Char.Action.Idle
 var _frame: int = 0

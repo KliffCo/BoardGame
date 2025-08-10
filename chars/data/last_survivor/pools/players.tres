@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CharPool" load_steps=2 format=3 uid="uid://cor1vpujgveox"]
+
+[ext_resource type="Script" uid="uid://b16bqojdyi4w4" path="res://source/chars/char_pool.gd" id="1_jemwh"]
+
+[resource]
+script = ExtResource("1_jemwh")
+list = Array[String](["uid://dal1a3mg8lfxi", "uid://yxr5k6tc8weh"])
+metadata/_custom_type_script = "uid://b16bqojdyi4w4"

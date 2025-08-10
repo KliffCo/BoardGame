@@ -6,4 +6,5 @@
 script = ExtResource("1_hv6ia")
 min_range = 0
 max_range = 0
+name = "Attack"
 metadata/_custom_type_script = "uid://di810l7x3b58q"

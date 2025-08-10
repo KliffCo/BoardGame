@@ -1,7 +1,7 @@
 class_name CharMesh
 extends Resource
 
-var _char: Character
+var _char: Char
 var _shadow_mesh: MeshInstance3D
 var _stand_mesh: MeshInstance3D
 var _shadow_mat: StandardMaterial3D
@@ -19,7 +19,7 @@ func _init(chr: Node3D):
 	_char.add_child(_stand_mesh)
 	
 	_stand_mesh.mesh = MeshGen.plane(Vector2(0.5, 0), 2)
-	_stand_mesh.rotate_x(deg_to_rad(-30))
+	_stand_mesh.rotate_x(deg_to_rad(-35))
 	_stand_mat = MeshGen.new_material(_stand_mesh)
 
 	_shadow_mesh.mesh = MeshGen.plane(Vector2(0.5, 0.5), 1)

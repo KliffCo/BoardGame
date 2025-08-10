@@ -1,8 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dt1o7iqt5tfub"]
-
-[ext_resource type="Script" uid="uid://bw58ov2jqjv5v" path="res://source/game/map_generator.gd" id="1_rke63"]
-
-[node name="MapGenerator" type="Node3D"]
-script = ExtResource("1_rke63")
-_settings = "uid://btewcncgyn2qg"
-metadata/_edit_group_ = true
