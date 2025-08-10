@@ -6,5 +6,8 @@ static var main: GameMode
 func _init():
 	main = self
 
-func on_map_loaded():
+func load_map():
+	pass
+
+func map_loaded():
 	pass

@@ -1,10 +1,10 @@
 [gd_resource type="Resource" script_class="CharData" load_steps=2 format=3 uid="uid://dal1a3mg8lfxi"]
 
-[ext_resource type="Script" uid="uid://kdheiaahier2" path="res://source/chars/char_data.gd" id="1_nokhs"]
+[ext_resource type="Script" uid="uid://kdheiaahier2" path="res://source/chars/char_data.gd" id="1_xx8yn"]
 
 [resource]
-script = ExtResource("1_nokhs")
+script = ExtResource("1_xx8yn")
 name = "Goblin"
-file = "goblin"
+sprites = "goblin"
 actions = Array[String](["uid://cb74emu6o42cb", "uid://dkemcyp28uh21"])
 metadata/_custom_type_script = "uid://kdheiaahier2"

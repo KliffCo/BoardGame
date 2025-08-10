@@ -2,7 +2,7 @@ class_name CharData
 extends Resource
 
 @export var name: String
-@export var file: String
+@export var sprites: String
 @export_file("*.tres") var actions: Array[String] = []
 #@export var actions: Array[GameAction] = []
 	#set(new_value):

@@ -72,3 +72,10 @@ func use_exit(index: int, room: Room):
 
 func is_in_grid(pos: Vector2i) -> bool:
 	return grid_list.find(pos) != -1
+
+func get_empty_slots() -> Array[RoomCharSlot]:
+	var slots: Array[RoomCharSlot] = []
+	for s in _char_slots:
+		if not s.get_char():
+			slots.append(s)
+	return slots

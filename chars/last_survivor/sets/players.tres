@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="FileOddsList" load_steps=5 format=3 uid="uid://q2wd7nqx7l77"]
+
+[ext_resource type="Script" uid="uid://ymova42ld343" path="res://source/general/file_odds.gd" id="1_rcgd1"]
+[ext_resource type="Script" uid="uid://bvvpx8fmjl6q3" path="res://source/general/file_odds_list.gd" id="2_rcgd1"]
+
+[sub_resource type="Resource" id="Resource_rcgd1"]
+script = ExtResource("1_rcgd1")
+file = "uid://dal1a3mg8lfxi"
+odds = 100
+
+[sub_resource type="Resource" id="Resource_t8hsf"]
+script = ExtResource("1_rcgd1")
+file = "uid://yxr5k6tc8weh"
+odds = 100
+
+[resource]
+script = ExtResource("2_rcgd1")
+_list = Array[ExtResource("1_rcgd1")]([SubResource("Resource_rcgd1"), SubResource("Resource_t8hsf")])
+metadata/_custom_type_script = "uid://bvvpx8fmjl6q3"

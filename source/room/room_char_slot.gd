@@ -6,7 +6,8 @@ static var _scale := Vector3(0.25, 1, 0.25)
 
 var _mat: StandardMaterial3D
 var _color: Color = Color.WHITE
-var changing: bool = false
+var _changing: bool = false
+var _char: Char = null
 
 func _ready() -> void:
 	scale = _scale
@@ -15,17 +16,23 @@ func _ready() -> void:
 	_mat.albedo_texture = _texture
 	#set_color(Color.RED)
 
+func set_char(char: Char) -> void:
+	_char = char
+
+func get_char() -> Char:
+	return _char
+
 func set_color(color: Color, instant: bool = false):
 	_color = color
-	changing = !instant
+	_changing = !instant
 	if instant:
 		_mat.albedo_color = color
 
 func _process(delta: float) -> void:
-	if not changing:
+	if not _changing:
 		return
 	if _mat.albedo_color != _color:
 		_mat.albedo_color = _mat.albedo_color.lerp(_color, delta*3)
 		var diff = _mat.albedo_color - _color
 		if diff.r+diff.g+diff.b+diff.a < 0.05:
-			changing = false
+			_changing = false

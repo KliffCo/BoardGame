@@ -11,8 +11,8 @@ var _zoom_offset: Vector3
 
 @export var min_zoom_offset: Vector3 = Vector3(0, 3, 1)
 @export var max_zoom_offset: Vector3 = Vector3(0, 1, 1)
-@export_range(-180, 180) var min_zoom_angle: float = -80
-@export_range(-180, 180) var max_zoom_angle: float = -20
+@export_range(-180, 180) var min_zoom_angle: float = -70
+@export_range(-180, 180) var max_zoom_angle: float = -30
 
 func get_actual_pan() -> Vector3:
 	return _actual_pan

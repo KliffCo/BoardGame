@@ -1,7 +1,7 @@
 class_name MapSettings
 extends Resource
 
-@export_file("*.tscn") var file: String
+#@export_file("*.tscn") var file: String
 @export_file("*.tres") var tile_set: String
 @export var map_seed: int = 0
 @export var rooms: int = 10
