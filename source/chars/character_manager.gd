@@ -4,7 +4,7 @@ extends Node3D
 static var main: CharacterManager = null
 
 #@export_file("*.tscn") var prefab: String
-@onready var prefab: Resource = preload("res://chars/character.tscn")
+#@onready var prefab: Resource = preload("res://chars/character.tscn")
 
 func _ready() -> void:
 	main = self
