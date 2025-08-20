@@ -1,17 +1,16 @@
 class_name CharAnimator
-extends Resource
+extends Node
 
 const FPS := 10
 const FRAME_TIME := 1.0/FPS
 
-var _char: Char = null
 var _frames: CharFrames = null
 var _action: Char.Action = Char.Action.Idle
 var _frame: int = 0
 var _next_frame: float = 0
 
-func _init(chr: Node3D):
-	_char = chr
+var _char: Char:
+	get: return get_parent() as Char
 
 func load(name: String):
 	_frames = CharFrames.new(name)

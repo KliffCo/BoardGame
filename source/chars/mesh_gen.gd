@@ -59,10 +59,11 @@ static func plane(offset:= Vector2(0.5, 0.5), rotate:= 1) -> ArrayMesh:
 	return mesh
 
 static func new_material(mesh: MeshInstance3D) -> StandardMaterial3D:
-	var material: StandardMaterial3D = mesh.mesh.surface_get_material(0)
-	if material == null:
-		material = StandardMaterial3D.new()
+	#var material: StandardMaterial3D = mesh.mesh.surface_get_material(0)
+	#if material == null:
+	var material: StandardMaterial3D = StandardMaterial3D.new()
 	#material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
-	mesh.mesh.surface_set_material(0, material)
+	#mesh.mesh.surface_set_material(0, material)
+	mesh.material_override = material
 	return material

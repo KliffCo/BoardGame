@@ -14,6 +14,5 @@ metadata/_custom_type_script = "uid://ds1fo4xoj7tu7"
 [resource]
 script = ExtResource("1_73i1k")
 _char_set_file = "uid://q2wd7nqx7l77"
-_room_set_file = "uid://0slpryrcs5d7"
 _map_settings = SubResource("Resource_7tf7f")
 metadata/_custom_type_script = "uid://btm6j7gut2ya2"

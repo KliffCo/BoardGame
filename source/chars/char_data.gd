@@ -4,6 +4,7 @@ extends Resource
 @export var name: String
 @export var sprites: String
 @export_file("*.tres") var actions: Array[String] = []
+
 #@export var actions: Array[GameAction] = []
 	#set(new_value):
 		#for i in range(new_value.size()):

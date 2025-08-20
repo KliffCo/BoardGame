@@ -2,6 +2,8 @@ class_name CharManager
 extends Node3D
 
 static var main: CharManager = null
+@export_file("*.tscn") var _prefab_file: String
+@onready var _prefab: Resource = load(_prefab_file)
 
 var chars: Array[Char] = []
 
@@ -17,7 +19,7 @@ func count() -> int:
 	return chars.size()
 
 func new_char(data: CharData, slot: RoomCharSlot) -> Char:
-	var char: Char = Char.new(count(), data, slot)
+	var char: Char = _prefab.instantiate()
+	char.init(self, count(), data, slot);
 	chars.append(char)
-	add_child(char)
 	return char

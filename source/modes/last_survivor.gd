@@ -15,8 +15,9 @@ func map_loaded():
 	rng.randomize()
 	for i in range(room_man.count()):
 		var room := room_man.get_room(i)
-		var slots = room.get_empty_slots()
-		if slots.size() > 0:
+		var empty_slots = room.get_empty_slots()
+		if empty_slots.size() > 0:
 			var data: CharData = load(char_set.get_random(rng))
-			char_man.new_char(data, slots[0])
+			char_man.new_char(data, empty_slots[0])
+	print_debug("all done")
 	

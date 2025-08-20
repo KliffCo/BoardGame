@@ -5,27 +5,33 @@ enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack, }
 
 static var _scale:= 0.5
 
+@export var Abc: int = 1
 var data: CharData
 var mesh: CharMesh
 var anim: CharAnimator
 var _slot: RoomCharSlot
 
-func _init(index: int, _data: CharData, slot: RoomCharSlot) -> void:
-	data = _data
+func init(parent: Node3D, index: int, __data: CharData, __slot: RoomCharSlot) -> void:
+	self.data = __data
+	self.slot = __slot
 	name = "Char"+str(index)
-	scale = Vector3(_scale, _scale, _scale)
-	mesh = CharMesh.new(self)
-	anim = CharAnimator.new(self)
-	anim.load(data.sprites)
-	set_slot(slot)
-	position = _slot.global_position
+	mesh = find_child("mesh")
+	anim = find_child("anim")
 
-func set_slot(slot: RoomCharSlot) -> void:
-	if _slot:
-		_slot.set_char(null)
-	_slot = slot
-	if _slot:
-		_slot.set_char(self)
+	parent.add_child(self)
+	position = _slot.global_position
+	scale = Vector3(_scale, _scale, _scale)
+	anim.load(data.sprites)
+
+var slot: RoomCharSlot:
+	get:
+		return _slot
+	set(value):
+		if _slot:
+			_slot.char = null
+		_slot = value
+		if _slot:
+			_slot.char = self
 
 func _process(delta: float) -> void:
 	anim.process(delta)
