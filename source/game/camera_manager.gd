@@ -74,10 +74,16 @@ func screen_to_world_pos(screen_pos: Vector2):
 	var direction = project_ray_normal(screen_pos)
 	if direction.y > -0.01:
 		return false
-	var origin = project_ray_origin(screen_pos)
+	var origin = position # project_ray_origin(screen_pos)
 	var ray_length = abs(origin.y/direction.y)
 	var end = origin + direction * ray_length
 	return end
 
 func world_to_screen_pos(world_pos: Vector3) -> Vector2:
 	return unproject_position(world_pos)
+
+func colliders_at_screen_pos(screen_pos: Vector2):
+	var direction = project_ray_normal(screen_pos)
+	var origin = position
+	var list = Colliders.get_ordered_ray_hits(get_world_3d().direct_space_state, origin, direction, 10)
+	return list

@@ -1,7 +1,7 @@
 class_name Room
 extends Node3D
 
-static var _char_slot_prefab = preload("res://rooms/components/room_char_slot.tscn")
+#static var _char_slot_prefab = preload("res://rooms/components/room_char_slot.tscn")
 
 var _tile: RoomTile
 var grid_list: Array[Vector2i] = []
@@ -43,14 +43,17 @@ func build_model():
 	_init_char_slots()
 
 func _init_char_slots():
+	if not GameMode.main.has_char_slots():
+		return
 	_char_slot_holder = Node3D.new()
+	_char_slot_holder.name = "Char Slots"
+	_char_slot_holder.position = Vector3(0, MeshGen.SPACING*2, 0)
 	add_child(_char_slot_holder)
 	for c in _model.get_children(false):
 		if c.name.begins_with("CharSlot_"):
-			var slot: RoomCharSlot = _char_slot_prefab.instantiate()
+			var slot: RoomCharSlot = GameMode.main.new_char_slot(c)
 			_char_slots.append(slot)
-			slot.position = c.position + Vector3(0, 0.01, 0)
-			add_child(slot)
+			_char_slot_holder.add_child(slot)
 
 func find_unused_exit(pos: Vector2i, dir: Vector2i) -> int:
 	for i in range(unused_exits.size()):

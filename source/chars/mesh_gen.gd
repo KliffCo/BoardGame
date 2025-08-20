@@ -1,6 +1,15 @@
 class_name MeshGen
 extends Node
 
+static var SPACING = 0.01
+
+static var _shared_plane = null
+static var shared_plane:
+	get:
+		if not _shared_plane:
+			shared_plane = plane()
+		return shared_plane
+
 static func plane(offset:= Vector2(0.5, 0.5), rotate:= 1) -> ArrayMesh:
 	rotate = clamp(rotate, 0, 2)
 	
@@ -58,12 +67,13 @@ static func plane(offset:= Vector2(0.5, 0.5), rotate:= 1) -> ArrayMesh:
 	mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, array)
 	return mesh
 
-static func new_material(mesh: MeshInstance3D) -> StandardMaterial3D:
+static func new_material(mesh: MeshInstance3D = null) -> StandardMaterial3D:
 	#var material: StandardMaterial3D = mesh.mesh.surface_get_material(0)
 	#if material == null:
 	var material: StandardMaterial3D = StandardMaterial3D.new()
 	#material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
+	#material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
 	#mesh.mesh.surface_set_material(0, material)
-	mesh.material_override = material
+	if mesh:
+		mesh.material_override = material
 	return material

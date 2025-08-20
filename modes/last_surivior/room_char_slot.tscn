@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsiothaij81ep"]
+
+[ext_resource type="Script" uid="uid://dvv83t3potbn5" path="res://source/room/room_char_slot.gd" id="1_sqxml"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8l3pf"]
+size = Vector3(1, 0.1, 1)
+
+[node name="RoomCharSlot" type="Node3D"]
+script = ExtResource("1_sqxml")
+_file = "uid://b8hnaal5lw5k0"
+metadata/_custom_type_script = "uid://dvv83t3potbn5"
+
+[node name="mesh" type="MeshInstance3D" parent="."]
+skeleton = NodePath("")
+
+[node name="collider" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="collider"]
+shape = SubResource("BoxShape3D_8l3pf")

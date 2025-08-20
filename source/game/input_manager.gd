@@ -29,10 +29,9 @@ func mouse_input(e: InputEventMouse):
 				_is_panning = false
 		elif e.button_index == MOUSE_BUTTON_LEFT:
 			if e.pressed:
-				var world_pos = CameraManager.main.screen_to_world_pos(e.position)
-				#var origin = project_ray_origin(e.position)
-				#var direction = project_ray_normal(e.position)
-				#var world_pos = CameraManager.main.screen_to_world_pos(e.position)
+				var list = CameraManager.main.colliders_at_screen_pos(e.position)
+				if(list.size() > 0):
+					pass
 	elif e is InputEventMouseMotion:
 		if _is_panning:
 			var world_pos = CameraManager.main.screen_to_world_pos(e.position)

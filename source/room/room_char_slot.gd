@@ -1,8 +1,8 @@
 class_name RoomCharSlot
-extends MeshInstance3D
+extends Node3D
 
-static var _texture : Texture2D = load("res://game/images/char_slot.png")
-static var _scale := Vector3(0.25, 1, 0.25)
+@export var _size = 0.25
+@export_file("*.png") var _file
 
 var _mat: StandardMaterial3D
 var _color: Color = Color.WHITE
@@ -10,15 +10,22 @@ var _changing: bool = false
 var _char: Char = null
 
 func _ready() -> void:
-	scale = _scale
-	mesh = MeshGen.plane()
-	_mat = MeshGen.new_material(self)
+	scale = Vector3(_size, _size, _size)
+	var mesh: MeshInstance3D = find_child("mesh")
+	var _texture : Texture2D = load(_file)
+	mesh.mesh = MeshGen.shared_plane
+	_mat = MeshGen.new_material()
+	_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	_mat.albedo_texture = _texture
+	mesh.material_override = _mat
 	#set_color(Color.RED)
 
 var character: Char:
 	get: return _char
-	set(value): _char = value
+	set(value):
+		_char = value
+		if value != null:
+			set_color(Color.RED)
 
 func set_color(color: Color, instant: bool = false):
 	_color = color
