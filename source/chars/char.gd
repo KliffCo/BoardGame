@@ -3,8 +3,6 @@ extends Node3D
 
 enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack, }
 
-static var _scale:= 0.5
-
 @export var Abc: int = 1
 var data: CharData
 var mesh: CharMesh
@@ -20,7 +18,7 @@ func init(parent: Node3D, index: int, __data: CharData, __slot: RoomCharSlot) ->
 
 	parent.add_child(self)
 	position = _slot.global_position
-	scale = Vector3(_scale, _scale, _scale)
+	#scale = Vector3(_scale, _scale, _scale)
 	anim.load(data.sprites)
 
 var slot: RoomCharSlot:
@@ -28,10 +26,10 @@ var slot: RoomCharSlot:
 		return _slot
 	set(value):
 		if _slot:
-			_slot.char = null
+			_slot.character = null
 		_slot = value
 		if _slot:
-			_slot.char = self
+			_slot.character = self
 
-func _process(delta: float) -> void:
-	anim.process(delta)
+#func _process(delta: float) -> void:
+	#anim.process(delta)

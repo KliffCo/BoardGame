@@ -81,8 +81,8 @@ func try_connect_rooms(a_room: Room, a_pos: Vector2i, b_room: Room, b_pos: Vecto
 	return true
 
 func update_range() -> void:
-	var min_range:= Vector2.ZERO
-	var max_mange:= Vector2.ZERO
+	min_range = Vector2.ZERO
+	max_range = Vector2.ZERO
 	for room in rooms:
 		for g in room.grid_list:
 			min_range = min_range.min(g)

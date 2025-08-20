@@ -11,15 +11,15 @@ func _ready() -> void:
 	main = self
 
 func clear():
-	for char in chars:
-		char.free()
+	for chr in chars:
+		chr.free()
 	chars = []
 
 func count() -> int:
 	return chars.size()
 
 func new_char(data: CharData, slot: RoomCharSlot) -> Char:
-	var char: Char = _prefab.instantiate()
-	char.init(self, count(), data, slot);
-	chars.append(char)
-	return char
+	var chr: Char = _prefab.instantiate()
+	chr.init(self, count(), data, slot);
+	chars.append(chr)
+	return chr

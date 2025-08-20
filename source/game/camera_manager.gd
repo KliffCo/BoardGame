@@ -53,7 +53,7 @@ func set_desired_pan(pan: Vector3):
 	pan.y = 0
 	_desired_pan = pan
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _actual_zoom != _desired_zoom:
 		_actual_zoom = lerp(_actual_zoom, _desired_zoom, 0.2)
 		if abs(_actual_zoom-_desired_zoom) < 0.001:

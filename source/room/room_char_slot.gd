@@ -16,11 +16,9 @@ func _ready() -> void:
 	_mat.albedo_texture = _texture
 	#set_color(Color.RED)
 
-var char: Char:
-	get:
-		return _char
-	set(value):
-		_char = value
+var character: Char:
+	get: return _char
+	set(value): _char = value
 
 func set_color(color: Color, instant: bool = false):
 	_color = color

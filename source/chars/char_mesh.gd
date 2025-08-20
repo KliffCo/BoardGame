@@ -6,8 +6,8 @@ var _stand_mesh: MeshInstance3D
 var _shadow_mat: StandardMaterial3D
 var _stand_mat: StandardMaterial3D
 
-var _char: Char:
-	get: return get_parent() as Char
+#var _char: Char:
+	#get: return get_parent() as Char
 
 func _ready() -> void:
 	var _parent = get_parent_node_3d()

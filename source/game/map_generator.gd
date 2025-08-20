@@ -6,7 +6,10 @@ static func generate(s: MapSettings):
 	room_man.clear()
 	var tile_set: FileOddsList = load(s.tile_set)
 	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-	rng.randomize() if s.map_seed == 0 else rng.set_seed(s.map_seed)
+	if s.map_seed == 0:
+		rng.randomize()
+	else:
+		rng.set_seed(s.map_seed)
 	
 	var tile: RoomTile = load(tile_set.get_random(rng)).instantiate()
 	room_man.try_add_room(tile, Vector2i.ZERO, true)

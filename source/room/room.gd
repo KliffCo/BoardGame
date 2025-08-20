@@ -76,6 +76,6 @@ func is_in_grid(pos: Vector2i) -> bool:
 func get_empty_slots() -> Array[RoomCharSlot]:
 	var slots: Array[RoomCharSlot] = []
 	for s in _char_slots:
-		if not s.char:
+		if not s.character:
 			slots.append(s)
 	return slots

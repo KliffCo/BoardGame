@@ -12,8 +12,8 @@ var _next_frame: float = 0
 var _char: Char:
 	get: return get_parent() as Char
 
-func load(name: String):
-	_frames = CharFrames.new(name)
+func load(_name: String):
+	_frames = CharFrames.new(_name)
 	_char.mesh.set_shadow_texture(_frames.get_shadow())
 	set_action(_action)
 	set_frame(_frame)
