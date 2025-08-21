@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6rf07cwojqns"]
+
+[ext_resource type="Material" uid="uid://d2vtvu175a4u4" path="res://shaders/char_material.tres" id="1_68py8"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_68py8"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.967042, -0.254619, 0, 0.254619, 0.967042, 0.628441, 0.00828779, 0.249443)
+material_override = ExtResource("1_68py8")
+mesh = SubResource("PlaneMesh_68py8")
