@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b6rf07cwojqns"]
 
-[ext_resource type="Material" uid="uid://d2vtvu175a4u4" path="res://shaders/char_material.tres" id="1_68py8"]
+[ext_resource type="Material" uid="uid://d2vtvu175a4u4" path="res://shaders/outline_material.tres" id="1_68py8"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_68py8"]
 
