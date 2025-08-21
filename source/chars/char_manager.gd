@@ -3,9 +3,11 @@ extends Node3D
 
 static var main: CharManager = null
 @export_file("*.tscn") var _prefab_file: String
-@export_file("*.tres") var _material_file: String
+#@export_file("*.tres") var _base_material_file: String
+@export_file("*.tres") var _outline_material_file: String
 @onready var _prefab: Resource = load(_prefab_file)
-@onready var _material: Resource = load(_material_file)
+#@onready var _base_material: Resource = load(_base_material_file)
+@onready var _outline_material: Resource = load(_outline_material_file)
 
 var chars: Array[Char] = []
 
@@ -26,5 +28,8 @@ func new_char(data: CharData, slot: RoomCharSlot) -> Char:
 	chars.append(chr)
 	return chr
 
-func new_material() -> ShaderMaterial:
-	return _material.duplicate()
+func new_base_material() -> Material:
+	return _base_material.duplicate()
+
+func new_outline_material() -> ShaderMaterial:
+	return _outline_material.duplicate()

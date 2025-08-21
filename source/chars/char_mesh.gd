@@ -2,9 +2,11 @@ class_name CharMesh
 extends Node3D
 
 var _shadow_mesh: MeshInstance3D
-var _stand_mesh: MeshInstance3D
 var _shadow_mat: Material
-var _stand_mat: ShaderMaterial
+
+var _stand_mesh: MeshInstance3D
+var _stand1_mat: Material
+var _stand2_mat: ShaderMaterial
 
 #var _char: Char:
 	#get: return get_parent() as Char
@@ -14,11 +16,9 @@ func _ready() -> void:
 	_shadow_mesh = find_child("Shadow");
 	_stand_mesh = find_child("Stand");
 	_shadow_mesh.position = Vector3(0, MeshGen.SPACING*1, 0)
-	#_stand_mat = MeshGen.new_material(_stand_mesh)
-	#var a = load("res://shaders/char_material.tres")
-	#_stand_mat = load("res://shaders/char_material.tres")
-	_stand_mat = CharManager.main.new_material()
-	_stand_mesh.material_override = _stand_mat
+	
+	_stand1_mat = CharManager.main.new_base_material()
+	_stand_mesh.material_override = _stand_mat1
 	#_shadow_mat = CharManager.main.new_material()
 	#_stand_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
 	_shadow_mat = MeshGen.new_material(_shadow_mesh)
