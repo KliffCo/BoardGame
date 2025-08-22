@@ -13,7 +13,7 @@ func _ready() -> void:
 	scale = Vector3(_size, _size, _size)
 	var mesh: MeshInstance3D = find_child("mesh")
 	var _texture : Texture2D = load(_file)
-	mesh.mesh = MeshGen.shared_plane
+	mesh.mesh = MeshGen.shared_plane()
 	_mat = MeshGen.new_material()
 	_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	_mat.albedo_texture = _texture

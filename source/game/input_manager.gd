@@ -29,9 +29,16 @@ func mouse_input(e: InputEventMouse):
 				_is_panning = false
 		elif e.button_index == MOUSE_BUTTON_LEFT:
 			if e.pressed:
-				var list = CameraManager.main.colliders_at_screen_pos(e.position)
-				if(list.size() > 0):
-					pass
+				var hits: Array = CameraManager.main.colliders_at_screen_pos(e.position, Colliders.CHAR_MASK)
+				var selected = false
+				for hit in hits:
+					var col = hit.collider as StaticBody3D
+					var chr = col.get_parent_node_3d() as Char
+					if chr && GameMode.main.on_select_char(chr):
+						selected = true
+						break
+				if not selected:
+					GameMode.main.on_select_char(null)
 	elif e is InputEventMouseMotion:
 		if _is_panning:
 			var world_pos = CameraManager.main.screen_to_world_pos(e.position)

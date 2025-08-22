@@ -29,3 +29,10 @@ func load_map():
 
 func map_loaded():
 	pass
+
+#func can_select_char(chr: Char):
+	#return true
+
+func on_select_char(chr: Char):
+	CharManager.main.select(chr)
+	return true

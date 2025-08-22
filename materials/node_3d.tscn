@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b6rf07cwojqns"]
 
-[ext_resource type="Material" uid="uid://d2vtvu175a4u4" path="res://shaders/outline_material.tres" id="1_68py8"]
-[ext_resource type="Material" uid="uid://c36jkoa7p3kx2" path="res://shaders/new_standard_material_3d.tres" id="2_b0noo"]
+[ext_resource type="Material" uid="uid://d2vtvu175a4u4" path="res://materials/char_material.tres" id="1_68py8"]
+[ext_resource type="Material" uid="uid://bel51fcfjog2w" path="res://materials/new_shader_material.tres" id="1_phpix"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_68py8"]
 
@@ -9,11 +9,11 @@
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.870339, -0.492455, 0, 0.492455, 0.870339, 1.62434, -0.0472105, 0.403173)
-material_override = ExtResource("1_68py8")
+material_override = ExtResource("1_phpix")
 mesh = SubResource("PlaneMesh_68py8")
 skeleton = NodePath("../MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.967042, -0.254619, 0, 0.254619, 0.967042, 0.628441, 0.00828779, 0.249443)
-material_override = ExtResource("2_b0noo")
+transform = Transform3D(1, 0, 0, 0, 0.967042, -0.254619, 0, 0.254619, 0.967042, 4.88713, 0.00828779, 3.68586)
+material_override = ExtResource("1_68py8")
 mesh = SubResource("PlaneMesh_68py8")

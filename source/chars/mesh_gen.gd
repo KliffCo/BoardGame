@@ -3,12 +3,11 @@ extends Node
 
 static var SPACING = 0.01
 
-static var _shared_plane = null
-static var shared_plane:
-	get:
-		if not _shared_plane:
-			shared_plane = plane()
-		return shared_plane
+static var _shared_plane : ArrayMesh = null
+static func shared_plane():
+	if not _shared_plane:
+		_shared_plane = plane()
+	return _shared_plane
 
 static func plane(offset:= Vector2(0.5, 0.5), rotate:= 1) -> ArrayMesh:
 	rotate = clamp(rotate, 0, 2)
@@ -70,6 +69,7 @@ static func plane(offset:= Vector2(0.5, 0.5), rotate:= 1) -> ArrayMesh:
 static func new_material(mesh: MeshInstance3D = null) -> StandardMaterial3D:
 	#var material: StandardMaterial3D = mesh.mesh.surface_get_material(0)
 	#if material == null:
+	Material
 	var material: StandardMaterial3D = StandardMaterial3D.new()
 	#material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	#material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR

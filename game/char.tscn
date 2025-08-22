@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://b1eton7knhroa"]
+[gd_scene load_steps=5 format=3 uid="uid://b1eton7knhroa"]
 
 [ext_resource type="Script" uid="uid://bs10werye0ojo" path="res://source/chars/char.gd" id="1_84md6"]
-[ext_resource type="PackedScene" uid="uid://dk8h631kp0er2" path="res://meshs/char.fbx" id="2_5ywgb"]
 [ext_resource type="Script" uid="uid://bwggmneihmuec" path="res://source/chars/char_mesh.gd" id="3_dodyp"]
 [ext_resource type="Script" uid="uid://bw37ki4xfdkg1" path="res://source/chars/char_animator.gd" id="4_dsqlj"]
 
@@ -13,8 +12,18 @@ radius = 0.25
 script = ExtResource("1_84md6")
 metadata/_custom_type_script = "uid://bs10werye0ojo"
 
-[node name="mesh" parent="." instance=ExtResource("2_5ywgb")]
+[node name="mesh" type="Node3D" parent="."]
 script = ExtResource("3_dodyp")
+metadata/_custom_type_script = "uid://bwggmneihmuec"
+
+[node name="stand" type="MeshInstance3D" parent="mesh"]
+skeleton = NodePath("../shadow")
+
+[node name="outline" type="MeshInstance3D" parent="mesh/stand"]
+skeleton = NodePath("../shadow")
+
+[node name="shadow" type="MeshInstance3D" parent="mesh"]
+skeleton = NodePath("../..")
 
 [node name="anim" type="Node" parent="."]
 script = ExtResource("4_dsqlj")

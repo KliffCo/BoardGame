@@ -19,4 +19,3 @@ func map_loaded():
 		if empty_slots.size() > 0:
 			var data: CharData = load(char_set.get_random(rng))
 			char_man.new_char(data, empty_slots[0])
-	
