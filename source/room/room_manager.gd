@@ -3,6 +3,9 @@ extends Node3D
 
 static var main: RoomManager = null
 
+@export_file("*.tres") var _outline_material_file: String
+var _outline_material: ShaderMaterial
+
 var rooms: Array[Room] = []
 var min_range: Vector2
 var max_range: Vector2
@@ -11,6 +14,12 @@ var radius: float
 
 func _ready() -> void:
 	main = self
+	_outline_material = load(_outline_material_file) as ShaderMaterial
+	#_outline_material.set_shader_parameter("tex_albedo", null)
+	#_outline_material.set_shader_parameter("outline_size", 3.0)
+
+func new_outline_material() -> ShaderMaterial:
+	return _outline_material.duplicate()
 
 func clear():
 	min_range = Vector2.ZERO
@@ -89,3 +98,29 @@ func update_range() -> void:
 			max_range = max_range.max(g)
 	mid_pos = Vector3(min_range.x+max_range.x, 0, min_range.y+max_range.y)/2 + Vector3(0, 0, 1)
 	radius = (max_range-min_range).length()/2
+
+func get_distance_array_from_room(start: Room) -> Array[int]:
+	return get_distance_array(rooms.find(start))
+
+func get_distance_array(start: int) -> Array[int]:
+	var count = rooms.size()
+	var distances := PackedInt32Array()
+	distances.resize(count)
+	for i in range(count):
+		distances[i] = count
+	distances[start] = 0
+	var todo :Array[int] = []
+	todo.append(todo)
+	while todo.size() != 0:
+		var src_index := todo[todo.size()-1]
+		todo.remove_at(todo.size()-1)
+		var src := rooms[src_index]
+		var distance := distances[src_index]+1
+		for exit in src.exits:
+			var dst = exit.room
+			var dst_index := rooms.find(dst)
+			if distances[dst_index] > distance:
+				distances[dst_index] = distance
+				if todo.find(dst_index) == -1:
+					todo.append(dst_index)
+	return distances

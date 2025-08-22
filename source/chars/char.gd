@@ -1,5 +1,5 @@
 class_name Char
-extends Node3D
+extends Selectable
 
 enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack, }
 
@@ -8,10 +8,6 @@ var mesh: CharMesh
 var anim: CharAnimator
 var collider: PhysicsBody3D
 var _slot: RoomCharSlot
-
-var _is_selected: bool
-var _is_selectable: bool
-var _selectable_color: Color
 
 func init(parent: Node3D, index: int, __data: CharData, __slot: RoomCharSlot) -> void:
 	self.data = __data
@@ -27,6 +23,9 @@ func init(parent: Node3D, index: int, __data: CharData, __slot: RoomCharSlot) ->
 	#scale = Vector3(_scale, _scale, _scale)
 	anim.load(data.sprites)
 
+var room : Room:
+	get: return _slot.room
+
 var slot: RoomCharSlot:
 	get:
 		return _slot
@@ -37,26 +36,7 @@ var slot: RoomCharSlot:
 		if _slot:
 			_slot.character = self
 
-#func _process(delta: float) -> void:
-	#anim.process(delta)
-
-func set_selected(value: bool):
-	_is_selected = value
-	_update_outline()
-
-func unset_selected():
-	_is_selectable = false
-	_update_outline()
-
-func set_selectable(color):
-	if _is_selectable == (color is Color):
-		return
-	_is_selectable = color is Color
-	if _is_selectable:
-		_selectable_color = color
-	_update_outline()
-
-func _update_outline():
+func _update_selectable() -> void:
 	if _is_selected:
 		mesh.set_outline(Colors.CHAR_SELECTED)
 		return
@@ -64,3 +44,17 @@ func _update_outline():
 		mesh.set_outline(_selectable_color)
 		return
 	mesh.unset_outline()
+
+#func _process(delta: float) -> void:
+	#anim.process(delta)
+
+#func unset_selected() -> void:
+	#_is_selectable = false
+	#_update_outline()
+
+func get_selectables() -> Array[ActionSelectable]:
+	var list := [ActionSelectable]
+	for action in data.actions:
+		var more = action.get_selectables(self)
+		list.append_array(more)
+	return list

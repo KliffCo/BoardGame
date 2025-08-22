@@ -1,0 +1,28 @@
+[gd_resource type="VisualShader" load_steps=5 format=3 uid="uid://ntr4nmk8dnp7"]
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_u3mi1"]
+input_name = "view_matrix"
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_rbglw"]
+input_name = "node_position_world"
+
+[sub_resource type="VisualShaderNodeTransformOp" id="VisualShaderNodeTransformOp_2uwwe"]
+
+[sub_resource type="VisualShaderNodeMultiplyAdd" id="VisualShaderNodeMultiplyAdd_f8tja"]
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_schlick_ggx;
+
+
+
+"
+nodes/fragment/2/node = SubResource("VisualShaderNodeInput_u3mi1")
+nodes/fragment/2/position = Vector2(-195.07, 269.48)
+nodes/fragment/3/node = SubResource("VisualShaderNodeInput_rbglw")
+nodes/fragment/3/position = Vector2(-460, 480)
+nodes/fragment/4/node = SubResource("VisualShaderNodeTransformOp_2uwwe")
+nodes/fragment/4/position = Vector2(155.83, 446.14)
+nodes/fragment/5/node = SubResource("VisualShaderNodeMultiplyAdd_f8tja")
+nodes/fragment/5/position = Vector2(-140, 560)
+nodes/fragment/connections = PackedInt32Array(2, 0, 4, 0, 3, 0, 5, 0)

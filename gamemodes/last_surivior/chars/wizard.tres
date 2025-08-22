@@ -6,5 +6,5 @@
 script = ExtResource("1_o04io")
 name = "Wizard"
 sprites = "wizard"
-actions = Array[String](["uid://cb74emu6o42cb", "uid://dkemcyp28uh21"])
+_action_files = Array[String](["uid://cb74emu6o42cb", "uid://dkemcyp28uh21"])
 metadata/_custom_type_script = "uid://kdheiaahier2"

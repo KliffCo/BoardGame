@@ -4,8 +4,7 @@
 
 [resource]
 script = ExtResource("1_xxlom")
-file = ""
-tile_set = "uid://bpvghkmuv5sm4"
+tile_set = "uid://0slpryrcs5d7"
 map_seed = 5
 rooms = 10
 extend_odds = 1.5

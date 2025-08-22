@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://sy4bvori8se6"
-path="res://.godot/imported/char_slot.fbx-058cae1c30d9d8c50f3e564a0f7417ff.scn"
+path="res://.godot/imported/char_slot.fbx-81e7d5db958c0c610aed88a89b6de0dd.scn"
 
 [deps]
 
-source_file="res://modes/last_surivior/models/char_slot.fbx"
-dest_files=["res://.godot/imported/char_slot.fbx-058cae1c30d9d8c50f3e564a0f7417ff.scn"]
+source_file="res://gamemodes/last_surivior/models/char_slot.fbx"
+dest_files=["res://.godot/imported/char_slot.fbx-81e7d5db958c0c610aed88a89b6de0dd.scn"]
 
 [params]
 

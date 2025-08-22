@@ -3,7 +3,16 @@ extends Resource
 
 @export var name: String
 @export var sprites: String
-@export_file("*.tres") var actions: Array[String] = []
+@export_file("*.tres") var _action_files: Array[String] = []
+var _loaded = false
+var _actions : Array[GameAction] = []
+
+var actions: Array[GameAction]:
+	get:
+		if not _loaded:
+			for file in _action_files:
+				_actions.append(load(file))
+		return _actions
 
 #@export var actions: Array[GameAction] = []
 	#set(new_value):

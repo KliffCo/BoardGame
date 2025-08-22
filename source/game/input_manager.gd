@@ -5,6 +5,7 @@ static var main: InputManager
 
 var _is_panning:= false
 var _grip_position: Vector3
+var _selectables = null
 
 func _ready() -> void:
 	main = self
@@ -44,3 +45,12 @@ func mouse_input(e: InputEventMouse):
 			var world_pos = CameraManager.main.screen_to_world_pos(e.position)
 			if world_pos is Vector3:
 				CameraManager.main.set_desired_pan(CameraManager.main.get_actual_pan()-world_pos+_grip_position)
+
+func set_selectables(list: Array[ActionSelectable]):
+	if _selectables:
+		for sel:ActionSelectable in _selectables:
+			sel.selectable.set_selectables(null)
+	_selectables = list
+	if _selectables:
+		for sel:ActionSelectable in _selectables:
+			sel.selectable.set_selectables(sel.color)

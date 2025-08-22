@@ -41,15 +41,12 @@ func new_shadow_material() -> StandardMaterial3D:
 	return mat
 
 func new_stand_material() -> ShaderMaterial:
-	#var mat: StandardMaterial3D = StandardMaterial3D.new()
-	#mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA_SCISSOR
-	#return mat
 	return _stand_material.duplicate()
 
 func new_outline_material() -> ShaderMaterial:
 	return _outline_material.duplicate()
 
-func select(chr: Char):
+func select(chr: Char) -> void:
 	if selected:
 		selected.set_selected(false)
 	selected = chr

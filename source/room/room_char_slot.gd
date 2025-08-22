@@ -20,6 +20,18 @@ func _ready() -> void:
 	mesh.material_override = _mat
 	#set_color(Color.RED)
 
+var room: Room:
+	get:
+		var node = get_parent_node_3d()
+		while node:
+			if node is Room:
+				return node
+			node = get_parent_node_3d()
+		return null
+
+var is_empty: bool:
+	get: return character == null
+
 var character: Char:
 	get: return _char
 	set(value):

@@ -1,7 +1,7 @@
 class_name CharMesh
 extends Node3D
 
-static var _stand_plane: ArrayMesh = null
+static var _stand_plane: Mesh = null
 var _holder: Node3D
 var _shadow_mesh: MeshInstance3D
 var _shadow_mat: Material
@@ -31,6 +31,7 @@ func _ready() -> void:
 		_stand_plane = MeshGen.shared_plane()
 	
 	_shadow_mesh.position = Vector3(0, MeshGen.SPACING*1, 0)
+	_shadow_mesh.scale = Vector3(0.25, 0.25, 0.25)
 	_shadow_mesh.mesh = MeshGen.shared_plane();
 	_shadow_mat = CharManager.main.new_shadow_material()
 	_shadow_mesh.material_override = _shadow_mat

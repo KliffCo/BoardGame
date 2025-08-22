@@ -38,7 +38,7 @@ void fragment() {
 		float alpha = 0.0;
 		for(int i=0; i<8; i++) {
 			vec2 offset = dx * offsets[i].x + dy * offsets[i].y;
-			alpha += texture(tex_albedo, UV + offset * outline_size).a;
+			alpha += textureLod(tex_albedo, UV + offset * outline_size, 1.0).a;
 		}
 		if(alpha > 0.01) {
 			ALBEDO = outline_color.rgb;

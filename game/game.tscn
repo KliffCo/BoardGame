@@ -21,6 +21,7 @@ transform = Transform3D(0.302869, -0.736126, 0.6053, 0.793734, 0.546378, 0.26731
 
 [node name="RoomMan" type="Node3D" parent="."]
 script = ExtResource("1_vasa2")
+_outline_material_file = "uid://ctxu4ynasu0dm"
 
 [node name="CharMan" type="Node3D" parent="."]
 script = ExtResource("1_l1rk1")

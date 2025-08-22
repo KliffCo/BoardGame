@@ -3,10 +3,10 @@ extends Node
 
 static var SPACING = 0.01
 
-static var _shared_plane : ArrayMesh = null
+static var _shared_plane : Mesh = null
 static func shared_plane():
 	if not _shared_plane:
-		_shared_plane = unit_plane()
+		_shared_plane = PlaneMesh.new()	#unit_plane()
 	return _shared_plane
 
 static func unit_plane() -> ArrayMesh:
