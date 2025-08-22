@@ -7,13 +7,14 @@ uniform sampler2D tex_albedo : source_color, repeat_disable;
 uniform vec4 outline_color : source_color = vec4(1.0, 1.0, 0.0, 1.0);
 uniform float outline_size : hint_range(0.0, 10.0) = 3.0;
 uniform float outer_glow : hint_range(0.0, 5.0) = 2.5;
-uniform vec2 center_point = vec2(0.5, 0.5);
+//uniform vec2 center_point = vec2(0.5, 0.5);
 
 const vec2 offsets[8] = vec2[8](vec2(0.0, -1.0), vec2(-1.0, 0.0), vec2(1.0, 0.0), vec2(0.0, 1.0), vec2(-0.7, -0.7), vec2(0.7, -0.7), vec2(-0.7, 0.7), vec2(0.7, 0.7));
 
 void vertex() {
 	VERTEX.xyz *= outline_expand;
-	UV.xy = (UV - center_point) * outline_expand + center_point;
+	UV.xy = (UV - vec2(0.5)) * outline_expand + vec2(0.5);
+	//UV.xy = (UV - center_point) * outline_expand + center_point;
 }
 
 void fragment() {

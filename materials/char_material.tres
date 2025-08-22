@@ -1,12 +1,8 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d2vtvu175a4u4"]
 
-[ext_resource type="Shader" uid="uid://crngkhyb044rj" path="res://materials/char_shader.gdshader" id="1_xtfoc"]
+[ext_resource type="Shader" uid="uid://w6g88fy78pp2" path="res://materials/char_shader.gdshader" id="1_xtfoc"]
 
 [resource]
 render_priority = 0
 shader = ExtResource("1_xtfoc")
-shader_parameter/outline_expand = 1.1
-shader_parameter/outline_color = Color(1, 0, 0, 1)
-shader_parameter/outline_size = 3.0
-shader_parameter/outer_glow = 2.0
-shader_parameter/inner_glow = 1.0
+shader_parameter/emission = 1.0

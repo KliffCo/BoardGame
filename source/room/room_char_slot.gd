@@ -1,7 +1,7 @@
 class_name RoomCharSlot
 extends Node3D
 
-@export var _size = 0.25
+@export var _size = 0.125
 @export_file("*.png") var _file
 
 var _mat: StandardMaterial3D
@@ -14,7 +14,7 @@ func _ready() -> void:
 	var mesh: MeshInstance3D = find_child("mesh")
 	var _texture : Texture2D = load(_file)
 	mesh.mesh = MeshGen.shared_plane()
-	_mat = MeshGen.new_material()
+	_mat = StandardMaterial3D.new()
 	_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	_mat.albedo_texture = _texture
 	mesh.material_override = _mat

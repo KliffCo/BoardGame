@@ -25,6 +25,7 @@ script = ExtResource("1_vasa2")
 [node name="CharMan" type="Node3D" parent="."]
 script = ExtResource("1_l1rk1")
 _prefab_file = "uid://b1eton7knhroa"
+_stand_material_file = "uid://d2vtvu175a4u4"
 _outline_material_file = "uid://bus27g4pd0smp"
 
 [node name="InputMan" type="Node3D" parent="."]

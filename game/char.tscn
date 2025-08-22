@@ -16,14 +16,16 @@ metadata/_custom_type_script = "uid://bs10werye0ojo"
 script = ExtResource("3_dodyp")
 metadata/_custom_type_script = "uid://bwggmneihmuec"
 
-[node name="stand" type="MeshInstance3D" parent="mesh"]
-skeleton = NodePath("../shadow")
-
-[node name="outline" type="MeshInstance3D" parent="mesh/stand"]
-skeleton = NodePath("../shadow")
-
 [node name="shadow" type="MeshInstance3D" parent="mesh"]
 skeleton = NodePath("../..")
+
+[node name="holder" type="Node3D" parent="mesh"]
+
+[node name="stand" type="MeshInstance3D" parent="mesh/holder"]
+skeleton = NodePath("../../shadow")
+
+[node name="outline" type="MeshInstance3D" parent="mesh/holder"]
+skeleton = NodePath("../../shadow")
 
 [node name="anim" type="Node" parent="."]
 script = ExtResource("4_dsqlj")

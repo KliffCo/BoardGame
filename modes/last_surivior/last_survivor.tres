@@ -7,7 +7,7 @@
 script = ExtResource("1_co5v4")
 tile_set = "uid://0slpryrcs5d7"
 map_seed = 5
-rooms = 10
+rooms = 1
 extend_odds = 1.5
 metadata/_custom_type_script = "uid://ds1fo4xoj7tu7"
 
