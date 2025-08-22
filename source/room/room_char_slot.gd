@@ -26,7 +26,7 @@ var room: Room:
 		while node:
 			if node is Room:
 				return node
-			node = get_parent_node_3d()
+			node = node.get_parent_node_3d()
 		return null
 
 var is_empty: bool:

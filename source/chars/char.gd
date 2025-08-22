@@ -53,7 +53,7 @@ func _update_selectable() -> void:
 	#_update_outline()
 
 func get_selectables() -> Array[ActionSelectable]:
-	var list := [ActionSelectable]
+	var list: Array[ActionSelectable] = []
 	for action in data.actions:
 		var more = action.get_selectables(self)
 		list.append_array(more)

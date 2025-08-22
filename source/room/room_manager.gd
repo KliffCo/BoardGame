@@ -102,7 +102,7 @@ func update_range() -> void:
 func get_distance_array_from_room(start: Room) -> Array[int]:
 	return get_distance_array(rooms.find(start))
 
-func get_distance_array(start: int) -> Array[int]:
+func get_distance_array(start: int) -> PackedInt32Array:
 	var count = rooms.size()
 	var distances := PackedInt32Array()
 	distances.resize(count)
@@ -110,7 +110,7 @@ func get_distance_array(start: int) -> Array[int]:
 		distances[i] = count
 	distances[start] = 0
 	var todo :Array[int] = []
-	todo.append(todo)
+	todo.append(start)
 	while todo.size() != 0:
 		var src_index := todo[todo.size()-1]
 		todo.remove_at(todo.size()-1)

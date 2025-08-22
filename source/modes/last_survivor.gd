@@ -22,6 +22,9 @@ func map_loaded():
 
 func on_select_char(chr: Char):
 	CharManager.main.select(chr)
-	var selectables := chr.get_selectables()
-	InputManager.main.set_selectables(selectables)
+	if chr:
+		var selectables := chr.get_selectables()
+		InputManager.main.set_selectables(selectables)
+	else:
+		InputManager.main.set_selectables([])
 	return true
