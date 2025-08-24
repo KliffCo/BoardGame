@@ -1,10 +1,13 @@
 [gd_resource type="Resource" script_class="CharData" load_steps=2 format=3 uid="uid://yxr5k6tc8weh"]
 
-[ext_resource type="Script" uid="uid://kdheiaahier2" path="res://source/chars/char_data.gd" id="1_o04io"]
+[ext_resource type="Script" uid="uid://kdheiaahier2" path="res://source/chars/char_data.gd" id="1_rxx1m"]
 
 [resource]
-script = ExtResource("1_o04io")
+script = ExtResource("1_rxx1m")
 name = "Wizard"
 sprites = "wizard"
+col_height = 0.35
+col_radius = 0.13
+health = 1
 _action_files = Array[String](["uid://cb74emu6o42cb", "uid://dkemcyp28uh21"])
 metadata/_custom_type_script = "uid://kdheiaahier2"

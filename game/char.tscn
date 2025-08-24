@@ -1,12 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b1eton7knhroa"]
+[gd_scene load_steps=4 format=3 uid="uid://b1eton7knhroa"]
 
 [ext_resource type="Script" uid="uid://bs10werye0ojo" path="res://source/chars/char.gd" id="1_84md6"]
 [ext_resource type="Script" uid="uid://bwggmneihmuec" path="res://source/chars/char_mesh.gd" id="3_dodyp"]
 [ext_resource type="Script" uid="uid://bw37ki4xfdkg1" path="res://source/chars/char_animator.gd" id="4_dsqlj"]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_fv8di"]
-height = 0.5
-radius = 0.25
 
 [node name="Char" type="Node3D"]
 script = ExtResource("1_84md6")
@@ -30,11 +26,3 @@ skeleton = NodePath("../../shadow")
 [node name="anim" type="Node" parent="."]
 script = ExtResource("4_dsqlj")
 metadata/_custom_type_script = "uid://bw37ki4xfdkg1"
-
-[node name="collider" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0.25, -0.05)
-collision_layer = 2
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="collider"]
-transform = Transform3D(1, 0, 0, 0, 1, -1.49012e-08, 0, 1.49012e-08, 1, 0, 0, 0)
-shape = SubResource("CylinderShape3D_fv8di")

@@ -104,15 +104,12 @@ func get_closest_slot(global_pos: Vector3) -> RoomCharSlot:
 			best_dist = dist
 	return best_slot
 
-func _update_selectable() -> void:
-	if _is_selectable:
-		if not _ground_mesh:
-			_init_ground_mesh()
+func _selectable_update() -> void:
+	if not _ground_mesh and _is_color_changing:
+		_init_ground_mesh()
+	if _ground_mesh:
+		_ground_mesh.visible = _is_selectable || _is_color_changing
 		_ground_mat.set_shader_parameter("outline_color", _current_color)
-		_ground_mesh.visible = true
-	else:
-		if _ground_mesh:
-			_ground_mesh.visible = false
 
 func _init_ground_mesh() -> void:
 	var ground = _model.find_child("Ground") as MeshInstance3D

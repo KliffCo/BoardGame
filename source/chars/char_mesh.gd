@@ -10,7 +10,7 @@ var _stand_mat: ShaderMaterial
 var _outline_mesh: MeshInstance3D
 var _outline_mat: ShaderMaterial
 
-var _angle : float = 30
+var _angle : float = -30
 var _size := Vector2(0.5, 0.5)
 var _pivot := Vector2(0.0, -1.0)
 
@@ -51,9 +51,9 @@ func _ready() -> void:
 func translate_stand() -> void:
 	var size := _size * 0.5
 	var y := _pivot.y * size.y
-	var angle_rag := deg_to_rad(90-_angle)
+	var angle_rag := deg_to_rad(90+_angle)
 	_holder.position = Vector3(-_pivot.x * size.x, -y * sin(angle_rag), y * cos(angle_rag))
-	_holder.rotation = Vector3(deg_to_rad(90-_angle), 0.0, 0.0)
+	_holder.rotation = Vector3(deg_to_rad(90+_angle), 0.0, 0.0)
 	_holder.scale = Vector3(size.x, 1.0, size.y)
 
 func set_stand_texture(tex: Texture2D):

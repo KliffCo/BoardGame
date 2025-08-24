@@ -5,8 +5,6 @@ var _is_selectable: bool
 var _desired_color: Color
 var _current_color := Color.TRANSPARENT
 var _is_color_changing: bool = false
-var _fade_progress := 0.0
-var _fade_time := 0.0
 
 func unset_selectable() -> void:
 	_desired_color = Color(_current_color, 0.0)
@@ -19,9 +17,6 @@ func set_selectable_color(color: Color) -> void:
 		_current_color = Color(_desired_color, _current_color.a)
 	_is_selectable = true
 	_is_color_changing = true
-	#var diff_color := _current_color - _desired_color
-	#var color_diff := Vector4(_current_color.r-_desired_color.r, _current_color.g-_desired_color.g, _current_color.b-_desired_color.b, _current_color.a-_desired_color.a)
-	#_fade_progress = max(color_diff.a, color_diff.r, color_diff.g, color_diff.b)
 
 func _process(delta: float) -> void:
 	_process_color(delta)

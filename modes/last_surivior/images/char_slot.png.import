@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b8hnaal5lw5k0"
-path.s3tc="res://.godot/imported/char_slot.png-c8e138878f0c3fdcf10def9d9c9e6742.s3tc.ctex"
+path.s3tc="res://.godot/imported/char_slot.png-8434044b075fb3186d54fadd7a1f4a74.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://gamemodes/last_surivior/images/char_slot.png"
-dest_files=["res://.godot/imported/char_slot.png-c8e138878f0c3fdcf10def9d9c9e6742.s3tc.ctex"]
+source_file="res://modes/last_surivior/images/char_slot.png"
+dest_files=["res://.godot/imported/char_slot.png-8434044b075fb3186d54fadd7a1f4a74.s3tc.ctex"]
 
 [params]
 

@@ -1,0 +1,2 @@
+class_name CharCollider
+extends StaticBody3D

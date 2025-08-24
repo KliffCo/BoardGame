@@ -3,6 +3,8 @@ extends Resource
 
 @export var name: String
 @export var sprites: String
+@export var col_height: float = 0.3
+@export var col_radius: float = 0.12
 @export var health: int = 1
 @export_file("*.tres") var _action_files: Array[String] = []
 var _loaded = false
