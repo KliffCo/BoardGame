@@ -4,7 +4,6 @@ extends Selectable
 enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack, }
 
 const WALK_SPEED = 1.0
-static var NULL_CALLABLE := func(): pass
 
 var data: CharData
 var mesh: CharMesh
@@ -20,7 +19,7 @@ var _is_selected := false
 var _is_walking := false
 var _walk_index = 0
 var _walk_points: Array[Vector3]
-var _walk_callback: Callable = NULL_CALLABLE
+var _walk_callback: Callable = Null.CALLABLE
 
 func init(parent: Node3D, index: int, _data: CharData, _slot: RoomCharSlot) -> void:
 	self.data = _data
@@ -81,14 +80,10 @@ func get_selectables() -> Array[ActionSelectable]:
 		list.append_array(more)
 	return list
 
-func try_damage(damage: int, _attacker: Char) -> bool:
-	health -= damage
-	return true
-
 func invoke_action(action, selectable) -> void:
 	action.invoke(self, selectable)
 
-func walk_to(points: Array[Vector3], callback: Callable):
+func walk_to(points: Array[Vector3], callback: Callable) -> void:
 	_walk_callback.call()
 	_walk_callback = callback
 	_walk_points = points
@@ -100,6 +95,23 @@ func walk_to(points: Array[Vector3], callback: Callable):
 		anim.set_action(Action.Idle)
 		_walk_callback.call()
 
+func try_damage(damage: int, attacker: Char, callback: Callable) -> void:
+	damage(damage, attacker, callback)
+
+func damage(damage: int, _attacker: Char, callback: Callable) -> void:
+	anim.play_once(Char.Action.Hurt, func():
+		health -= damage
+		if is_alive:
+			anim.set_action(Char.Action.Idle);
+			callback.call(true)
+		else:
+			anim.play_once(Char.Action.Die, func():
+				anim.play_once(Char.Action.Dead, func():
+					callback.call(true)
+				)
+			)
+	)
+
 func _process(delta: float) -> void:
 	_process_color(delta)
 	if _is_walking:
@@ -107,5 +119,5 @@ func _process(delta: float) -> void:
 		if position == _walk_points[_walk_index]:
 			anim.set_action(Action.Idle)
 			_walk_callback.call()
-			_walk_callback = NULL_CALLABLE
+			_walk_callback = Null.CALLABLE
 			_is_walking = false

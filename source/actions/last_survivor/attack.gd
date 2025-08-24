@@ -28,6 +28,11 @@ func invoke(_chr: Char, _other: Selectable) -> void:
 	var target := _other as Char
 	if target:
 		GameMode.main.do_action(func(callback: Callable):
-			target.try_damage(1, _chr)
-			callback.call()
+			var sync = 2
+			_chr.anim.play_once(Char.Action.Attack, func():
+				_chr.anim.set_action(Char.Action.Idle)
+				target.try_damage(1, _chr, func(_did_hit: bool):
+					callback.call()
+				)
+			)
 		)
