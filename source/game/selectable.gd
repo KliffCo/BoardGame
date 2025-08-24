@@ -5,6 +5,10 @@ var _is_selectable: bool
 var _desired_color: Color
 var _current_color := Color.TRANSPARENT
 var _is_color_changing: bool = false
+#@onready var _collider = find_child("collider")
+
+func get_collider() -> PhysicsBody3D:
+	return null
 
 func unset_selectable() -> void:
 	_desired_color = Color(_current_color, 0.0)

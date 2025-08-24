@@ -84,6 +84,14 @@ func world_to_screen_pos(world_pos: Vector3) -> Vector2:
 
 func colliders_at_screen_pos(screen_pos: Vector2, mask: int = 0xffffffff) -> Array:
 	var direction = project_ray_normal(screen_pos)
-	var origin = position
-	var list = Colliders.get_ordered_ray_hits(get_world_3d().direct_space_state, origin, direction, 10, mask)
+	var list = Colliders.get_ordered_ray_hits(get_world_3d().direct_space_state, position, direction, 10, mask)
 	return list
+
+func colliders_at_screen_pos_in(screen_pos: Vector2, from_list: Array[PhysicsBody3D]) -> Array:
+	var direction = project_ray_normal(screen_pos)
+	var list = Colliders.get_ordered_ray_hits_in(get_world_3d().direct_space_state, position, direction, 10, from_list)
+	return list
+
+func collider_at_screen_pos_in(screen_pos: Vector2, from_list: Array[PhysicsBody3D]) -> Dictionary:
+	var direction = project_ray_normal(screen_pos)
+	return Colliders.get_ray_hit_in(get_world_3d().direct_space_state, position, direction, 10, from_list)

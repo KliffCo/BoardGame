@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bus27g4pd0smp"]
 
-[ext_resource type="Shader" uid="uid://1wont4fjghxk" path="res://materials/outline_shader.gdshader" id="1_prarl"]
+[ext_resource type="Shader" uid="uid://1wont4fjghxk" path="res://materials/char_outline.gdshader" id="1_prarl"]
 [ext_resource type="Texture2D" uid="uid://cy6xbl04epevh" path="res://rooms/models/NESW.png" id="2_867gf"]
 
 [resource]
@@ -9,5 +9,5 @@ shader = ExtResource("1_prarl")
 shader_parameter/outline_expand = 1.25
 shader_parameter/tex_albedo = ExtResource("2_867gf")
 shader_parameter/outline_color = Color(1, 1, 0, 1)
-shader_parameter/outline_size = 3.0
+shader_parameter/outline_size = 2.0
 shader_parameter/outer_glow = 2.5

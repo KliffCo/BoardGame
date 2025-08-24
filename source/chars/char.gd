@@ -15,15 +15,14 @@ var health: int = 1
 #var team: int
 #var items: []
 
-var _is_selected := false
 var _is_walking := false
 var _walk_index = 0
 var _walk_points: Array[Vector3]
 var _walk_callback: Callable = Null.CALLABLE
 
-func init(parent: Node3D, index: int, _data: CharData, _slot: RoomCharSlot) -> void:
+func init(parent: Node3D, index: int, _data: CharData, __slot: RoomCharSlot) -> void:
 	self.data = _data
-	self.slot = _slot
+	self.slot = __slot
 	name = "char_"+str(index)
 	mesh = find_child("mesh")
 	anim = find_child("anim")
@@ -67,6 +66,9 @@ var slot: RoomCharSlot:
 		if _slot:
 			_slot.character = self
 
+func get_collider() -> PhysicsBody3D:
+	return collider
+
 func _selectable_update() -> void:
 	mesh.set_outline(_current_color, _current_color.a * 0.5)
 	if not _is_color_changing:
@@ -96,9 +98,9 @@ func walk_to(points: Array[Vector3], callback: Callable) -> void:
 		_walk_callback.call()
 
 func try_damage(damage: int, attacker: Char, callback: Callable) -> void:
-	damage(damage, attacker, callback)
+	take_damage(damage, attacker, callback)
 
-func damage(damage: int, _attacker: Char, callback: Callable) -> void:
+func take_damage(damage: int, _attacker: Char, callback: Callable) -> void:
 	anim.play_once(Char.Action.Hurt, func():
 		health -= damage
 		if is_alive:

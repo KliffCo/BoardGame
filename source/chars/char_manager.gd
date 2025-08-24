@@ -19,7 +19,7 @@ func _ready() -> void:
 	_stand_material.set_shader_parameter("emmision", 0.0)
 	_outline_material = load(_outline_material_file) as ShaderMaterial
 	_outline_material.set_shader_parameter("tex_albedo", null)
-	_outline_material.set_shader_parameter("outline_size", 3.0)
+	#_outline_material.set_shader_parameter("outline_size", 2.0)
 
 func clear():
 	for chr in chars:

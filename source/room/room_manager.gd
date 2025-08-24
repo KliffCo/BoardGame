@@ -15,8 +15,8 @@ var radius: float
 func _ready() -> void:
 	main = self
 	_outline_material = load(_outline_material_file) as ShaderMaterial
-	#_outline_material.set_shader_parameter("tex_albedo", null)
-	#_outline_material.set_shader_parameter("outline_size", 3.0)
+	_outline_material.set_shader_parameter("tex_albedo", null)
+	#_outline_material.set_shader_parameter("outline_size", 2.0)
 
 func new_outline_material() -> ShaderMaterial:
 	return _outline_material.duplicate()

@@ -13,6 +13,7 @@ var _char_slot_holder: Node3D = null
 var _char_slots: Array[RoomCharSlot] = []
 var _ground_mesh: MeshInstance3D = null
 var _ground_mat: ShaderMaterial = null
+var _collider: StaticBody3D = null
 
 var char_slots: Array[RoomCharSlot]:
 	get: return _char_slots
@@ -125,14 +126,17 @@ func _init_ground_mesh() -> void:
 	_model.add_child(_ground_mesh)
 
 func add_colliders() -> void:
-	var body:= StaticBody3D.new()
-	body.name = "collider"
-	body.collision_layer = Colliders.ROOM_MASK
-	self.add_child(body)
+	_collider = StaticBody3D.new()
+	_collider.name = "collider"
+	_collider.collision_layer = Colliders.ROOM_MASK
+	self.add_child(_collider)
 	for y in range(_tile.size.y):
 		for x in range(_tile.size.x):
 			var box := CollisionShape3D.new()
 			box.name = "col_"+str(x)+"_"+str(y)
 			box.shape = BoxShape3D.new()
 			box.shape.size = Vector3(1.0, 0.05, 1.0)
-			body.add_child(box)
+			_collider.add_child(box)
+
+func get_collider() -> PhysicsBody3D:
+	return _collider

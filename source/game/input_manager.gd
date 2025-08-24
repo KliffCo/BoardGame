@@ -7,7 +7,9 @@ var _enabled = true
 var _is_panning:= false
 var _grip_position: Vector3
 var _selectables:Array[ActionSelectable] = []
+var _colliders:Array[PhysicsBody3D] = []
 var _is_dragging: = false
+var _proposed_selectable: Selectable = null
 
 func _ready() -> void:
 	main = self
@@ -61,14 +63,26 @@ func mouse_input(e: InputEventMouse):
 			var world_pos = CameraManager.main.screen_to_world_pos(e.position)
 			if world_pos is Vector3:
 				CameraManager.main.set_desired_pan(CameraManager.main.get_actual_pan()-world_pos+_grip_position)
+		if _is_dragging:
+			var hit := CameraManager.main.collider_at_screen_pos_in(e.position, _colliders)
+			var sel: Selectable = null
+			if hit:
+				#var body: PhysicsBody3D = hit["collider"]
+				var index = _colliders.find(hit.collider as PhysicsBody3D)
+				if index != -1:
+					sel = _selectables[index].selectable
+			propose_selectable(sel)
 
 func set_selectables(list: Array[ActionSelectable]) -> void:
 	for sel:ActionSelectable in _selectables:
 		if sel.selectable != CharManager.main.selected:
 			sel.selectable.unset_selectable()
 	_selectables = list
+	_colliders.clear()
+	_proposed_selectable = null
 	for sel:ActionSelectable in _selectables:
 		sel.selectable.set_selectable_color(sel.color)
+		_colliders.append(sel.selectable.get_collider())
 
 func find_selectable(sel) -> ActionSelectable:
 	for act in _selectables:
@@ -77,8 +91,14 @@ func find_selectable(sel) -> ActionSelectable:
 	return null
 
 func propose_selectable(b: Selectable):
+	if _proposed_selectable == b:
+		return
+	_proposed_selectable = b
 	for sel:ActionSelectable in _selectables:
-		sel.selectable.set_selectable_color(Color(sel.color, 0.5))
+		if _proposed_selectable && sel.selectable != _proposed_selectable:
+			sel.selectable.set_selectable_color(Color(sel.color, 0.1))
+		else:
+			sel.selectable.set_selectable_color(sel.color)
 
 func pause() -> void:
 	_enabled = false
