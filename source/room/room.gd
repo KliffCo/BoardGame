@@ -1,8 +1,6 @@
 class_name Room
 extends Selectable
 
-#static var _char_slot_prefab = preload("res://rooms/components/room_char_slot.tscn")
-
 var _tile: RoomTile
 var grid_list: Array[Vector2i] = []
 
@@ -16,16 +14,20 @@ var _char_slots: Array[RoomCharSlot] = []
 var _ground_mesh: MeshInstance3D = null
 var _ground_mat: ShaderMaterial = null
 
+var char_slots: Array[RoomCharSlot]:
+	get: return _char_slots
+
 var grid_pos: Vector2i:
 	get: return grid_list[0]
 
 func _init(index:int, tile: RoomTile, pos: Vector2i):
-	name = "Room"+str(index)
+	name = "room_"+str(index)
 	_tile = tile
 	grid_list.append(pos)
 	position = Vector3i(pos.x, 0, pos.y)
 	add_child(tile)
 	set_angle(0)
+	add_colliders()
 
 func set_angle(angle: int) -> void:
 	exits = []
@@ -48,7 +50,7 @@ func _init_char_slots() -> void:
 	if not GameMode.main.has_char_slots():
 		return
 	_char_slot_holder = Node3D.new()
-	_char_slot_holder.name = "Char Slots"
+	_char_slot_holder.name = "char_slots"
 	_char_slot_holder.position = Vector3(0, MeshGen.SPACING*2, 0)
 	add_child(_char_slot_holder)
 	for c in _model.get_children(false):
@@ -113,3 +115,16 @@ func _init_ground_mesh() -> void:
 	_ground_mat.set_shader_parameter("tex_albedo", src_mat.albedo_texture)
 	_ground_mesh.material_override = _ground_mat
 	_model.add_child(_ground_mesh)
+
+func add_colliders() -> void:
+	var body:= StaticBody3D.new()
+	body.name = "collider"
+	body.collision_layer = Colliders.ROOM_MASK
+	self.add_child(body)
+	for y in range(_tile.size.y):
+		for x in range(_tile.size.x):
+			var box := CollisionShape3D.new()
+			box.name = "col_"+str(x)+"_"+str(y)
+			box.shape = BoxShape3D.new()
+			box.shape.size = Vector3(1.0, 0.05, 1.0)
+			body.add_child(box)

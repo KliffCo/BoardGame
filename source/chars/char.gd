@@ -9,10 +9,14 @@ var anim: CharAnimator
 var collider: PhysicsBody3D
 var _slot: RoomCharSlot
 
+var health: int = 1
+#var team: int
+#var items: []
+
 func init(parent: Node3D, index: int, __data: CharData, __slot: RoomCharSlot) -> void:
 	self.data = __data
 	self.slot = __slot
-	name = "Char"+str(index)
+	name = "char_"+str(index)
 	mesh = find_child("mesh")
 	anim = find_child("anim")
 	collider = find_child("collider")
@@ -22,6 +26,10 @@ func init(parent: Node3D, index: int, __data: CharData, __slot: RoomCharSlot) ->
 	position = _slot.global_position
 	#scale = Vector3(_scale, _scale, _scale)
 	anim.load(data.sprites)
+	health = data.health
+
+var is_alive: bool:
+	get: return health > 0
 
 var room : Room:
 	get: return _slot.room
@@ -58,3 +66,7 @@ func get_selectables() -> Array[ActionSelectable]:
 		var more = action.get_selectables(self)
 		list.append_array(more)
 	return list
+
+func try_damage(damage: int) -> bool:
+	health -= damage
+	return true

@@ -1,4 +1,4 @@
-class_name GameActionWalk
+class_name LSActionWalk
 extends GameAction
 
 @export var min:= 1
@@ -9,7 +9,7 @@ func get_color() -> Color:
 
 func get_selectables(chr: Char) -> Array[ActionSelectable]:
 	var list : Array[ActionSelectable] = []
-	#var chr = CharManager.Singleton.SelectedCharacter
+	#var chr = CharManager.main.selected
 	var rooms := RoomManager.main.rooms
 	var start = rooms.find(chr.room)
 	var distances := RoomManager.main.get_distance_array(start)

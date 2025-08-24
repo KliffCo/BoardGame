@@ -103,11 +103,11 @@ func get_distance_array_from_room(start: Room) -> Array[int]:
 	return get_distance_array(rooms.find(start))
 
 func get_distance_array(start: int) -> PackedInt32Array:
-	var count = rooms.size()
+	var _count = rooms.size()
 	var distances := PackedInt32Array()
-	distances.resize(count)
-	for i in range(count):
-		distances[i] = count
+	distances.resize(_count)
+	for i in range(_count):
+		distances[i] = _count
 	distances[start] = 0
 	var todo :Array[int] = []
 	todo.append(start)
