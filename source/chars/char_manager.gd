@@ -48,7 +48,8 @@ func new_outline_material() -> ShaderMaterial:
 
 func select(chr: Char) -> void:
 	if selected:
-		selected.set_selected(false)
+		selected.is_selectable = false
 	selected = chr
 	if selected:
-		selected.set_selected(true)
+		selected.is_selectable = true
+		selected.set_selectable_color(Colors.CHAR_SELECTED)

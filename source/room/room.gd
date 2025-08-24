@@ -93,6 +93,17 @@ func get_empty_slots() -> Array[RoomCharSlot]:
 			slots.append(s)
 	return slots
 
+func get_closest_slot(global_pos: Vector3) -> RoomCharSlot:
+	var slots:= get_empty_slots()
+	var best_slot = null
+	var best_dist = 0
+	for slot in slots:
+		var dist = (slot.global_position - global_pos).length_squared()
+		if best_slot == null || dist < best_dist:
+			best_slot = slot
+			best_dist = dist
+	return best_slot
+
 func _update_selectable() -> void:
 	if _is_selectable:
 		if not _ground_mesh:

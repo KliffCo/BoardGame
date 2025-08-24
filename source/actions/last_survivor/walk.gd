@@ -20,3 +20,14 @@ func get_selectables(chr: Char) -> Array[ActionSelectable]:
 			var action_sel := ActionSelectable.new(room, self, Colors.ROOM_WALKABLE)
 			list.append(action_sel);
 	return list
+
+func invoke(_chr: Char, _other: Selectable) -> void:
+	var room := _other as Room
+	var slot := room.get_closest_slot(_chr.slot.global_position)
+	if slot:
+		GameMode.main.do_action(func(callback: Callable):
+			_chr.slot = slot
+			var points: Array[Vector3] = []
+			points.append(slot.global_position)
+			_chr.walk_to(points, callback)
+		)

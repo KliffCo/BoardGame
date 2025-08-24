@@ -1,7 +1,7 @@
 class_name CharAnimator
 extends Node
 
-const FPS := 10
+const FPS := 15
 const FRAME_TIME := 1.0/FPS
 
 var _frames: CharFrames = null
@@ -19,7 +19,7 @@ func load(_name: String):
 	set_frame(_frame)
 
 func set_action(action: Char.Action):
-	if char == null:
+	if _char == null:
 		_action = action
 		return
 	if _action != action:
@@ -37,7 +37,7 @@ func set_frame(frame: int):
 	var tex = _frames.get_texture(_action, _frame)
 	_char.mesh.set_stand_texture(tex)
 
-func process(delta: float) -> void:
+func _process(delta: float) -> void:
 	_next_frame -= delta
 	if _next_frame <= 0:
 		set_frame(_frame + 1)

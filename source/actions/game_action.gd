@@ -14,3 +14,6 @@ func get_selectables(_chr: Char) -> Array[ActionSelectable]:
 
 #func _can_select(sel: Selectable) -> bool:
 	#return false
+
+func invoke(_chr: Char, _other: Selectable) -> void:
+	pass

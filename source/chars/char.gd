@@ -3,6 +3,9 @@ extends Selectable
 
 enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack, }
 
+const WALK_SPEED = 1.0
+static var NULL_CALLABLE := func(): pass
+
 var data: CharData
 var mesh: CharMesh
 var anim: CharAnimator
@@ -12,6 +15,12 @@ var _slot: RoomCharSlot
 var health: int = 1
 #var team: int
 #var items: []
+
+var _is_selected := false
+var _is_walking := false
+var _walk_index = 0
+var _walk_points: Array[Vector3]
+var _walk_callback: Callable = NULL_CALLABLE
 
 func init(parent: Node3D, index: int, __data: CharData, __slot: RoomCharSlot) -> void:
 	self.data = __data
@@ -44,21 +53,19 @@ var slot: RoomCharSlot:
 		if _slot:
 			_slot.character = self
 
-func _update_selectable() -> void:
-	if _is_selected:
-		mesh.set_outline(Colors.CHAR_SELECTED)
-		return
-	if _is_selectable:
-		mesh.set_outline(_selectable_color)
-		return
-	mesh.unset_outline()
-
-#func _process(delta: float) -> void:
-	#anim.process(delta)
-
-#func unset_selected() -> void:
-	#_is_selectable = false
-	#_update_outline()
+func _selectable_update() -> void:
+	if _is_color_changing:
+		mesh.set_outline(_current_color)
+	else:
+		if not _is_selectable:
+			mesh.unset_outline()
+	#if _is_selected:
+		#mesh.set_outline(Color(Colors.CHAR_SELECTED, _alpha))
+		#return
+	#if _is_selectable:
+		#mesh.set_outline(Color(_selectable_color, _alpha))
+		#return
+	#mesh.unset_outline()
 
 func get_selectables() -> Array[ActionSelectable]:
 	var list: Array[ActionSelectable] = []
@@ -67,6 +74,31 @@ func get_selectables() -> Array[ActionSelectable]:
 		list.append_array(more)
 	return list
 
-func try_damage(damage: int) -> bool:
+func try_damage(damage: int, _attacker: Char) -> bool:
 	health -= damage
 	return true
+
+func invoke_action(action, selectable) -> void:
+	action.invoke(self, selectable)
+
+func walk_to(points: Array[Vector3], callback: Callable):
+	_walk_callback.call()
+	_walk_callback = callback
+	_walk_points = points
+	_walk_index = 0
+	_is_walking = _walk_points.size() > 0
+	if _is_walking:
+		anim.set_action(Action.Walk)
+	else:
+		anim.set_action(Action.Idle)
+		_walk_callback.call()
+
+func _process(delta: float) -> void:
+	_process_color(delta)
+	if _is_walking:
+		position = position.move_toward(_walk_points[_walk_index], delta * WALK_SPEED)
+		if position == _walk_points[_walk_index]:
+			anim.set_action(Action.Idle)
+			_walk_callback.call()
+			_walk_callback = NULL_CALLABLE
+			_is_walking = false

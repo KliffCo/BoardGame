@@ -23,3 +23,9 @@ func get_selectables(chr: Char) -> Array[ActionSelectable]:
 					var action_sel := ActionSelectable.new(slot.character, self, Colors.CHAR_ATTACKABLE_ENEMY)
 					list.append(action_sel);
 	return list
+
+func invoke(_chr: Char, _other: Selectable) -> void:
+	var target := _other as Char
+	if target:
+		GameMode.main.action_start()
+		target.try_damage(1, _chr)

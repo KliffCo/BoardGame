@@ -3,14 +3,18 @@ extends Node3D
 
 static var main: InputManager
 
+var _enabled = true
 var _is_panning:= false
 var _grip_position: Vector3
 var _selectables:Array[ActionSelectable] = []
+var _is_dragging: = false
 
 func _ready() -> void:
 	main = self
 
 func _input(e: InputEvent) -> void:
+	if not _enabled:
+		return
 	if e is InputEventMouse:
 		mouse_input(e)
 
@@ -38,17 +42,46 @@ func mouse_input(e: InputEventMouse):
 					if chr && GameMode.main.on_select_char(chr):
 						selected = true
 						break
-				if not selected:
+				if selected:
+					_is_dragging = true
+				else:
 					GameMode.main.on_select_char(null)
+			else:
+				if _is_dragging && CharManager.main.selected:
+					_is_dragging = false
+					var hits: Array = CameraManager.main.colliders_at_screen_pos(e.position)
+					for hit in hits:
+						var col = hit.collider as StaticBody3D
+						var act = find_selectable(col.get_parent_node_3d() as Selectable)
+						if act:
+							CharManager.main.selected.invoke_action(act.action, act.selectable)
+							break
 	elif e is InputEventMouseMotion:
 		if _is_panning:
 			var world_pos = CameraManager.main.screen_to_world_pos(e.position)
 			if world_pos is Vector3:
 				CameraManager.main.set_desired_pan(CameraManager.main.get_actual_pan()-world_pos+_grip_position)
 
-func set_selectables(list: Array[ActionSelectable]):
+func set_selectables(list: Array[ActionSelectable]) -> void:
 	for sel:ActionSelectable in _selectables:
-		sel.selectable.set_selectable(null)
+		sel.selectable.is_selectable = false
 	_selectables = list
 	for sel:ActionSelectable in _selectables:
-		sel.selectable.set_selectable(sel.color)
+		sel.selectable.is_selectable = true
+		sel.selectable.set_selectable_color(sel.color)
+
+func find_selectable(sel) -> ActionSelectable:
+	for act in _selectables:
+		if act.selectable == sel:
+			return act
+	return null
+
+func propose_selectable(b: Selectable):
+	for sel:ActionSelectable in _selectables:
+		sel.selectable.set_selectable_color(Color(sel.color, 0.5))
+
+func pause() -> void:
+	_enabled = false
+
+func resume() -> void:
+	_enabled = true
