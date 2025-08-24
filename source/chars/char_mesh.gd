@@ -63,9 +63,9 @@ func set_stand_texture(tex: Texture2D):
 func set_shadow_texture(tex: Texture2D):
 	_shadow_mat.albedo_texture = tex
 
-func set_outline(color: Color):
+func set_outline(color: Color, glow: float):
 	_outline_mesh.visible = true
-	_stand_mat.set_shader_parameter("emission", 0.5)
+	_stand_mat.set_shader_parameter("emission", glow)
 	_outline_mat.set_shader_parameter("outline_color", color)
 
 func unset_outline():

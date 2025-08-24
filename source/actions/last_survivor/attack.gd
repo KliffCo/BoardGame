@@ -27,5 +27,7 @@ func get_selectables(chr: Char) -> Array[ActionSelectable]:
 func invoke(_chr: Char, _other: Selectable) -> void:
 	var target := _other as Char
 	if target:
-		GameMode.main.action_start()
-		target.try_damage(1, _chr)
+		GameMode.main.do_action(func(callback: Callable):
+			target.try_damage(1, _chr)
+			callback.call()
+		)

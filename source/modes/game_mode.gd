@@ -40,7 +40,6 @@ func on_select_char(chr: Char):
 func do_action(action: Callable):
 	InputManager.main.pause()
 	action.call(func():
-		pass
 		InputManager.main.resume()
 		if CharManager.main.selected:
 			on_select_char(CharManager.main.selected)

@@ -108,7 +108,7 @@ func _update_selectable() -> void:
 	if _is_selectable:
 		if not _ground_mesh:
 			_init_ground_mesh()
-		_ground_mat.set_shader_parameter("outline_color", _selectable_color)
+		_ground_mat.set_shader_parameter("outline_color", _current_color)
 		_ground_mesh.visible = true
 	else:
 		if _ground_mesh:

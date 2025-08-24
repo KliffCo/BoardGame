@@ -64,10 +64,10 @@ func mouse_input(e: InputEventMouse):
 
 func set_selectables(list: Array[ActionSelectable]) -> void:
 	for sel:ActionSelectable in _selectables:
-		sel.selectable.is_selectable = false
+		if sel.selectable != CharManager.main.selected:
+			sel.selectable.unset_selectable()
 	_selectables = list
 	for sel:ActionSelectable in _selectables:
-		sel.selectable.is_selectable = true
 		sel.selectable.set_selectable_color(sel.color)
 
 func find_selectable(sel) -> ActionSelectable:

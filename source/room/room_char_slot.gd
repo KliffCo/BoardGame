@@ -57,7 +57,7 @@ var character: Char:
 
 func _update_selectable() -> void:
 	if _is_selectable:
-		_mat.albedo_color = _selectable_color
+		_mat.albedo_color = _desired_color
 	elif character:
 		_mat.albedo_color = Color(Color.WHITE, 0.25)
 	else:

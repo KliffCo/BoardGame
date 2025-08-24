@@ -55,17 +55,10 @@ var slot: RoomCharSlot:
 
 func _selectable_update() -> void:
 	if _is_color_changing:
-		mesh.set_outline(_current_color)
+		mesh.set_outline(_current_color, _current_color.a * 0.5)
 	else:
 		if not _is_selectable:
 			mesh.unset_outline()
-	#if _is_selected:
-		#mesh.set_outline(Color(Colors.CHAR_SELECTED, _alpha))
-		#return
-	#if _is_selectable:
-		#mesh.set_outline(Color(_selectable_color, _alpha))
-		#return
-	#mesh.unset_outline()
 
 func get_selectables() -> Array[ActionSelectable]:
 	var list: Array[ActionSelectable] = []
