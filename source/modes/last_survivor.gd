@@ -20,11 +20,6 @@ func map_loaded():
 			var data: CharData = load(char_set.get_random(rng))
 			char_man.new_char(data, empty_slots[0])
 
-func on_select_char(chr: Char):
+func try_select_char(chr: Char):
 	CharManager.main.select(chr)
-	if chr:
-		var selectables := chr.get_selectables()
-		InputManager.main.set_selectables(selectables)
-	else:
-		InputManager.main.set_selectables([])
 	return true

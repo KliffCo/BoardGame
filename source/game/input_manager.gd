@@ -41,13 +41,13 @@ func mouse_input(e: InputEventMouse):
 				for hit in hits:
 					var col = hit.collider as StaticBody3D
 					var chr = col.get_parent_node_3d() as Char
-					if chr && GameMode.main.on_select_char(chr):
+					if chr && GameMode.main.try_select_char(chr):
 						selected = true
 						break
 				if selected:
 					_is_dragging = true
 				else:
-					GameMode.main.on_select_char(null)
+					GameMode.main.try_select_char(null)
 			else:
 				if _is_dragging && CharManager.main.selected:
 					_is_dragging = false
@@ -82,7 +82,9 @@ func set_selectables(list: Array[ActionSelectable]) -> void:
 	_proposed_selectable = null
 	for sel:ActionSelectable in _selectables:
 		sel.selectable.set_selectable_color(sel.color)
-		_colliders.append(sel.selectable.get_collider())
+		var col:= sel.selectable.get_collider()
+		if _colliders.find(col) != -1:
+			_colliders.append(col)
 
 func find_selectable(sel) -> ActionSelectable:
 	for act in _selectables:

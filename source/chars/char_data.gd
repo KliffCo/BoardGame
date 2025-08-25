@@ -13,6 +13,7 @@ var _actions : Array[GameAction] = []
 var actions: Array[GameAction]:
 	get:
 		if not _loaded:
+			_loaded = true
 			for file in _action_files:
 				_actions.append(load(file))
 		return _actions

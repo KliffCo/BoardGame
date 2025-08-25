@@ -30,17 +30,29 @@ func load_map():
 func map_loaded():
 	pass
 
-#func can_select_char(chr: Char):
-	#return true
-
-func on_select_char(chr: Char):
+func try_select_char(chr: Char):
 	CharManager.main.select(chr)
 	return true
+
+func char_selected():
+	var chr := CharManager.main.selected
+	if chr:
+		var selectables := chr.get_selectables()
+		InputManager.main.set_selectables(selectables)
+	else:
+		InputManager.main.set_selectables([])
 
 func do_action(action: Callable):
 	InputManager.main.pause()
 	action.call(func():
 		InputManager.main.resume()
 		if CharManager.main.selected:
-			on_select_char(CharManager.main.selected)
+			CharManager.main.select(CharManager.main.selected)
+			action_finished()
 	)
+
+func action_finished():
+	turn_finished()
+
+func turn_finished():
+	pass
