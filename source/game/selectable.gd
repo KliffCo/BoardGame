@@ -1,26 +1,58 @@
 class_name Selectable
 extends Node3D
 
-var _is_selectable: bool
-var _desired_color: Color
-var _current_color := Color.TRANSPARENT
+var _is_outlined: bool = false
+var _is_filled: bool = false
+var _desired_outline:= Color.TRANSPARENT
+var _current_outline:= Color.TRANSPARENT
+var _desired_fill:= Color.TRANSPARENT
+var _current_fill:= Color.TRANSPARENT
 var _is_color_changing: bool = false
-#@onready var _collider = find_child("collider")
+var _collider: PhysicsBody3D = null
+var _proxy: Selectable = null
 
-func get_collider() -> PhysicsBody3D:
-	return null
+var collider: PhysicsBody3D:
+	get: return _proxy.collider if _proxy else _collider
 
-func unset_selectable() -> void:
-	_desired_color = Color(_current_color, 0.0)
-	_is_selectable = false
-	_is_color_changing = true
+var is_outlined: bool:
+	get: return _proxy.is_outlined if _proxy else _is_outlined
+	set(value):
+		if _proxy:
+			_proxy.is_outlined = value
+		else:
+			_is_outlined = value
+			_is_color_changing = true
+			if not _is_outlined:
+				_desired_outline = Color(_current_outline, 0.0)
 
-func set_selectable_color(color: Color) -> void:
-	_desired_color = color
-	if _is_selectable == false && not _is_color_changing:
-		_current_color = Color(_desired_color, _current_color.a)
-	_is_selectable = true
-	_is_color_changing = true
+var is_filled: bool:
+	get: return _proxy.is_filled if _proxy else _is_filled
+	set(value):
+		if _proxy:
+			_proxy.is_filled = value
+		else:
+			_is_filled = value
+			_is_color_changing = true
+
+var outline_color: Color:
+	set(value):
+		if _proxy:
+			_proxy.outline_color = value
+		else:
+			_desired_outline = value
+			if _is_outlined == false && not _is_color_changing:
+				_current_outline = Color(_desired_outline, _current_outline.a)
+			_is_color_changing = true
+
+var fill_color: Color:
+	set(value):
+		if _proxy:
+			_proxy.fill_color = value
+		else:
+			_desired_fill = value
+			if _is_outlined == false && not _is_color_changing:
+				_current_fill = Color(_desired_fill, _current_fill.a)
+			_is_color_changing = true
 
 func _process(delta: float) -> void:
 	_process_color(delta)
@@ -28,11 +60,14 @@ func _process(delta: float) -> void:
 func _process_color(delta: float) -> void:
 	if not _is_color_changing:
 		return
-	_current_color = _current_color.lerp(_desired_color, delta * 10.0)
-	var color_diff := Vector4(_current_color.r-_desired_color.r, _current_color.g-_desired_color.g, _current_color.b-_desired_color.b, _current_color.a-_desired_color.a)
-	if(color_diff.length_squared() < 0.001):
+	_current_outline = _current_outline.lerp(_desired_outline, delta * 10.0)
+	var outline_diff := Vector4(_current_outline.r-_desired_outline.r, _current_outline.g-_desired_outline.g, _current_outline.b-_desired_outline.b, _current_outline.a-_desired_outline.a)
+	_current_fill = _current_fill.lerp(_desired_fill, delta * 10.0)
+	var fill_diff := Vector4(_current_fill.r-_desired_fill.r, _current_fill.g-_desired_fill.g, _current_fill.b-_desired_fill.b, _current_fill.a-_desired_fill.a)
+	if(outline_diff.length_squared() < 0.001 && fill_diff.length_squared() < 0.001):
 		_is_color_changing = false
-		_current_color = _desired_color
+		_current_outline = _desired_outline
+		_current_fill = _desired_fill
 	_selectable_update()
 
 func _selectable_update() -> void:

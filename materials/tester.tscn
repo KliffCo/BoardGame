@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://b6rf07cwojqns"]
 
 [ext_resource type="Texture2D" uid="uid://cy6xbl04epevh" path="res://rooms/models/NESW.png" id="1_2l4bj"]
-[ext_resource type="Material" uid="uid://ctxu4ynasu0dm" path="res://materials/ground.tres" id="1_28yap"]
+[ext_resource type="Material" uid="uid://dm5niw7dumxpo" path="res://materials/slot.tres" id="2_2l4bj"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_2l4bj"]
 
@@ -18,4 +18,4 @@ surface_material_override/0 = SubResource("StandardMaterial3D_s61pa")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_2l4bj")
-surface_material_override/0 = ExtResource("1_28yap")
+surface_material_override/0 = ExtResource("2_2l4bj")

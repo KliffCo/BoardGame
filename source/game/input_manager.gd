@@ -76,13 +76,14 @@ func mouse_input(e: InputEventMouse):
 func set_selectables(list: Array[ActionSelectable]) -> void:
 	for sel:ActionSelectable in _selectables:
 		if sel.selectable != CharManager.main.selected:
-			sel.selectable.unset_selectable()
+			sel.selectable.is_outlined = false
 	_selectables = list
 	_colliders.clear()
 	_proposed_selectable = null
 	for sel:ActionSelectable in _selectables:
-		sel.selectable.set_selectable_color(sel.color)
-		var col:= sel.selectable.get_collider()
+		sel.selectable.is_outlined = true
+		sel.selectable.outline_color = sel.color
+		var col:= sel.selectable.collider
 		if _colliders.find(col) != -1:
 			_colliders.append(col)
 

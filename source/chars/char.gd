@@ -1,14 +1,13 @@
 class_name Char
 extends Selectable
 
-enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack, }
+enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack }
 
 const WALK_SPEED = 1.0
 
 var data: CharData
 var mesh: CharMesh
 var anim: CharAnimator
-var collider: PhysicsBody3D
 var _slot: RoomCharSlot
 
 var health: int = 1
@@ -21,9 +20,10 @@ var _walk_points: Array[Vector3]
 var _walk_callback: Callable = Null.CALLABLE
 
 func init(parent: Node3D, index: int, _data: CharData, __slot: RoomCharSlot) -> void:
-	self.data = _data
-	self.slot = __slot
 	name = "char_"+str(index)
+	data = _data
+	slot = __slot
+	_proxy = slot
 	mesh = find_child("mesh")
 	anim = find_child("anim")
 	init_collider()
@@ -35,20 +35,20 @@ func init(parent: Node3D, index: int, _data: CharData, __slot: RoomCharSlot) -> 
 	health = data.health
 
 func init_collider() -> void:
-	collider = StaticBody3D.new()
-	collider.name = "collider"
-	collider.collision_layer = Colliders.CHAR_MASK
+	_collider = StaticBody3D.new()
+	_collider.name = "collider"
+	_collider.collision_layer = Colliders.CHAR_MASK
 	var shape := CollisionShape3D.new()
 	shape.name = "cylinder"
 	var cylinder = CylinderShape3D.new()
 	cylinder.height = data.col_height
 	cylinder.radius = data.col_radius
 	shape.shape = cylinder
-	collider.add_child(shape)
-	add_child(collider)
+	_collider.add_child(shape)
+	add_child(_collider)
 	var angle = deg_to_rad(mesh._angle)
-	collider.rotation = Vector3(angle, 0, 0)
-	collider.position = Vector3(0, data.col_height * 0.5 * cos(angle), data.col_height * 0.5 * sin(angle))
+	_collider.rotation = Vector3(angle, 0, 0)
+	_collider.position = Vector3(0, data.col_height * 0.5 * cos(angle), data.col_height * 0.5 * sin(angle))
 
 var is_alive: bool:
 	get: return health > 0
@@ -66,13 +66,24 @@ var slot: RoomCharSlot:
 		if _slot:
 			_slot.character = self
 
-func get_collider() -> PhysicsBody3D:
-	return collider
+var is_outlined: bool:
+	get: return _slot.is_outlined
+	set(value): _slot.is_outlined = value
+
+var is_filled: bool:
+	get: return slot.is_filled
+	set(value): slot.is_filled = value
+
+var outline_color: Color:
+	set(value): slot.outline_color = value
+
+var fill_color: Color:
+	set(value): slot.fill_color = value
 
 func _selectable_update() -> void:
-	mesh.set_outline(_current_color, _current_color.a * 0.5)
+	mesh.set_outline(_current_outline, _current_outline.a * 0.5)
 	if not _is_color_changing:
-		if not _is_selectable:
+		if not _is_outlined:
 			mesh.unset_outline()
 
 func get_selectables() -> Array[ActionSelectable]:

@@ -13,7 +13,6 @@ var _char_slot_holder: Node3D = null
 var _char_slots: Array[RoomCharSlot] = []
 var _ground_mesh: MeshInstance3D = null
 var _ground_mat: ShaderMaterial = null
-var _collider: StaticBody3D = null
 
 var char_slots: Array[RoomCharSlot]:
 	get: return _char_slots
@@ -109,8 +108,8 @@ func _selectable_update() -> void:
 	if not _ground_mesh and _is_color_changing:
 		_init_ground_mesh()
 	if _ground_mesh:
-		_ground_mesh.visible = _is_selectable || _is_color_changing
-		_ground_mat.set_shader_parameter("outline_color", _current_color)
+		_ground_mesh.visible = _is_outlined || _is_color_changing
+		_ground_mat.set_shader_parameter("outline_color", _current_outline)
 
 func _init_ground_mesh() -> void:
 	var ground = _model.find_child("Ground") as MeshInstance3D
@@ -137,6 +136,3 @@ func add_colliders() -> void:
 			box.shape = BoxShape3D.new()
 			box.shape.size = Vector3(1.0, 0.05, 1.0)
 			_collider.add_child(box)
-
-func get_collider() -> PhysicsBody3D:
-	return _collider

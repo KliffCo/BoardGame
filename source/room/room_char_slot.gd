@@ -2,11 +2,9 @@ class_name RoomCharSlot
 extends Selectable
 
 @export var _size = 0.25
-@export_file("*.png") var _file
+@export_file("*.png") var _material_file: String
 
-var _mat: StandardMaterial3D
-#var _color: Color = Color.WHITE
-#var _changing: bool = false
+var _mat: ShaderMaterial
 var _char: Char = null
 
 func _ready() -> void:
@@ -14,14 +12,10 @@ func _ready() -> void:
 	scale = Vector3(size, size, size)
 	var mesh: MeshInstance3D = find_child("mesh")
 	var collider: StaticBody3D = find_child("collider")
-	var _texture : Texture2D = load(_file)
 	mesh.mesh = MeshGen.shared_plane()
-	_mat = StandardMaterial3D.new()
-	_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	_mat.albedo_texture = _texture
+	_mat = load(_material_file)
 	mesh.material_override = _mat
 	collider.collision_layer = Colliders.SLOT_MASK
-	#set_color(Color.RED)
 
 var room: Room:
 	get:
@@ -39,6 +33,7 @@ var character: Char:
 	get: return _char
 	set(value):
 		_char = value
+		_update_selectable()
 
 #func set_color(color: Color, instant: bool = false):
 	#_color = color
@@ -56,9 +51,9 @@ var character: Char:
 			#_changing = false
 
 func _update_selectable() -> void:
-	if _is_selectable:
-		_mat.albedo_color = _desired_color
-	elif character:
-		_mat.albedo_color = Color(Color.WHITE, 0.25)
+	if _char:
+		_mat.set_shader_parameter("outline_color", Colors.SLOT_FULL)
+	elif _is_outlined:
+		_mat.set_shader_parameter("outline_color", _current_outline)
 	else:
-		_mat.albedo_color = Color.WHITE
+		_mat.set_shader_parameter("outline_color", Colors.SLOT_EMPTY)
