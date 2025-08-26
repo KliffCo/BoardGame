@@ -47,10 +47,8 @@ func new_outline_material() -> ShaderMaterial:
 
 func select(chr: Char) -> void:
 	if selected:
-		selected.is_outlined = false
+		selected.set_selected(false)
 	selected = chr
 	if selected:
-		selected.is_outlined = true
-		selected.outline_color = Colors.SLOT_SELECTED
-		#selected.outline_color = Colors.CHAR_SELECTED
+		selected.set_selected(true)
 	GameMode.main.char_selected()

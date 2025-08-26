@@ -1,8 +1,9 @@
 shader_type spatial;
-render_mode cull_disabled, depth_draw_opaque;
+//render_mode cull_disabled, depth_draw_opaque;
 
 uniform sampler2D tex_albedo : source_color, repeat_disable;
 uniform vec4 outline_color : source_color = vec4(1.0, 1.0, 0.0, 1.0);
+uniform float emission : hint_range(0.0, 5.0) = 2.5;
 
 uniform bool animated = false;
 uniform float dir_speed = 0.5;   // how fast the direction rotates
@@ -29,4 +30,5 @@ void fragment() {
 
     ALBEDO = tex_color.rgb * outline_color.rgb;
     ALPHA = tex_color.a * outline_color.a * alpha;
+	EMISSION = outline_color.rgb * emission;
 }

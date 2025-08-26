@@ -8,6 +8,7 @@ render_priority = 0
 shader = ExtResource("1_bo1gv")
 shader_parameter/tex_albedo = ExtResource("2_3tbx4")
 shader_parameter/outline_color = Color(1, 1, 0, 1)
+shader_parameter/emission = 2.5
 shader_parameter/animated = true
 shader_parameter/dir_speed = 0.5
 shader_parameter/speed = 5.0

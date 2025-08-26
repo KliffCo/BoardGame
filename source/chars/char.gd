@@ -23,7 +23,6 @@ func init(parent: Node3D, index: int, _data: CharData, __slot: RoomCharSlot) -> 
 	name = "char_"+str(index)
 	data = _data
 	slot = __slot
-	_proxy = slot
 	mesh = find_child("mesh")
 	anim = find_child("anim")
 	init_collider()
@@ -62,29 +61,40 @@ var slot: RoomCharSlot:
 	set(value):
 		if _slot:
 			_slot.character = null
+			_slot.reset_color()
 		_slot = value
 		if _slot:
 			_slot.character = self
+			if self == CharManager.main.selected:
+				set_selected(true)
 
-var is_outlined: bool:
-	get: return _slot.is_outlined
-	set(value): _slot.is_outlined = value
+func set_selected(value: bool):
+	if value:
+		_slot.is_outlined = true
+		_slot.outline_color = Colors.SLOT_SELECTED
+	else:
+		_slot.is_outlined = false
 
-var is_filled: bool:
-	get: return slot.is_filled
-	set(value): slot.is_filled = value
+func set_selectable(value: bool, color: Color):
+	_slot.is_outlined = value
+	if value:
+		_slot.outline_color = color
 
-var outline_color: Color:
-	set(value): slot.outline_color = value
+func set_is_outlined(value: bool): _slot.set_is_outlined(value)
+func set_is_filled(value: bool): _slot.set_is_filled(value)
+func set_outline_color(value: Color): _slot.set_outline_color(value)
+func set_fill_color(value: Color) -> void: _slot.set_fill_color(value)
 
-var fill_color: Color:
-	set(value): slot.fill_color = value
-
-func _selectable_update() -> void:
-	mesh.set_outline(_current_outline, _current_outline.a * 0.5)
-	if not _is_color_changing:
-		if not _is_outlined:
-			mesh.unset_outline()
+#func _selectable_update() -> void:
+	##slot.copy_state(copy_state)
+	#pass
+	#_slot.is_outlined = _is_outlined
+	#_slot.set_outline_color(_current_outline)
+	#_slot.set_desired_color()
+	#mesh.set_outline(_current_outline, _current_outline.a * 0.5)
+	#if not _is_color_changing:
+		#if not _is_outlined:
+			#mesh.unset_outline()
 
 func get_selectables() -> Array[ActionSelectable]:
 	var list: Array[ActionSelectable] = []
