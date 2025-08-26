@@ -33,32 +33,20 @@ var character: Char:
 	get: return _char
 	set(value):
 		_char = value
-		#_update_selectable()
 
-#func set_color(color: Color, instant: bool = false):
-	#_color = color
-	#_changing = !instant
-	#if instant:
-		#_mat.albedo_color = color
-
-#func _process(delta: float) -> void:
-	#if not _changing:
-		#return
-	#if _mat.albedo_color != _color:
-		#_mat.albedo_color = _mat.albedo_color.lerp(_color, delta*3)
-		#var diff = _mat.albedo_color - _color
-		#if diff.r+diff.g+diff.b+diff.a < 0.05:
-			#_changing = false
+func set_is_outlined(value: bool):
+	super.set_is_outlined(value)
 
 func reset_color() -> void:
-	_mat.set_shader_parameter("animated", false)
-	_mat.set_shader_parameter("outline_color", Colors.SLOT_EMPTY)
-	_mat.set_shader_parameter("emission", 0)
+	set_is_outlined(false)
+	set_outline_color(Colors.SLOT_EMPTY)
 
 func _selectable_update() -> void:
 	if _is_outlined || _is_color_changing:
 		_mat.set_shader_parameter("animated", true)
 		_mat.set_shader_parameter("outline_color", _current_outline)
-		_mat.set_shader_parameter("emission", outline_color.a*2.0)
+		_mat.set_shader_parameter("emission", _current_outline.a*2.0 if _is_outlined else 0.0)
 	else:
-		reset_color()
+		_mat.set_shader_parameter("animated", false)
+		_mat.set_shader_parameter("outline_color", Colors.SLOT_EMPTY)
+		_mat.set_shader_parameter("emission", 0.0)

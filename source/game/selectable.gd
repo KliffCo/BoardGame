@@ -15,29 +15,28 @@ var collider: PhysicsBody3D:
 
 var is_outlined: bool:
 	set(value): set_is_outlined(value)
-var is_filled: bool:
-	set(value): set_is_filled(value)
-var outline_color: Color:
-	set(value): set_outline_color(value)
-var fill_color: Color:
-	set(value): set_fill_color(value)
-
-func set_is_outlined(value: bool):
+func set_is_outlined(value: bool) -> void:
 	_is_outlined = value
 	_is_color_changing = true
 	if not _is_outlined:
 		_desired_outline = Color(_current_outline, 0.0)
 
-func set_is_filled(value: bool):
+var is_filled: bool:
+	set(value): set_is_filled(value)
+func set_is_filled(value: bool) -> void:
 	_is_filled = value
 	_is_color_changing = true
 
+var outline_color: Color:
+	set(value): set_outline_color(value)
 func set_outline_color(value: Color) -> void:
 	_desired_outline = value
 	if _is_outlined == false && not _is_color_changing:
 		_current_outline = Color(_desired_outline, _current_outline.a)
 	_is_color_changing = true
 
+var fill_color: Color:
+	set(value): set_fill_color(value)
 func set_fill_color(value: Color) -> void:
 	_desired_fill = value
 	if _is_outlined == false && not _is_color_changing:

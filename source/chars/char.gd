@@ -65,8 +65,8 @@ var slot: RoomCharSlot:
 		_slot = value
 		if _slot:
 			_slot.character = self
-			if self == CharManager.main.selected:
-				set_selected(true)
+			#if self == CharManager.main.selected:
+				#set_selected(true)
 
 func set_selected(value: bool):
 	if value:
@@ -83,14 +83,9 @@ func set_selectable(value: bool, color: Color):
 func set_is_outlined(value: bool): _slot.set_is_outlined(value)
 func set_is_filled(value: bool): _slot.set_is_filled(value)
 func set_outline_color(value: Color): _slot.set_outline_color(value)
-func set_fill_color(value: Color) -> void: _slot.set_fill_color(value)
+func set_fill_color(value: Color): _slot.set_fill_color(value)
 
 #func _selectable_update() -> void:
-	##slot.copy_state(copy_state)
-	#pass
-	#_slot.is_outlined = _is_outlined
-	#_slot.set_outline_color(_current_outline)
-	#_slot.set_desired_color()
 	#mesh.set_outline(_current_outline, _current_outline.a * 0.5)
 	#if not _is_color_changing:
 		#if not _is_outlined:
