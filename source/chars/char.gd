@@ -89,8 +89,8 @@ func get_selectables() -> Array[ActionSelectable]:
 		list.append_array(more)
 	return list
 
-func invoke_action(action, selectable) -> void:
-	action.invoke(self, selectable)
+func invoke_action(act: ActionSelectable) -> void:
+	act.action.invoke(self, act)
 
 func walk_to(points: Array[Vector3], callback: Callable) -> void:
 	_walk_callback.call()

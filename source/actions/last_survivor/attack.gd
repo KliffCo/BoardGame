@@ -24,10 +24,10 @@ func get_selectables(chr: Char) -> Array[ActionSelectable]:
 					list.append(action_sel);
 	return list
 
-func invoke(_chr: Char, _other: Selectable) -> void:
-	var target := _other as Char
+func invoke(_chr: Char, _act: ActionSelectable) -> void:
+	var target := _act.selectable as Char
 	if target:
-		GameMode.main.do_action(func(callback: Callable):
+		GameMode.main.do_action(_act, func(callback: Callable):
 			var sync = 2
 			_chr.anim.play_once(Char.Action.Attack, func():
 				_chr.anim.set_action(Char.Action.Idle)

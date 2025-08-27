@@ -44,9 +44,9 @@ func char_selected():
 	else:
 		InputManager.main.set_selectables([])
 
-func do_action(action: Callable):
+func do_action(act: ActionSelectable, action: Callable):
 	InputManager.main.pause()
-	InputManager.main.set_selectables([]);
+	InputManager.main.set_selectables([act]);
 	CharManager.main.hide_selection();
 	action.call(func():
 		InputManager.main.resume()

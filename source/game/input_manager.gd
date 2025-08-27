@@ -56,7 +56,7 @@ func mouse_input(e: InputEventMouse):
 						var col = hit.collider as StaticBody3D
 						var act = find_selectable(col.get_parent_node_3d() as Selectable)
 						if act:
-							CharManager.main.selected.invoke_action(act.action, act.selectable)
+							CharManager.main.selected.invoke_action(act)
 							break
 	elif e is InputEventMouseMotion:
 		if _is_panning:

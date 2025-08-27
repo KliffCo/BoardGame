@@ -21,11 +21,11 @@ func get_selectables(chr: Char) -> Array[ActionSelectable]:
 			list.append(action_sel);
 	return list
 
-func invoke(_chr: Char, _other: Selectable) -> void:
-	var room := _other as Room
+func invoke(_chr: Char, _act: ActionSelectable) -> void:
+	var room := _act.selectable as Room
 	var slot := room.get_closest_slot(_chr.slot.global_position)
 	if slot:
-		GameMode.main.do_action(func(callback: Callable):
+		GameMode.main.do_action(_act, func(callback: Callable):
 			_chr.slot = slot
 			var points: Array[Vector3] = []
 			points.append(slot.global_position)
