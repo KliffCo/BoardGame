@@ -34,19 +34,21 @@ var character: Char:
 	set(value):
 		_char = value
 
-func set_is_outlined(value: bool):
-	super.set_is_outlined(value)
-
-func reset_color() -> void:
-	set_is_outlined(false)
-	set_outline_color(Colors.SLOT_EMPTY)
+#func reset_color() -> void:
+	#set_stroke(false, Color.TRANSPARENT)
 
 func _selectable_update() -> void:
-	if _is_outlined || _is_color_changing:
-		_mat.set_shader_parameter("animated", true)
-		_mat.set_shader_parameter("outline_color", _current_outline)
-		_mat.set_shader_parameter("emission", _current_outline.a*2.0 if _is_outlined else 0.0)
+	var fill := _current_fill.a > 0.01
+	var stroke := _is_stroked || _is_color_changing
+	
+	_mat.set_shader_parameter("noise", stroke)
+	_mat.set_shader_parameter("fill", fill)
+	if fill:
+		_mat.set_shader_parameter("fill_color", _current_fill)
+	_mat.set_shader_parameter("emission", _current_fill.a*3.0)
+	if stroke:
+		_mat.set_shader_parameter("speed", 0.35)
+		_mat.set_shader_parameter("stroke_color", _current_stroke)
 	else:
-		_mat.set_shader_parameter("animated", false)
-		_mat.set_shader_parameter("outline_color", Colors.SLOT_EMPTY)
-		_mat.set_shader_parameter("emission", 0.0)
+		_mat.set_shader_parameter("speed", 0.0)
+		_mat.set_shader_parameter("stroke_color", Colors.SLOT_EMPTY)

@@ -61,7 +61,7 @@ var slot: RoomCharSlot:
 	set(value):
 		if _slot:
 			_slot.character = null
-			_slot.reset_color()
+			_slot.set_stroke(false, Color.TRANSPARENT)
 		_slot = value
 		if _slot:
 			_slot.character = self
@@ -70,26 +70,17 @@ var slot: RoomCharSlot:
 
 func set_selected(value: bool):
 	if value:
-		_slot.is_outlined = true
-		_slot.outline_color = Colors.SLOT_SELECTED
+		_slot.set_stroke(true, Colors.SLOT_SELECTED)
 	else:
-		_slot.is_outlined = false
+		_slot.set_stroke(false, Color.TRANSPARENT)
 
 func set_selectable(value: bool, color: Color):
 	_slot.is_outlined = value
 	if value:
 		_slot.outline_color = color
 
-func set_is_outlined(value: bool): _slot.set_is_outlined(value)
-func set_is_filled(value: bool): _slot.set_is_filled(value)
-func set_outline_color(value: Color): _slot.set_outline_color(value)
-func set_fill_color(value: Color): _slot.set_fill_color(value)
-
-#func _selectable_update() -> void:
-	#mesh.set_outline(_current_outline, _current_outline.a * 0.5)
-	#if not _is_color_changing:
-		#if not _is_outlined:
-			#mesh.unset_outline()
+func set_stroke(enabled: bool, color: Color) -> void: _slot.set_stroke(enabled, color)
+func set_fill(enabled: bool, color: Color) -> void: _slot.set_fill(enabled, color)
 
 func get_selectables() -> Array[ActionSelectable]:
 	var list: Array[ActionSelectable] = []

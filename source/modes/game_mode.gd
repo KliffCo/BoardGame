@@ -31,8 +31,10 @@ func map_loaded():
 	pass
 
 func try_select_char(chr: Char):
-	CharManager.main.select(chr)
-	return true
+	if not chr || (chr && chr.is_alive):
+		CharManager.main.select(chr)
+		return true
+	return false
 
 func char_selected():
 	var chr := CharManager.main.selected
@@ -44,6 +46,8 @@ func char_selected():
 
 func do_action(action: Callable):
 	InputManager.main.pause()
+	InputManager.main.set_selectables([]);
+	CharManager.main.hide_selection();
 	action.call(func():
 		InputManager.main.resume()
 		if CharManager.main.selected:

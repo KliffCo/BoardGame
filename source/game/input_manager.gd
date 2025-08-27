@@ -76,15 +76,15 @@ func mouse_input(e: InputEventMouse):
 func set_selectables(list: Array[ActionSelectable]) -> void:
 	for sel:ActionSelectable in _selectables:
 		if sel.selectable != CharManager.main.selected:
-			sel.selectable.is_outlined = false
+			sel.selectable.set_stroke(false, Color.TRANSPARENT)
+			sel.selectable.set_fill(false, Color.TRANSPARENT)
 	_selectables = list
 	_colliders.clear()
 	_proposed_selectable = null
 	for sel:ActionSelectable in _selectables:
-		sel.selectable.is_outlined = true
-		sel.selectable.outline_color = sel.color
+		sel.selectable.set_stroke(true, sel.color)
 		var col:= sel.selectable.collider
-		if _colliders.find(col) != -1:
+		if _colliders.find(col) == -1:
 			_colliders.append(col)
 
 func find_selectable(sel) -> ActionSelectable:
@@ -98,10 +98,11 @@ func propose_selectable(b: Selectable):
 		return
 	_proposed_selectable = b
 	for sel:ActionSelectable in _selectables:
-		if _proposed_selectable && sel.selectable != _proposed_selectable:
-			sel.selectable.set_selectable_color(Color(sel.color, 0.1))
+		if sel.selectable == _proposed_selectable:
+			#sel.selectable.set_fill(true, Color(sel.color));
+			sel.selectable.set_fill(true, Color.WHITE);
 		else:
-			sel.selectable.set_selectable_color(sel.color)
+			sel.selectable.set_fill(false, Color.TRANSPARENT);
 
 func pause() -> void:
 	_enabled = false

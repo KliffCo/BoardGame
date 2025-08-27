@@ -20,7 +20,3 @@ func map_loaded():
 			var data: CharData = load(char_set.get_random(rng))
 			char_man.new_char(data, empty_slots[0])
 	PlayerManager.main.first_player()
-
-func try_select_char(chr: Char):
-	CharManager.main.select(chr)
-	return true

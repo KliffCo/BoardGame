@@ -52,3 +52,7 @@ func select(chr: Char) -> void:
 	if selected:
 		selected.set_selected(true)
 	GameMode.main.char_selected()
+
+func hide_selection():
+	if selected:
+		selected.set_selected(false)

@@ -107,15 +107,25 @@ func get_closest_slot(global_pos: Vector3) -> RoomCharSlot:
 func _selectable_update() -> void:
 	if not _ground_mesh and _is_color_changing:
 		_init_ground_mesh()
-	if _ground_mesh:
-		_ground_mesh.visible = _is_outlined || _is_color_changing
-		_ground_mat.set_shader_parameter("outline_color", _current_outline)
+	if not _ground_mesh:
+		return
+	
+	var fill := _current_fill.a > 0.01
+	var stroke := _is_stroked || _is_color_changing
+	
+	_ground_mesh.visible = stroke
+	_ground_mat.set_shader_parameter("fill", fill)
+	_ground_mat.set_shader_parameter("emission", _current_fill.a*3.0)
+	if fill:
+		_ground_mat.set_shader_parameter("fill_color", _current_fill)
+	if stroke:
+		_ground_mat.set_shader_parameter("stroke_color", _current_stroke)
 
 func _init_ground_mesh() -> void:
 	var ground = _model.find_child("Ground") as MeshInstance3D
 	_ground_mesh = MeshInstance3D.new()
 	_ground_mesh.visible = false
-	_ground_mesh.name = "Ground_Outline"
+	_ground_mesh.name = "ground_outline"
 	_ground_mesh.transform = ground.transform
 	_ground_mesh.mesh = ground.mesh
 	_ground_mat = RoomManager.main.new_outline_material()
