@@ -21,7 +21,7 @@ func _ready() -> void:
 func new_outline_material() -> ShaderMaterial:
 	return _outline_material.duplicate()
 
-func clear():
+func clear() -> void:
 	min_range = Vector2.ZERO
 	max_range = Vector2.ZERO
 	for room in rooms:

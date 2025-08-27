@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://35ftiuq3ifgk"]
+
+[ext_resource type="Script" uid="uid://b58xmm6rt8acu" path="res://source/ui/player_ui.gd" id="1_26wyo"]
+
+[node name="player" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_26wyo")
+metadata/_custom_type_script = "uid://b58xmm6rt8acu"
+
+[node name="name" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -594.0
+offset_bottom = -578.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 10
+text = "Hello"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="image" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2

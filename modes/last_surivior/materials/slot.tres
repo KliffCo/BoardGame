@@ -1,7 +1,7 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://dm5niw7dumxpo"]
 
 [ext_resource type="Shader" uid="uid://ciupasc2p1w4u" path="res://modes/last_surivior/materials/slot.gdshader" id="1_erid3"]
-[ext_resource type="Texture2D" uid="uid://mg4nkft613wi" path="res://noise_combined.png" id="2_pbnf8"]
+[ext_resource type="Texture2D" uid="uid://mg4nkft613wi" path="res://images/noise_combined.png" id="2_pbnf8"]
 
 [resource]
 render_priority = 0

@@ -10,6 +10,7 @@ var game_mode: GameMode
 func _ready() -> void:
 	if main != null:
 		return
+	add_child(load("res://game/ui/ui_manager.tscn").instantiate());
 	main = self
 	game_mode = load(_game_mode) as GameMode
 	game_mode.load_map()

@@ -21,22 +21,22 @@ func new_char_slot(node: Node3D) -> RoomCharSlot:
 	slot.position = node.position# + Vector3(0, 0.01, 0)
 	return slot
 
-func _init():
+func _init() -> void:
 	main = self
 
-func load_map():
+func load_map() -> void:
 	pass
 
-func map_loaded():
+func map_loaded() -> void:
 	pass
 
-func try_select_char(chr: Char):
+func try_select_char(chr: Char) -> bool:
 	if not chr || (chr && chr.is_alive):
 		CharManager.main.select(chr)
 		return true
 	return false
 
-func char_selected():
+func char_selected() -> void:
 	var chr := CharManager.main.selected
 	if chr:
 		var selectables := chr.get_selectables()
@@ -44,7 +44,7 @@ func char_selected():
 	else:
 		InputManager.main.set_selectables([])
 
-func do_action(act: ActionSelectable, action: Callable):
+func do_action(act: ActionSelectable, action: Callable) -> void:
 	InputManager.main.pause()
 	InputManager.main.set_selectables([act]);
 	CharManager.main.hide_selection();
@@ -55,8 +55,8 @@ func do_action(act: ActionSelectable, action: Callable):
 			action_finished()
 	)
 
-func action_finished():
+func action_finished() -> void:
 	turn_finished()
 
-func turn_finished():
+func turn_finished() -> void:
 	pass

@@ -56,18 +56,18 @@ func translate_stand() -> void:
 	_holder.rotation = Vector3(deg_to_rad(90+_angle), 0.0, 0.0)
 	_holder.scale = Vector3(size.x, 1.0, size.y)
 
-func set_stand_texture(tex: Texture2D):
+func set_stand_texture(tex: Texture2D) -> void:
 	_stand_mat.set_shader_parameter("tex_albedo", tex)
 	_outline_mat.set_shader_parameter("tex_albedo", tex)
 
-func set_shadow_texture(tex: Texture2D):
+func set_shadow_texture(tex: Texture2D) -> void:
 	_shadow_mat.albedo_texture = tex
 
-func set_outline(color: Color, glow: float):
+func set_outline(color: Color, glow: float) -> void:
 	_outline_mesh.visible = true
 	_stand_mat.set_shader_parameter("emission", glow)
 	_outline_mat.set_shader_parameter("outline_color", color)
 
-func unset_outline():
+func unset_outline() -> void:
 	_outline_mesh.visible = false
 	_stand_mat.set_shader_parameter("emission", 0.0)

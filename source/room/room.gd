@@ -20,7 +20,7 @@ var char_slots: Array[RoomCharSlot]:
 var grid_pos: Vector2i:
 	get: return grid_list[0]
 
-func _init(index:int, tile: RoomTile, pos: Vector2i):
+func _init(index:int, tile: RoomTile, pos: Vector2i) -> void:
 	name = "room_"+str(index)
 	_tile = tile
 	grid_list.append(pos)

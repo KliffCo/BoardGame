@@ -32,22 +32,22 @@ func _ready() -> void:
 	position = _actual_pan + _zoom_offset
 	rotation_degrees = Vector3(lerp(min_zoom_angle, max_zoom_angle, _actual_zoom), 0, 0)
 
-func set_actual_zoom(zoom: float):
+func set_actual_zoom(zoom: float) -> void:
 	_actual_zoom = clamp(zoom, 0, 1)
 	_desired_zoom = _actual_zoom
 	_zoom_offset = min_zoom_offset.lerp(max_zoom_offset, _actual_zoom)
 
-func set_desired_zoom(zoom: float):
+func set_desired_zoom(zoom: float) -> void:
 	_desired_zoom = clamp(zoom, 0, 1)
 
-func set_actual_pan(pan: Vector3):
+func set_actual_pan(pan: Vector3) -> void:
 	if pan.y < 0:
 		return
 	pan.y = 0
 	_actual_pan = pan
 	_desired_pan = pan
 
-func set_desired_pan(pan: Vector3):
+func set_desired_pan(pan: Vector3) -> void:
 	if pan.y < 0:
 		return
 	pan.y = 0
@@ -70,7 +70,7 @@ func _process(_delta: float) -> void:
 	position = _actual_pan + _zoom_offset
 	rotation_degrees = Vector3(lerp(min_zoom_angle, max_zoom_angle, ease(_actual_zoom, 2)), 0, 0)
 
-func screen_to_world_pos(screen_pos: Vector2):
+func screen_to_world_pos(screen_pos: Vector2):	# Variable return type
 	var direction = project_ray_normal(screen_pos)
 	if direction.y > -0.01:
 		return false

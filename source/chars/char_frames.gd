@@ -6,7 +6,7 @@ static var _keys = null
 var _shadow: Texture2D
 var _textures: Array = []
 
-func _init(name: String):
+func _init(name: String) -> void:
 	if _keys == null:
 		_keys = Char.Action.keys()
 		for i in range(_keys.size()):

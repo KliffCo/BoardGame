@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://ds0m6gdt720xs"]
+
+[ext_resource type="Script" uid="uid://bekjfdh5rfjoy" path="res://source/managers/ui_manager.gd" id="1_i3pdx"]
+[ext_resource type="Script" uid="uid://dokmq0jplwd2q" path="res://source/managers/player_manager.gd" id="2_del37"]
+[ext_resource type="Script" uid="uid://b58xmm6rt8acu" path="res://source/ui/player_ui.gd" id="3_del37"]
+
+[node name="ui_man" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i3pdx")
+
+[node name="player_man" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_right = 50.0
+offset_bottom = 70.0
+grow_horizontal = 2
+script = ExtResource("2_del37")
+
+[node name="player" type="Control" parent="player_man"]
+clip_contents = true
+custom_minimum_size = Vector2(50, 70)
+layout_mode = 2
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 70.0
+grow_horizontal = 2
+script = ExtResource("3_del37")
+metadata/_custom_type_script = "uid://b58xmm6rt8acu"
+
+[node name="name" type="Label" parent="player_man/player"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 8
+text = "Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="image" type="TextureRect" parent="player_man/player"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1

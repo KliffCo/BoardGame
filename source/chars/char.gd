@@ -68,13 +68,13 @@ var slot: RoomCharSlot:
 			#if self == CharManager.main.selected:
 				#set_selected(true)
 
-func set_selected(value: bool):
+func set_selected(value: bool) -> void:
 	if value:
 		_slot.set_stroke(true, Colors.SLOT_SELECTED)
 	else:
 		_slot.set_stroke(false, Color.TRANSPARENT)
 
-func set_selectable(value: bool, color: Color):
+func set_selectable(value: bool, color: Color) -> void:
 	_slot.is_outlined = value
 	if value:
 		_slot.outline_color = color

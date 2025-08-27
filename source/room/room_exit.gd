@@ -6,7 +6,7 @@ extends Resource
 @export var direction: Vector2i
 var room: Room
 
-func init(index: int):
+func init(index: int) -> void:
 	position = Vector2i.ZERO
 	if index == 0:
 		name = "N"

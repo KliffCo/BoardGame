@@ -11,10 +11,10 @@ extends Resource
 
 var _total_count:int = -1
 
-func size():
+func size() -> int:
 	return _list.size()
 
-func _update_total():
+func _update_total() -> bool:
 	_total_count = 0
 	for e in _list:
 		_total_count += e.odds

@@ -20,7 +20,7 @@ func _ready() -> void:
 	_outline_material = load(_outline_material_file) as ShaderMaterial
 	_outline_material.set_shader_parameter("tex_albedo", null)
 
-func clear():
+func clear() -> void:
 	for chr in chars:
 		chr.free()
 	chars = []
@@ -53,6 +53,6 @@ func select(chr: Char) -> void:
 		selected.set_selected(true)
 	GameMode.main.char_selected()
 
-func hide_selection():
+func hide_selection() -> void:
 	if selected:
 		selected.set_selected(false)

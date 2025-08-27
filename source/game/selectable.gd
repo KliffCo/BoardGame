@@ -34,7 +34,7 @@ func set_fill(enabled: bool, color: Color) -> void:
 	_is_filled = enabled
 	_is_color_changing = true
 
-func become_desired_color():
+func become_desired_color() -> void:
 	_is_color_changing = false
 	_current_stroke = _desired_stroke
 	_current_fill = _desired_fill

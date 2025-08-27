@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1mp6fgrsmrxw"]
+[gd_scene load_steps=6 format=3 uid="uid://d1mp6fgrsmrxw"]
 
-[ext_resource type="Script" uid="uid://bqea3vgu1idh1" path="res://source/game/game_manager.gd" id="1_h7iqs"]
+[ext_resource type="Script" uid="uid://bqea3vgu1idh1" path="res://source/managers/game_manager.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://p7bergsb7t2p" path="res://source/chars/char_manager.gd" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://bnuijdbm3307i" path="res://source/room/room_manager.gd" id="1_vasa2"]
-[ext_resource type="Script" uid="uid://br4hmohaqxuvj" path="res://source/game/camera_manager.gd" id="2_dxrkv"]
-[ext_resource type="Script" uid="uid://bna7lhqviwq2f" path="res://source/game/input_manager.gd" id="4_4fuuu"]
-[ext_resource type="Script" uid="uid://dokmq0jplwd2q" path="res://game/planer_manager.gd" id="6_dakft"]
+[ext_resource type="Script" uid="uid://br4hmohaqxuvj" path="res://source/managers/camera_manager.gd" id="2_dxrkv"]
+[ext_resource type="Script" uid="uid://bna7lhqviwq2f" path="res://source/managers/input_manager.gd" id="4_4fuuu"]
 
 [node name="game_man" type="Node3D"]
 script = ExtResource("1_h7iqs")
@@ -19,9 +18,6 @@ max_zoom_offset = Vector3(0, 0.5, 0.1)
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="camera_man"]
 transform = Transform3D(0.302869, -0.736126, 0.6053, 0.793734, 0.546378, 0.267314, -0.5275, 0.399486, 0.74977, 0, 0.0535836, -3.32548)
-
-[node name="player_man" type="Node3D" parent="."]
-script = ExtResource("6_dakft")
 
 [node name="room_man" type="Node3D" parent="."]
 script = ExtResource("1_vasa2")

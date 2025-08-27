@@ -20,7 +20,7 @@ func _input(e: InputEvent) -> void:
 	if e is InputEventMouse:
 		mouse_input(e)
 
-func mouse_input(e: InputEventMouse):
+func mouse_input(e: InputEventMouse) -> void:
 	if e is InputEventMouseButton:
 		if e.button_index == MOUSE_BUTTON_WHEEL_UP:
 			CameraManager.main.set_desired_zoom(CameraManager.main.get_desired_zoom()+0.1)
@@ -93,7 +93,7 @@ func find_selectable(sel) -> ActionSelectable:
 			return act
 	return null
 
-func propose_selectable(b: Selectable):
+func propose_selectable(b: Selectable) -> void:
 	if _proposed_selectable == b:
 		return
 	_proposed_selectable = b

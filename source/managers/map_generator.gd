@@ -1,7 +1,7 @@
 class_name MapGenerator
 extends Resource
 
-static func generate(s: MapSettings):
+static func generate(s: MapSettings) -> void:
 	var room_man:= RoomManager.main
 	room_man.clear()
 	var tile_set: FileOddsList = load(s.tile_set)
