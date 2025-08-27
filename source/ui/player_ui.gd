@@ -2,6 +2,7 @@ class_name PlayerUI
 extends Control
 
 var player: Player = null
+@onready var selected: Control = $selected
 
 func _ready():
 	for c in get_children():
@@ -14,3 +15,7 @@ func set_player(value: Player) -> void:
 		var image = find_child("image") as TextureRect
 		label.text = player.name
 		image.texture = player.avatar
+		set_active(false)
+
+func set_active(value: bool) -> void:
+	selected.visible = value

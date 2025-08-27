@@ -45,7 +45,7 @@ func mouse_input(e: InputEventMouse) -> void:
 						selected = true
 						break
 				if selected:
-					_is_dragging = true
+					_is_dragging = PlayerManager.main.is_my_turn()
 				else:
 					GameMode.main.try_select_char(null)
 			else:

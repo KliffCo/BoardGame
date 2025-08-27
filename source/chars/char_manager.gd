@@ -27,6 +27,13 @@ func clear() -> void:
 
 func count() -> int:
 	return chars.size()
+	
+func count_alive() -> int:
+	var count := 0
+	for chr in chars:
+		if chr.is_alive:
+			count += 1
+	return count
 
 func new_char(data: CharData, slot: RoomCharSlot) -> Char:
 	var chr: Char = _prefab.instantiate()

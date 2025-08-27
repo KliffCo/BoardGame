@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d2vtvu175a4u4"]
 
-[ext_resource type="Shader" uid="uid://w6g88fy78pp2" path="res://modes/last_surivior/materials/char_stand.gdshader" id="1_xtfoc"]
+[ext_resource type="Shader" uid="uid://w6g88fy78pp2" path="res://modes/last_surivior/materials/old/char_stand.gdshader" id="1_xtfoc"]
 
 [resource]
 render_priority = 0

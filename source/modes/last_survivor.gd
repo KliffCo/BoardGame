@@ -20,3 +20,11 @@ func map_loaded() -> void:
 			var data: CharData = load(char_set.get_random(rng))
 			char_man.new_char(data, empty_slots[0])
 	PlayerManager.main.first_player()
+
+func turn_finished() -> void:
+	PlayerManager.main.next_player()
+
+func on_char_died() -> void:
+	var count:= CharManager.main.count_alive()
+	if count <= 1:
+		end_game()

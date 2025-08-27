@@ -55,8 +55,17 @@ func do_action(act: ActionSelectable, action: Callable) -> void:
 			action_finished()
 	)
 
+func on_char_moved() -> void:
+	pass
+
+func on_char_died() -> void:
+	pass
+
 func action_finished() -> void:
 	turn_finished()
 
 func turn_finished() -> void:
+	pass
+
+func end_game() -> void:
 	pass

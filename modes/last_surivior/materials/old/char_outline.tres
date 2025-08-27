@@ -1,6 +1,6 @@
 [gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bus27g4pd0smp"]
 
-[ext_resource type="Shader" uid="uid://1wont4fjghxk" path="res://modes/last_surivior/materials/char_outline.gdshader" id="1_prarl"]
+[ext_resource type="Shader" uid="uid://1wont4fjghxk" path="res://modes/last_surivior/materials/old/char_outline.gdshader" id="1_prarl"]
 [ext_resource type="Texture2D" uid="uid://cy6xbl04epevh" path="res://rooms/models/NESW.png" id="2_867gf"]
 
 [resource]
