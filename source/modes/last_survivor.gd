@@ -28,9 +28,3 @@ func on_char_died() -> void:
 	var count:= CharManager.main.count_alive()
 	if count <= 1:
 		end_game()
-
-func try_select_char(chr: Char) -> bool:
-	if not chr || (chr && chr.is_alive):
-		CharManager.main.select(chr)
-		return true
-	return false

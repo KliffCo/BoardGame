@@ -9,10 +9,10 @@ var _can_select = true
 #var _can_select = true
 
 var _is_panning:= false
+var _is_dragging:= false
 var _grip_position: Vector3
 var _selectables:Array[ActionSelectable] = []
 var _colliders:Array[PhysicsBody3D] = []
-#var _is_dragging: = false
 var _hovering: Selectable = null
 
 var can_select: bool:
@@ -57,20 +57,22 @@ func mouse_select(e: InputEventMouse) -> void:
 		return
 	if e is InputEventMouseButton:
 		if e.button_index == MOUSE_BUTTON_LEFT:
+			if _hovering && (e.pressed || (not e.pressed && _is_dragging)):
+				var acts := get_actions_for(_hovering)
+				if acts.size() > 0:
+					ActionMenu.main.open(e.position, CharManager.main.selected, acts)
+					#CharManager.main.selected.invoke_action(act)
+				return
+			_is_dragging = false
 			if e.pressed:
-				if _hovering:
-					var acts := get_actions_for(_hovering)
-					if acts.size() > 0:
-						ActionMenu.main.show_list(e.position, CharManager.main.selected, acts)
-						#CharManager.main.selected.invoke_action(act)
-					return
 				var hits: Array = CameraManager.main.colliders_at_screen_pos(e.position, Colliders.CHAR_MASK)
 				for hit in hits:
 					var col = hit.collider as StaticBody3D
 					var chr = col.get_parent_node_3d() as Char
-					if chr && GameMode.main.try_select_char(chr):
+					if chr && CharManager.main.try_select(chr):
+						_is_dragging = true
 						return
-					GameMode.main.try_select_char(null)
+					CharManager.main.select(null)
 	elif e is InputEventMouseMotion:
 		if len(_colliders) > 0:
 			var hit := CameraManager.main.collider_at_screen_pos_in(e.position, _colliders)
@@ -95,12 +97,6 @@ func set_selectables(list: Array[ActionSelectable]) -> void:
 		if _colliders.find(col) == -1:
 			_colliders.append(col)
 
-func find_action(sel) -> ActionSelectable:
-	for act in _selectables:
-		if act.selectable == sel:
-			return act
-	return null
-
 func get_actions_for(sel) -> Array[ActionSelectable]:
 	var list: Array[ActionSelectable] = []
 	for act in _selectables:
@@ -114,7 +110,7 @@ func set_hovering(value: Selectable) -> void:
 	_hovering = value
 	for sel:ActionSelectable in _selectables:
 		if sel.selectable == _hovering:
-			sel.selectable.set_fill(true, Color.WHITE);		# Color(sel.color));
+			sel.selectable.set_fill(true, Color.WHITE);
 		else:
 			sel.selectable.set_fill(false, Color.TRANSPARENT);
 

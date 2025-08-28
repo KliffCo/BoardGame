@@ -30,11 +30,8 @@ func load_map() -> void:
 func map_loaded() -> void:
 	pass
 
-func try_select_char(chr: Char) -> bool:
-	if not chr || (chr && chr.is_alive):
-		CharManager.main.select(chr)
-		return true
-	return false
+func can_select_char(chr: Char) -> bool:
+	return not chr || (chr && chr.is_alive)
 
 func char_selected() -> void:
 	var chr := CharManager.main.selected

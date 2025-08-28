@@ -52,8 +52,14 @@ func new_stand_material() -> ShaderMaterial:
 func new_outline_material() -> ShaderMaterial:
 	return _outline_material.duplicate()
 
+func try_select(chr: Char) -> bool:
+	if GameMode.main.can_select_char(chr):
+		select(chr)
+		return true
+	return false
+
 func select(chr: Char) -> void:
-	ActionMenu.main.hide_list()
+	ActionMenu.main.close()
 	if selected:
 		selected.set_selected(false)
 	selected = chr
