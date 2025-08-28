@@ -29,11 +29,11 @@ func count() -> int:
 	return chars.size()
 	
 func count_alive() -> int:
-	var count := 0
+	var c := 0
 	for chr in chars:
 		if chr.is_alive:
-			count += 1
-	return count
+			c += 1
+	return c
 
 func new_char(data: CharData, slot: RoomCharSlot) -> Char:
 	var chr: Char = _prefab.instantiate()
@@ -53,6 +53,7 @@ func new_outline_material() -> ShaderMaterial:
 	return _outline_material.duplicate()
 
 func select(chr: Char) -> void:
+	ActionMenu.main.hide_list()
 	if selected:
 		selected.set_selected(false)
 	selected = chr

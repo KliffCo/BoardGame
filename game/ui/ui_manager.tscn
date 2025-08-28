@@ -1,25 +1,20 @@
-[gd_scene load_steps=5 format=3 uid="uid://ds0m6gdt720xs"]
+[gd_scene load_steps=6 format=3 uid="uid://ds0m6gdt720xs"]
 
 [ext_resource type="Script" uid="uid://bekjfdh5rfjoy" path="res://source/managers/ui_manager.gd" id="1_i3pdx"]
 [ext_resource type="Script" uid="uid://dokmq0jplwd2q" path="res://source/managers/player_manager.gd" id="2_del37"]
 [ext_resource type="Script" uid="uid://b58xmm6rt8acu" path="res://source/ui/player_ui.gd" id="3_del37"]
 [ext_resource type="Texture2D" uid="uid://q1hmgainf5mw" path="res://icon.svg" id="4_hpja4"]
+[ext_resource type="PackedScene" uid="uid://xdsgc8nhr8mr" path="res://game/action_menu.tscn" id="5_ugklg"]
 
-[node name="ui_man" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ui_man" type="CanvasLayer"]
 script = ExtResource("1_i3pdx")
 
 [node name="player_man" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_right = 50.0
+layout_mode = 3
+anchor_left = 0.522
+anchor_right = 0.522
+offset_left = -25.344
+offset_right = 24.656
 offset_bottom = 70.0
 grow_horizontal = 2
 script = ExtResource("2_del37")
@@ -71,3 +66,12 @@ offset_bottom = -21.0
 grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
+
+[node name="action_menu" parent="." instance=ExtResource("5_ugklg")]
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1

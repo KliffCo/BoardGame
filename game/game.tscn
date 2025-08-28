@@ -1,20 +1,29 @@
-[gd_scene load_steps=6 format=3 uid="uid://d1mp6fgrsmrxw"]
+[gd_scene load_steps=12 format=3 uid="uid://d1mp6fgrsmrxw"]
 
 [ext_resource type="Script" uid="uid://bqea3vgu1idh1" path="res://source/managers/game_manager.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://p7bergsb7t2p" path="res://source/chars/char_manager.gd" id="1_l1rk1"]
 [ext_resource type="Script" uid="uid://bnuijdbm3307i" path="res://source/room/room_manager.gd" id="1_vasa2"]
 [ext_resource type="Script" uid="uid://br4hmohaqxuvj" path="res://source/managers/camera_manager.gd" id="2_dxrkv"]
 [ext_resource type="Script" uid="uid://bna7lhqviwq2f" path="res://source/managers/input_manager.gd" id="4_4fuuu"]
+[ext_resource type="Script" uid="uid://dokmq0jplwd2q" path="res://source/managers/player_manager.gd" id="7_j8tme"]
+[ext_resource type="Script" uid="uid://bekjfdh5rfjoy" path="res://source/managers/ui_manager.gd" id="7_u5opy"]
+[ext_resource type="Script" uid="uid://b58xmm6rt8acu" path="res://source/ui/player_ui.gd" id="8_3vho3"]
+[ext_resource type="Texture2D" uid="uid://q1hmgainf5mw" path="res://icon.svg" id="9_qf6n1"]
+[ext_resource type="Script" uid="uid://c2n56ex0rjimo" path="res://action_menu.gd" id="10_3vho3"]
+[ext_resource type="Script" uid="uid://b8bk6t45eo6wu" path="res://action_menu_button.gd" id="11_qf6n1"]
 
 [node name="game_man" type="Node3D"]
 script = ExtResource("1_h7iqs")
 _game_mode = "uid://sav2rxd100lq"
+metadata/_custom_type_script = "uid://bqea3vgu1idh1"
 
 [node name="camera_man" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.894935, 0.446198, 0, -0.446198, 0.894935, 0, 1.43587, 3)
+current = true
 script = ExtResource("2_dxrkv")
 min_zoom_offset = Vector3(0, 3.5, 0.6)
 max_zoom_offset = Vector3(0, 0.5, 0.1)
+metadata/_custom_type_script = "uid://br4hmohaqxuvj"
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="camera_man"]
 transform = Transform3D(0.302869, -0.736126, 0.6053, 0.793734, 0.546378, 0.267314, -0.5275, 0.399486, 0.74977, 0, 0.0535836, -3.32548)
@@ -22,12 +31,124 @@ transform = Transform3D(0.302869, -0.736126, 0.6053, 0.793734, 0.546378, 0.26731
 [node name="room_man" type="Node3D" parent="."]
 script = ExtResource("1_vasa2")
 _outline_material_file = "uid://ctxu4ynasu0dm"
+metadata/_custom_type_script = "uid://bnuijdbm3307i"
 
 [node name="char_man" type="Node3D" parent="."]
 script = ExtResource("1_l1rk1")
 _prefab_file = "uid://b1eton7knhroa"
 _stand_material_file = "uid://d2vtvu175a4u4"
 _outline_material_file = "uid://bus27g4pd0smp"
+metadata/_custom_type_script = "uid://p7bergsb7t2p"
 
 [node name="input_man" type="Node3D" parent="."]
 script = ExtResource("4_4fuuu")
+metadata/_custom_type_script = "uid://bna7lhqviwq2f"
+
+[node name="UIManager" type="CanvasLayer" parent="."]
+script = ExtResource("7_u5opy")
+metadata/_custom_type_script = "uid://bekjfdh5rfjoy"
+
+[node name="player_man" type="Control" parent="UIManager"]
+layout_mode = 3
+anchor_left = 0.522
+anchor_right = 0.522
+offset_left = -25.344
+offset_right = 24.656
+offset_bottom = 70.0
+grow_horizontal = 2
+script = ExtResource("7_j8tme")
+metadata/_custom_type_script = "uid://dokmq0jplwd2q"
+
+[node name="player" type="Control" parent="UIManager/player_man"]
+clip_contents = true
+custom_minimum_size = Vector2(50, 70)
+layout_mode = 2
+anchors_preset = 0
+offset_right = 50.0
+offset_bottom = 70.0
+grow_horizontal = 2
+script = ExtResource("8_3vho3")
+metadata/_custom_type_script = "uid://b58xmm6rt8acu"
+
+[node name="selected" type="TextureRect" parent="UIManager/player_man/player"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_qf6n1")
+expand_mode = 1
+
+[node name="name" type="Label" parent="UIManager/player_man/player"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 8
+text = "Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="image" type="TextureRect" parent="UIManager/player_man/player"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = -21.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+
+[node name="action_menu" type="Control" parent="UIManager"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 100.0
+offset_bottom = 50.0
+script = ExtResource("10_3vho3")
+metadata/_custom_type_script = "uid://c2n56ex0rjimo"
+
+[node name="background" type="ColorRect" parent="UIManager/action_menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.399181, 0.43688, 0.6015, 1)
+
+[node name="container" type="VBoxContainer" parent="UIManager/action_menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="cell" type="Control" parent="UIManager/action_menu/container"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+script = ExtResource("11_qf6n1")
+metadata/_custom_type_script = "uid://b8bk6t45eo6wu"
+
+[node name="button" type="Button" parent="UIManager/action_menu/container/cell"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Action1"
+
+[connection signal="button_up" from="UIManager/action_menu/container/cell/button" to="UIManager/action_menu/container/cell" method="_on_button_up"]

@@ -1,5 +1,5 @@
 class_name UIManager
-extends Control
+extends CanvasLayer
 
 static var main: UIManager
 
