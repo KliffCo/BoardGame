@@ -1,5 +1,8 @@
-class_name LSActionSelect
+class_name ActionSelect
 extends GameAction
+
+func _init():
+	name = "Select"
 
 func get_selectables(con: Controllable) -> Array[ActionSelectable]:
 	return []

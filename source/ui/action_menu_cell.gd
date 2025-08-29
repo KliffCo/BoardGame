@@ -19,8 +19,9 @@ func _on_gui_input(e: InputEvent) -> void:
 		var viewport = get_viewport()
 		match e.button_index:
 			MOUSE_BUTTON_LEFT:
+				var do_action = get_global_rect().has_point(e.global_position)
 				ActionMenu.main.close()
-				if get_rect().has_point(e.position):
+				if do_action:
 					_con.invoke_action(_act)
 			MOUSE_BUTTON_RIGHT:
 				ActionMenu.main.close()

@@ -22,12 +22,15 @@ func _unhandled_input(e: InputEvent) -> void:
 
 func open(pos: Vector2, con: Controllable, list: Array[ActionSelectable]) -> void:
 	close()
+	if list.size() == 0:
+		return
 	_list = list
-	for act in _list:
+	for i in range(_list.size()):
 		var cell = prefab.duplicate() as ActionMenuCell
 		container.add_child(cell)
 		cell.set_owner(self)
-		cell.setup(con, act)
+		cell.name = "button_"+str(i)
+		cell.setup(con, _list[i])
 	visible = true
 	var view_size := get_viewport().get_visible_rect().size
 	var cell_size:= prefab.get_rect().size

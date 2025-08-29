@@ -30,7 +30,7 @@ func count() -> int:
 func count_alive() -> int:
 	var c := 0
 	for chr in chars:
-		if chr.is_alive:
+		if chr.is_alive():
 			c += 1
 	return c
 

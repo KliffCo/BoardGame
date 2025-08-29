@@ -105,7 +105,7 @@ func try_damage(damage: int, attacker: Char, callback: Callable) -> void:
 func take_damage(damage: int, _attacker: Char, callback: Callable) -> void:
 	anim.play_once(Char.Action.Hurt, func():
 		health -= damage
-		if is_alive:
+		if is_alive():
 			anim.set_action(Char.Action.Idle);
 			callback.call(true)
 		else:

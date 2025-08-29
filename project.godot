@@ -13,7 +13,7 @@ config_version=5
 config/name="BoardGame"
 run/main_scene="uid://d1mp6fgrsmrxw"
 config/features=PackedStringArray("4.4", "Mobile")
-config/icon="res://icon.svg"
+config/icon="uid://q1hmgainf5mw"
 
 [dotnet]
 

@@ -1,8 +1,8 @@
 class_name LSActionWalk
 extends GameAction
 
-@export var min:= 1
-@export var max:= 1
+@export var _min:= 1
+@export var _max:= 1
 
 func get_color() -> Color:
 	return Colors.ROOM_WALKABLE if advanced else Colors.ROOM_WALKABLE
@@ -18,7 +18,7 @@ func get_selectables(con: Controllable) -> Array[ActionSelectable]:
 	for i in range(rooms.size()):
 		var room := rooms[i]
 		var distance := distances[i]
-		if distance <= max && distance >= min && room.has_empty_slot():
+		if distance <= _max && distance >= _min && room.has_empty_slot():
 			var action_sel := ActionSelectable.new(room, self, Colors.ROOM_WALKABLE)
 			list.append(action_sel);
 	return list

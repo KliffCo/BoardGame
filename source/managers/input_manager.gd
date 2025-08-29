@@ -15,6 +15,8 @@ var _selectables:Array[ActionSelectable] = []
 var _colliders:Array[PhysicsBody3D] = []
 var _hovering: Selectable = null
 var _controlling: Controllable = null
+var _select_action: ActionSelect = ActionSelect.new()
+var _mouse_pos: Vector2
 
 var controlling: Controllable:
 	get: return _controlling
@@ -25,6 +27,10 @@ var can_select: bool:
 
 func _ready() -> void:
 	main = self
+
+func _input(e: InputEvent) -> void:
+	if e is InputEventMouse:
+		_mouse_pos = e.position
 
 func _unhandled_input(e: InputEvent) -> void:
 	if not _enabled:
@@ -56,15 +62,22 @@ func mouse_pan(e: InputEventMouse) -> void:
 			if world_pos is Vector3:
 				CameraManager.main.set_desired_pan(CameraManager.main.get_actual_pan()-world_pos+_grip_position)
 
+var a = 0
 func mouse_select(e: InputEventMouse) -> void:
 	if not _can_select:
 		return
 	if e is InputEventMouseButton:
+		if a == 1:
+			pass
 		if e.button_index == MOUSE_BUTTON_LEFT:
 			if _hovering && (e.pressed || (not e.pressed && _is_dragging)):
 				var acts := get_actions_for(_hovering)
 				if acts.size() > 0:
+					var c := _hovering as Controllable
+					if _hovering is Controllable and GameMode.main.can_control(_hovering):
+						acts.insert(0, ActionSelectable.new(_hovering, _select_action, Colors.CHAR_SELECTED))
 					ActionMenu.main.open(e.position, InputManager.main.controlling, acts)
+					a += 1
 				return
 			_is_dragging = false
 			if e.pressed:
@@ -78,14 +91,17 @@ func mouse_select(e: InputEventMouse) -> void:
 						return
 					set_controlling(null)
 	elif e is InputEventMouseMotion:
-		if len(_colliders) > 0:
-			var hit := CameraManager.main.collider_at_screen_pos_in(e.position, _colliders)
-			var sel: Selectable = null
-			if hit:
-				var index = _colliders.find(hit.collider as PhysicsBody3D)
-				if index != -1:
-					sel = _selectables[index].selectable
-			set_hovering(sel)
+		update_hovering(e.position)
+
+func update_hovering(position: Vector2):
+	if len(_colliders) > 0:
+		var hit := CameraManager.main.collider_at_screen_pos_in(position, _colliders)
+		var sel: Selectable = null
+		if hit:
+			var index = _colliders.find(hit.collider as PhysicsBody3D)
+			if index != -1:
+				sel = _selectables[index].selectable
+		set_hovering(sel)
 
 func set_controlling(con: Controllable) -> void:
 	ActionMenu.main.close()
@@ -113,6 +129,7 @@ func set_selectables(list: Array[ActionSelectable]) -> void:
 		var col:= sel.selectable.collider
 		if _colliders.find(col) == -1:
 			_colliders.append(col)
+	update_hovering(_mouse_pos)
 
 func get_actions_for(sel) -> Array[ActionSelectable]:
 	var list: Array[ActionSelectable] = []
