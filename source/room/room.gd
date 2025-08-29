@@ -29,7 +29,7 @@ func _init(index:int, tile: RoomTile, pos: Vector2i) -> void:
 	set_angle(0)
 	add_colliders()
 
-func set_angle(angle: int) -> void:
+func set_angle(_angle: int) -> void:	# TODO angle
 	exits = []
 	unused_exits = []
 	for src in _tile.exits:

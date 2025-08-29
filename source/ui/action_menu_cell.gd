@@ -1,8 +1,6 @@
 class_name ActionMenuCell
 extends Button
 
-signal left_click
-
 var _con: Controllable
 var _act: ActionSelectable
 

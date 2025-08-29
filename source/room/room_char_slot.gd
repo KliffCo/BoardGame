@@ -11,7 +11,6 @@ func _ready() -> void:
 	var size = _size * 0.5
 	scale = Vector3(size, size, size)
 	var mesh: MeshInstance3D = find_child("mesh")
-	var collider: StaticBody3D = find_child("collider")
 	mesh.mesh = MeshGen.shared_plane()
 	_mat = load(_material_file).duplicate()
 	mesh.material_override = _mat

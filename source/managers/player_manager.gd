@@ -42,7 +42,6 @@ func add_player() -> void:
 	p.id = next_id
 	next_id += 1
 	p.name = "Kliff"
-	var a = load("res://images/players/player1.png")
 	p.avatar = load("res://images/players/player1.png")
 	
 	p.node = prefab.duplicate() as PlayerUI
@@ -69,7 +68,7 @@ func next_player() -> void:
 func on_size_changed() -> void:
 	sort_nodes(false)
 
-func sort_nodes(animate: bool) -> void:
+func sort_nodes(_animate: bool) -> void:
 	if list.size() == 0:
 		return
 	var dir := Vector2(1.0, 0.0) if horizontal else Vector2(0.0, 1.0)
