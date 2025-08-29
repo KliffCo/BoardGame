@@ -21,7 +21,6 @@ func _unhandled_input(e: InputEvent) -> void:
 	viewport.set_input_as_handled()
 
 func open(pos: Vector2, con: Controllable, list: Array[ActionSelectable]) -> void:
-	close()
 	if list.size() == 0:
 		return
 	_list = list

@@ -6,7 +6,6 @@ static var main: InputManager
 var _enabled = true
 var _can_pan = true
 var _can_select = true
-#var _can_select = true
 
 var _is_panning:= false
 var _is_dragging:= false
@@ -21,9 +20,9 @@ var _mouse_pos: Vector2
 var controlling: Controllable:
 	get: return _controlling
 
-var can_select: bool:
-	get: return _can_select
-	set(value): _can_select = value
+#var can_select: bool:
+	#get: return _can_select
+	#set(value): _can_select = value
 
 func _ready() -> void:
 	main = self
@@ -38,7 +37,6 @@ func _unhandled_input(e: InputEvent) -> void:
 	if e is InputEventMouse:
 		mouse_pan(e)
 		mouse_select(e)
-	# get_viewport().set_input_as_handled()
 
 func mouse_pan(e: InputEventMouse) -> void:
 	if not _can_pan:
@@ -62,13 +60,10 @@ func mouse_pan(e: InputEventMouse) -> void:
 			if world_pos is Vector3:
 				CameraManager.main.set_desired_pan(CameraManager.main.get_actual_pan()-world_pos+_grip_position)
 
-var a = 0
 func mouse_select(e: InputEventMouse) -> void:
 	if not _can_select:
 		return
 	if e is InputEventMouseButton:
-		if a == 1:
-			pass
 		if e.button_index == MOUSE_BUTTON_LEFT:
 			if _hovering && (e.pressed || (not e.pressed && _is_dragging)):
 				var acts := get_actions_for(_hovering)
@@ -77,7 +72,6 @@ func mouse_select(e: InputEventMouse) -> void:
 					if _hovering is Controllable and GameMode.main.can_control(_hovering):
 						acts.insert(0, ActionSelectable.new(_hovering, _select_action, Colors.CHAR_SELECTED))
 					ActionMenu.main.open(e.position, InputManager.main.controlling, acts)
-					a += 1
 				return
 			_is_dragging = false
 			if e.pressed:
@@ -89,7 +83,7 @@ func mouse_select(e: InputEventMouse) -> void:
 						set_controlling(con)
 						_is_dragging = true
 						return
-					set_controlling(null)
+				set_controlling(null)
 	elif e is InputEventMouseMotion:
 		update_hovering(e.position)
 
@@ -149,7 +143,9 @@ func set_hovering(value: Selectable) -> void:
 			sel.selectable.set_fill(false, Color.TRANSPARENT);
 
 func pause() -> void:
-	_enabled = false
+	_can_select = false
+	#_enabled = false
 
 func resume() -> void:
-	_enabled = true
+	_can_select = true
+	#_enabled = true

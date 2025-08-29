@@ -72,12 +72,8 @@ func set_controlling(value: bool) -> void:
 	else:
 		_slot.set_stroke(false, Color.TRANSPARENT)
 
-func set_selectable(value: bool, color: Color) -> void:
-	_slot.is_outlined = value
-	if value:
-		_slot.outline_color = color
-
 func set_stroke(enabled: bool, color: Color) -> void: _slot.set_stroke(enabled, color)
+
 func set_fill(enabled: bool, color: Color) -> void: _slot.set_fill(enabled, color)
 
 func get_selectables() -> Array[ActionSelectable]:

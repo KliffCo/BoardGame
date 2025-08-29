@@ -42,7 +42,7 @@ void fragment() {
 			EMISSION = ALBEDO * emission;
 		} else if(fill) {
 			ALBEDO = fill_color.rgb;
-			ALPHA = (1.0-radius_sq) * noise_at(UV + vec2(0.5));
+			ALPHA = (1.0-radius_sq) * noise_at(UV + vec2(0.5)) * fill_color.a;
 			EMISSION = ALBEDO * ALPHA * emission;
 		} else {
 			discard;

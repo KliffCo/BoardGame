@@ -16,5 +16,5 @@ shader_parameter/inner_radius = 0.3
 shader_parameter/outer_radius = 0.35
 shader_parameter/speed = 0.35
 shader_parameter/scale = 0.15
-shader_parameter/density = 8.0
-shader_parameter/add = -0.1
+shader_parameter/density = 8.5
+shader_parameter/add = -0.05

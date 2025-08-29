@@ -17,4 +17,4 @@ shader_parameter/fill = false
 shader_parameter/speed = 0.7
 shader_parameter/scale = 0.15
 shader_parameter/density = 7.0
-shader_parameter/add = -0.1
+shader_parameter/add = -0.05

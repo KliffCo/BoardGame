@@ -6,6 +6,7 @@ extends Selectable
 
 var _mat: ShaderMaterial = null
 var _char: Char = null
+var noise: bool = false
 
 func _ready() -> void:
 	var size = _size * 0.5
@@ -14,6 +15,8 @@ func _ready() -> void:
 	mesh.mesh = MeshGen.shared_plane()
 	_mat = load(_material_file).duplicate()
 	mesh.material_override = _mat
+	set_stroke(false, Color.TRANSPARENT)
+	set_fill(false, Color.TRANSPARENT)
 	_selectable_update()
 
 var room: Room:
@@ -33,21 +36,28 @@ var character: Char:
 	set(value):
 		_char = value
 
+func set_stroke(enabled: bool, color: Color) -> void:
+	noise = enabled
+	if enabled:
+		super.set_stroke(enabled, color)
+	else:
+		super.set_stroke(true, Colors.SLOT_EMPTY)
+
 #func reset_color() -> void:
 	#set_stroke(false, Color.TRANSPARENT)
 
 func _selectable_update() -> void:
 	var fill := _current_fill.a > 0.01
-	var stroke := _is_stroked || _is_color_changing
+	#var stroke := _is_stroked || _is_color_changing
 	
-	_mat.set_shader_parameter("noise", stroke)
+	_mat.set_shader_parameter("noise", noise or _is_color_changing)
 	_mat.set_shader_parameter("fill", fill)
 	if fill:
 		_mat.set_shader_parameter("fill_color", _current_fill)
 	_mat.set_shader_parameter("emission", _current_fill.a*3.0)
-	if stroke:
-		_mat.set_shader_parameter("speed", 0.35)
-		_mat.set_shader_parameter("stroke_color", _current_stroke)
-	else:
-		_mat.set_shader_parameter("speed", 0.0)
-		_mat.set_shader_parameter("stroke_color", Colors.SLOT_EMPTY)
+	#if stroke:
+	_mat.set_shader_parameter("speed", 0.35)
+	_mat.set_shader_parameter("stroke_color", _current_stroke)
+	#else:
+		#_mat.set_shader_parameter("speed", 0.0)
+		#_mat.set_shader_parameter("stroke_color", Color.TRANSPARENT)
