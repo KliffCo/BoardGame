@@ -7,9 +7,11 @@ extends GameAction
 func get_color() -> Color:
 	return Colors.ROOM_WALKABLE if advanced else Colors.ROOM_WALKABLE
 
-func get_selectables(chr: Char) -> Array[ActionSelectable]:
+func get_selectables(con: Controllable) -> Array[ActionSelectable]:
+	var chr = con as Char
+	if not chr:
+		return []
 	var list : Array[ActionSelectable] = []
-	#var chr = CharManager.main.selected
 	var rooms := RoomManager.main.rooms
 	var start = rooms.find(chr.room)
 	var distances := RoomManager.main.get_distance_array(start)
@@ -21,13 +23,16 @@ func get_selectables(chr: Char) -> Array[ActionSelectable]:
 			list.append(action_sel);
 	return list
 
-func invoke(_chr: Char, _act: ActionSelectable) -> void:
-	var room := _act.selectable as Room
-	var slot := room.get_closest_slot(_chr.slot.global_position)
+func invoke(con: Controllable, act: ActionSelectable) -> void:
+	var chr = con as Char
+	if not chr:
+		return
+	var room := act.selectable as Room
+	var slot := room.get_closest_slot(chr.slot.global_position)
 	if slot:
-		GameMode.main.do_action(_act, func(callback: Callable):
-			_chr.slot = slot
+		GameMode.main.do_action(act, func(callback: Callable):
+			chr.slot = slot
 			var points: Array[Vector3] = []
 			points.append(slot.global_position)
-			_chr.walk_to(points, callback)
+			chr.walk_to(points, callback)
 		)

@@ -30,26 +30,32 @@ func load_map() -> void:
 func map_loaded() -> void:
 	pass
 
-func can_select_char(chr: Char) -> bool:
-	return not chr || (chr && chr.is_alive)
+#func try_control(sel: Selectable) -> void:
+	#if not sel or can_control(sel):
 
-func char_selected() -> void:
-	var chr := CharManager.main.selected
+func can_control(sel: Selectable) -> bool:
+	var chr = sel as Char
 	if chr:
-		var selectables := chr.get_selectables()
+		return chr.is_alive()
+	return false
+
+func controlling_changed() -> void:
+	var con := InputManager.main.controlling
+	if con:
+		var selectables := con.get_selectables()
 		InputManager.main.set_selectables(selectables)
 	else:
 		InputManager.main.set_selectables([])
 
-func do_action(act: ActionSelectable, action: Callable) -> void:
+func do_action(_act: ActionSelectable, action: Callable) -> void:
+	var con = InputManager.main.controlling
 	InputManager.main.pause()
-	InputManager.main.set_selectables([act]);
-	CharManager.main.hide_selection();
+	InputManager.main.set_selectables([]);
+	InputManager.main.set_controlling(null)
 	action.call(func():
 		InputManager.main.resume()
-		if CharManager.main.selected:
-			CharManager.main.select(CharManager.main.selected)
-			action_finished()
+		InputManager.main.set_controlling(con)
+		action_finished()
 	)
 
 func on_char_moved() -> void:

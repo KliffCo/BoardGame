@@ -1,5 +1,5 @@
 class_name Char
-extends Selectable
+extends Controllable
 
 enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack }
 
@@ -49,8 +49,8 @@ func init_collider() -> void:
 	_collider.rotation = Vector3(angle, 0, 0)
 	_collider.position = Vector3(0, data.col_height * 0.5 * cos(angle), data.col_height * 0.5 * sin(angle))
 
-var is_alive: bool:
-	get: return health > 0
+func is_alive() -> bool:
+	return health > 0
 
 var room : Room:
 	get: return _slot.room
@@ -65,10 +65,8 @@ var slot: RoomCharSlot:
 		_slot = value
 		if _slot:
 			_slot.character = self
-			#if self == CharManager.main.selected:
-				#set_selected(true)
 
-func set_selected(value: bool) -> void:
+func set_controlling(value: bool) -> void:
 	if value:
 		_slot.set_stroke(true, Colors.SLOT_SELECTED)
 	else:
@@ -88,9 +86,6 @@ func get_selectables() -> Array[ActionSelectable]:
 		var more = action.get_selectables(self)
 		list.append_array(more)
 	return list
-
-func invoke_action(act: ActionSelectable) -> void:
-	act.action.invoke(self, act)
 
 func walk_to(points: Array[Vector3], callback: Callable) -> void:
 	_walk_callback.call()

@@ -7,7 +7,10 @@ extends GameAction
 #func get_color() -> Color:
 	#return Colors.CHAR_ATTACKABLE_ENEMY
 
-func get_selectables(chr: Char) -> Array[ActionSelectable]:
+func get_selectables(con: Controllable) -> Array[ActionSelectable]:
+	var chr = con as Char
+	if not chr:
+		return []
 	var list : Array[ActionSelectable] = []
 	var rooms := RoomManager.main.rooms
 	var chars := CharManager.main.chars
@@ -24,14 +27,17 @@ func get_selectables(chr: Char) -> Array[ActionSelectable]:
 					list.append(action_sel);
 	return list
 
-func invoke(_chr: Char, _act: ActionSelectable) -> void:
-	var target := _act.selectable as Char
+func invoke(con: Controllable, act: ActionSelectable) -> void:
+	var chr = con as Char
+	if not chr:
+		return
+	var target := act.selectable as Char
 	if target:
-		GameMode.main.do_action(_act, func(callback: Callable):
+		GameMode.main.do_action(act, func(callback: Callable):
 			var sync = 2
-			_chr.anim.play_once(Char.Action.Attack, func():
-				_chr.anim.set_action(Char.Action.Idle)
-				target.try_damage(1, _chr, func(_did_hit: bool):
+			chr.anim.play_once(Char.Action.Attack, func():
+				chr.anim.set_action(Char.Action.Idle)
+				target.try_damage(1, chr, func(_did_hit: bool):
 					callback.call()
 				)
 			)

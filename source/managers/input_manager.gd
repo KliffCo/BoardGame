@@ -14,6 +14,10 @@ var _grip_position: Vector3
 var _selectables:Array[ActionSelectable] = []
 var _colliders:Array[PhysicsBody3D] = []
 var _hovering: Selectable = null
+var _controlling: Controllable = null
+
+var controlling: Controllable:
+	get: return _controlling
 
 var can_select: bool:
 	get: return _can_select
@@ -60,19 +64,19 @@ func mouse_select(e: InputEventMouse) -> void:
 			if _hovering && (e.pressed || (not e.pressed && _is_dragging)):
 				var acts := get_actions_for(_hovering)
 				if acts.size() > 0:
-					ActionMenu.main.open(e.position, CharManager.main.selected, acts)
-					#CharManager.main.selected.invoke_action(act)
+					ActionMenu.main.open(e.position, InputManager.main.controlling, acts)
 				return
 			_is_dragging = false
 			if e.pressed:
 				var hits: Array = CameraManager.main.colliders_at_screen_pos(e.position, Colliders.CHAR_MASK)
 				for hit in hits:
 					var col = hit.collider as StaticBody3D
-					var chr = col.get_parent_node_3d() as Char
-					if chr && CharManager.main.try_select(chr):
+					var con = col.get_parent_node_3d() as Controllable
+					if con && GameMode.main.can_control(con):
+						set_controlling(con)
 						_is_dragging = true
 						return
-					CharManager.main.select(null)
+					set_controlling(null)
 	elif e is InputEventMouseMotion:
 		if len(_colliders) > 0:
 			var hit := CameraManager.main.collider_at_screen_pos_in(e.position, _colliders)
@@ -83,9 +87,22 @@ func mouse_select(e: InputEventMouse) -> void:
 					sel = _selectables[index].selectable
 			set_hovering(sel)
 
+func set_controlling(con: Controllable) -> void:
+	ActionMenu.main.close()
+	if _controlling:
+		_controlling.set_controlling(false)
+	_controlling = con
+	if _controlling:
+		_controlling.set_controlling(true)
+	GameMode.main.controlling_changed()
+
+#func hide_controlling() -> void:
+	#if _controlling:
+		#_controlling.set_controlling(false)
+
 func set_selectables(list: Array[ActionSelectable]) -> void:
 	for sel:ActionSelectable in _selectables:
-		if sel.selectable != CharManager.main.selected:
+		if sel.selectable != InputManager.main.controlling:
 			sel.selectable.set_stroke(false, Color.TRANSPARENT)
 			sel.selectable.set_fill(false, Color.TRANSPARENT)
 	_selectables = list

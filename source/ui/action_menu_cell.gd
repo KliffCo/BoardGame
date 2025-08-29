@@ -3,11 +3,11 @@ extends Button
 
 signal left_click
 
-var _chr: Char
+var _con: Controllable
 var _act: ActionSelectable
 
-func setup(chr: Char, act: ActionSelectable):
-	_chr = chr
+func setup(con: Controllable, act: ActionSelectable):
+	_con = con
 	_act = act
 	#var btn = find_child("button", false, false)
 	#btn.text = act.action.name
@@ -23,7 +23,7 @@ func _on_gui_input(e: InputEvent) -> void:
 			MOUSE_BUTTON_LEFT:
 				ActionMenu.main.close()
 				if get_rect().has_point(e.position):
-					_chr.invoke_action(_act)
+					_con.invoke_action(_act)
 			MOUSE_BUTTON_RIGHT:
 				ActionMenu.main.close()
 		viewport.set_input_as_handled()
