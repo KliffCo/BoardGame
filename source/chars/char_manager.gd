@@ -34,6 +34,13 @@ func count_alive() -> int:
 			c += 1
 	return c
 
+func get_alive_list() -> Array[Char]:
+	var list: Array[Char] = []
+	for chr in chars:
+		if chr.is_alive():
+			list.append(chr)
+	return list
+
 func new_char(data: CharData, slot: RoomCharSlot) -> Char:
 	var chr: Char = _prefab.instantiate()
 	chr.init(self, count(), data, slot);

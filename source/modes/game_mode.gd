@@ -5,6 +5,8 @@ static var main: GameMode
 
 @export_file("*.tscn") var _char_slot_file
 var _char_slot_prefab: Resource = null
+var _last_chr_to_act: Controllable = null
+var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
 func has_char_slots() -> bool:
 	if _char_slot_file == null:
@@ -23,6 +25,7 @@ func new_char_slot(node: Node3D) -> RoomCharSlot:
 
 func _init() -> void:
 	main = self
+	_rng.randomize()
 
 func load_map() -> void:
 	pass
@@ -47,8 +50,8 @@ func controlling_changed() -> void:
 	else:
 		InputManager.main.set_selectables([])
 
-func do_action(_act: ActionSelectable, action: Callable) -> void:
-	var con = InputManager.main.controlling
+func do_action(con: Controllable, action: Callable) -> void:
+	_last_chr_to_act = con
 	InputManager.main.pause()
 	InputManager.main.set_selectables([]);
 	InputManager.main.set_controlling(null)

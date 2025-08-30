@@ -12,7 +12,7 @@ static func generate(s: MapSettings) -> void:
 		rng.set_seed(s.map_seed)
 	
 	var tile: RoomTile = load(tile_set.get_random(rng)).instantiate()
-	room_man.try_add_room(tile, Vector2i.ZERO, true)
+	var _room0 := room_man.try_add_room(tile, Vector2i.ZERO, true)
 
 	while room_man.count() < s.rooms:
 		var room_id: int = min(rng.randi() % (int)(room_man.count() * s.extend_odds), room_man.count()-1)
@@ -32,4 +32,4 @@ static func generate(s: MapSettings) -> void:
 			if dst_room == null:
 				continue
 			if not room_man.try_connect_rooms(src_room, exit_pos, dst_room, entry_pos):
-				room_man.remove_room(dst_room)
+				room_man.remove_last_room()

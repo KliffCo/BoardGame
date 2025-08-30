@@ -1,6 +1,7 @@
 class_name Room
 extends Selectable
 
+var id: int
 var _tile: RoomTile
 var grid_list: Array[Vector2i] = []
 
@@ -21,7 +22,8 @@ var grid_pos: Vector2i:
 	get: return grid_list[0]
 
 func _init(index:int, tile: RoomTile, pos: Vector2i) -> void:
-	name = "room_"+str(index)
+	id = index
+	name = "room_"+str(id)
 	_tile = tile
 	grid_list.append(pos)
 	position = Vector3i(pos.x, 0, pos.y)
@@ -67,7 +69,7 @@ func find_unused_exit(pos: Vector2i, dir: Vector2i) -> int:
 	return -1
 
 func use_exit(index: int, room: Room) -> void:
-	var exit = unused_exits[index]
+	var exit := unused_exits[index]
 	exit.room = room
 	exits.append(exit)
 	unused_exits.remove_at(index)
@@ -80,9 +82,22 @@ func use_exit(index: int, room: Room) -> void:
 func is_in_grid(pos: Vector2i) -> bool:
 	return grid_list.find(pos) != -1
 
+func is_empty() -> bool:
+	for slot in _char_slots:
+		if not slot.is_empty():
+			return false
+	return true
+
+func empty_slot_count() -> int:
+	var _count := 0
+	for slot in _char_slots:
+		if slot.is_empty():
+			_count += 1
+	return _count
+
 func has_empty_slot() -> bool:
 	for slot in _char_slots:
-		if slot.is_empty:
+		if slot.is_empty():
 			return true
 	return false
 

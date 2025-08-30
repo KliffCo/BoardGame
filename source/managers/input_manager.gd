@@ -46,7 +46,7 @@ func mouse_pan(e: InputEventMouse) -> void:
 			CameraManager.main.set_desired_zoom(CameraManager.main.get_desired_zoom()+0.1)
 		elif e.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			CameraManager.main.set_desired_zoom(CameraManager.main.get_desired_zoom()-0.1)
-		elif e.button_index == MOUSE_BUTTON_RIGHT or e.button_index == MOUSE_BUTTON_MIDDLE:
+		else: #if e.button_index == MOUSE_BUTTON_RIGHT or e.button_index == MOUSE_BUTTON_MIDDLE:
 			if e.pressed:
 				var world_pos = CameraManager.main.screen_to_world_pos(e.position)
 				if world_pos is Vector3:
@@ -71,6 +71,7 @@ func mouse_select(e: InputEventMouse) -> void:
 					var c := _hovering as Controllable
 					if _hovering is Controllable and GameMode.main.can_control(_hovering):
 						acts.insert(0, ActionSelectable.new(_hovering, _select_action, Colors.CHAR_SELECTED))
+					_is_panning = false
 					ActionMenu.main.open(e.position, InputManager.main.controlling, acts)
 				return
 			_is_dragging = false
@@ -81,7 +82,7 @@ func mouse_select(e: InputEventMouse) -> void:
 					var con = col.get_parent_node_3d() as Controllable
 					if con && GameMode.main.can_control(con):
 						set_controlling(con)
-						_is_dragging = true
+						#_is_dragging = true
 						return
 				set_controlling(null)
 	elif e is InputEventMouseMotion:

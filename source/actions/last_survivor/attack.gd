@@ -13,7 +13,7 @@ func get_selectables(con: Controllable) -> Array[ActionSelectable]:
 		return []
 	var list : Array[ActionSelectable] = []
 	var rooms := RoomManager.main.rooms
-	var start = rooms.find(chr.room)
+	var start = chr.room.id
 	var distances := RoomManager.main.get_distance_array(start)
 
 	for i in range(rooms.size()):
@@ -32,7 +32,7 @@ func invoke(con: Controllable, act: ActionSelectable) -> void:
 		return
 	var target := act.selectable as Char
 	if target:
-		GameMode.main.do_action(act, func(callback: Callable):
+		GameMode.main.do_action(con, func(callback: Callable):
 			chr.anim.play_once(Char.Action.Attack, func():
 				chr.anim.set_action(Char.Action.Idle)
 				target.try_damage(1, chr, func(_did_hit: bool):

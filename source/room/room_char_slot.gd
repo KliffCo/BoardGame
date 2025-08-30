@@ -28,13 +28,13 @@ var room: Room:
 			node = node.get_parent_node_3d()
 		return null
 
-var is_empty: bool:
-	get: return character == null
-
 var character: Char:
 	get: return _char
 	set(value):
 		_char = value
+
+func is_empty() -> bool:
+	return character == null
 
 func set_stroke(enabled: bool, color: Color) -> void:
 	noise = enabled

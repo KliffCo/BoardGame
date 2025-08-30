@@ -13,7 +13,7 @@ func get_selectables(con: Controllable) -> Array[ActionSelectable]:
 		return []
 	var list : Array[ActionSelectable] = []
 	var rooms := RoomManager.main.rooms
-	var start = rooms.find(chr.room)
+	var start = chr.room.id
 	var distances := RoomManager.main.get_distance_array(start)
 	for i in range(rooms.size()):
 		var room := rooms[i]
@@ -30,7 +30,7 @@ func invoke(con: Controllable, act: ActionSelectable) -> void:
 	var room := act.selectable as Room
 	var slot := room.get_closest_slot(chr.slot.global_position)
 	if slot:
-		GameMode.main.do_action(act, func(callback: Callable):
+		GameMode.main.do_action(con, func(callback: Callable):
 			chr.slot = slot
 			var points: Array[Vector3] = []
 			points.append(slot.global_position)
