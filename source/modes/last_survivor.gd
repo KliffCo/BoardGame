@@ -22,34 +22,46 @@ func map_loaded() -> void:
 	PlayerManager.main.first_player()
 
 func turn_finished() -> void:
-	PlayerManager.main.next_player()
 	try_shrink_map()
+	PlayerManager.main.next_player()
 
 func try_shrink_map() -> void:
-	var alive_count = CharManager.main.count_alive()
-	if alive_count > 0 and alive_count <= 3:
-		var alive := CharManager.main.get_alive_list()
+	var alive := CharManager.main.get_alive_list()
+	if alive.size() > 0 and alive.size() <= 3:
+		for i in range(alive.size() - 1, 0, -1):
+			var j = _rng.randi() % (i + 1)
+			var temp = alive[i]
+			alive[i] = alive[j]
+			alive[j] = temp
+		
 		var rooms := RoomManager.main.rooms
-		var start_id := alive[0].room.id
-		var distances := RoomManager.main.get_distance_array(start_id, RoomManager.MAX_ROOMS, 0)
-		#var empty: Array[bool] = []
-		#empty.resize(rooms.size())
-		var choices: Array[int] = []
-		for i in range(rooms.size()):
-			#empty[i] = rooms[i].is_empty()
-			if rooms[i].is_empty():
-				choices.append((distances[i] << 16) + i)
-		choices.sort()
-		for i in range(choices.size()-1, -1, -1):
-			var room_id := choices[i] & 0xFFFF;
-			var path:= RoomManager.main.find_path2(room_id, start_id, distances)
-			if path.size() != 0:
-				return
-		#var pick = choices[_rng.randi() % choices.size()]
+		var distances : Array[int] = []
+		distances.resize(rooms.size())
+		var used_rooms : Array[bool] = []
+		used_rooms.resize(rooms.size())
+		
+		for i in range(alive.size()):
+			var chr1 := alive[i]
+			var distances_to_chr1 := RoomManager.main.get_distance_array(chr1.room.id, RoomManager.MAX_ROOMS, 0)
+			for j in range(i):
+				var chr2 := alive[j]
+				var chr_dist = distances_to_chr1[chr2.room.id]
+				for k in range(rooms.size()):
+					if used_rooms[k] && distances_to_chr1[k] <= chr_dist:
+						var path := RoomManager.main.find_path_with_distance_array(chr2.room.id, chr1.room.id, distances_to_chr1)
+						for room_id in path:
+							used_rooms[room_id] = true
+			for k in range(rooms.size()):
+				if not used_rooms[k] and rooms[k].exits.size() != 0:
+					distances[k] += distances_to_chr1[k] * distances_to_chr1[k]
+		
+		var choice := -1
+		for k in range(rooms.size()):
+			if rooms[k].exits.size() != 0 and not used_rooms[k] and (choice == -1 or distances[k] >= distances[choice]):
+				choice = k
+		if choice != -1:
+			rooms[choice].remove_all_exits()
 	return
-
-#, path: Array[int], exits: Array[int]
-
 
 func on_char_died() -> void:
 	var count:= CharManager.main.count_alive()

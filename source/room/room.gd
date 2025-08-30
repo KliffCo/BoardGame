@@ -9,7 +9,6 @@ var exits: Array[RoomExit] = []
 var unused_exits: Array[RoomExit] = []
 
 var _model: Node3D = null
-
 var _char_slot_holder: Node3D = null
 var _char_slots: Array[RoomCharSlot] = []
 var _ground_mesh: MeshInstance3D = null
@@ -161,3 +160,16 @@ func add_colliders() -> void:
 			box.shape = BoxShape3D.new()
 			box.shape.size = Vector3(1.0, 0.05, 1.0)
 			_collider.add_child(box)
+
+func remove_exits_to_room(room: Room) -> void:
+	for i in range(exits.size()-1, -1, -1):
+		if exits[i].room == room:
+			exits.remove_at(i)
+
+func remove_all_exits() -> void:
+	for exit in exits:
+		exit.room.remove_exits_to_room(self)
+	exits.clear()
+	#for slot in char_slots:
+		#var chr = Char.new()
+		#chr.slot = self

@@ -57,8 +57,8 @@ func do_action(con: Controllable, action: Callable) -> void:
 	InputManager.main.set_controlling(null)
 	action.call(func():
 		InputManager.main.resume()
-		InputManager.main.set_controlling(con)
 		action_finished()
+		InputManager.main.set_controlling(con)
 	)
 
 func on_char_moved() -> void:

@@ -68,7 +68,6 @@ func mouse_select(e: InputEventMouse) -> void:
 			if _hovering && (e.pressed || (not e.pressed && _is_dragging)):
 				var acts := get_actions_for(_hovering)
 				if acts.size() > 0:
-					var c := _hovering as Controllable
 					if _hovering is Controllable and GameMode.main.can_control(_hovering):
 						acts.insert(0, ActionSelectable.new(_hovering, _select_action, Colors.CHAR_SELECTED))
 					_is_panning = false
@@ -88,9 +87,9 @@ func mouse_select(e: InputEventMouse) -> void:
 	elif e is InputEventMouseMotion:
 		update_hovering(e.position)
 
-func update_hovering(position: Vector2):
+func update_hovering(_position: Vector2):
 	if len(_colliders) > 0:
-		var hit := CameraManager.main.collider_at_screen_pos_in(position, _colliders)
+		var hit := CameraManager.main.collider_at_screen_pos_in(_position, _colliders)
 		var sel: Selectable = null
 		if hit:
 			var index = _colliders.find(hit.collider as PhysicsBody3D)

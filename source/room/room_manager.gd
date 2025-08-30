@@ -128,23 +128,46 @@ func get_distance_array(start: int, max_distance: int = MAX_ROOMS, min_empty_slo
 	return distances
 
 func find_path(start_index: int, end_index: int) -> Array[int]:
-	var distances:= get_distance_array(start_index)
-	if distances[end_index] >= rooms.size():
+	var distances_from_end := get_distance_array(end_index)
+	var path := find_path_with_distance_array(start_index, end_index, distances_from_end)
+	return path
+
+func find_path_with_distance_array(start_index: int, end_index: int, distances_from_end: PackedInt32Array) -> Array[int]:
+	if distances_from_end[start_index] >= rooms.size():
 		return []
-	var path: Array[int] = []
-	path.append(end_index)
-	var dist := distances[end_index] - 1
-	var room := rooms[end_index]
+	var path: Array[int] = [start_index]
+	if start_index == end_index:
+		return path
+	var dist := distances_from_end[start_index] - 1
+	var room := rooms[start_index]
 	while dist != 0:
 		for exit in room.exits:
-			if distances[exit.room.id] == dist:
+			if distances_from_end[exit.room.id] == dist:
 				room = exit.room
 				path.append(room.id)
 				dist -= 1
 				break
-	#path.append(start_pos)
-	path.reverse()
+	path.append(end_index)
 	return path
+
+#func find_path(start_index: int, end_index: int) -> Array[int]:
+	#var distances:= get_distance_array(start_index)
+	#if distances[end_index] >= rooms.size():
+		#return []
+	#var path: Array[int] = []
+	#path.append(end_index)
+	#var dist := distances[end_index] - 1
+	#var room := rooms[end_index]
+	#while dist != 0:
+		#for exit in room.exits:
+			#if distances[exit.room.id] == dist:
+				#room = exit.room
+				#path.append(room.id)
+				#dist -= 1
+				#break
+	##path.append(start_pos)
+	#path.reverse()
+	#return path
 
 func find_path2(start_index: int, end_index: int, distances_from_end: PackedInt32Array) -> Array[int]:
 	var path: Array[int] = []
