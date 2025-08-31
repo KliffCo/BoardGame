@@ -45,12 +45,14 @@ func try_shrink_map() -> void:
 			var distances_to_chr1 := RoomManager.main.get_distance_array(chr1.room.id, RoomManager.MAX_ROOMS, 0)
 			for j in range(i):
 				var chr2 := alive[j]
-				var chr_dist = distances_to_chr1[chr2.room.id]
+				var path := RoomManager.main.find_path_with_distance_array(chr2.room.id, chr1.room.id, distances_to_chr1)
+				var chr_dist := distances_to_chr1[chr2.room.id]
 				for k in range(rooms.size()):
-					if used_rooms[k] && distances_to_chr1[k] <= chr_dist:
-						var path := RoomManager.main.find_path_with_distance_array(chr2.room.id, chr1.room.id, distances_to_chr1)
-						for room_id in path:
-							used_rooms[room_id] = true
+					if used_rooms[k] and distances_to_chr1[k] <= chr_dist:
+						path = RoomManager.main.find_path_with_distance_array(k, chr1.room.id, distances_to_chr1)
+						break
+				for room_id in path:
+					used_rooms[room_id] = true
 			for k in range(rooms.size()):
 				if not used_rooms[k] and rooms[k].exits.size() != 0:
 					distances[k] += distances_to_chr1[k] * distances_to_chr1[k]
@@ -61,6 +63,7 @@ func try_shrink_map() -> void:
 				choice = k
 		if choice != -1:
 			rooms[choice].remove_all_exits()
+			rooms[choice].visible = false
 	return
 
 func on_char_died() -> void:

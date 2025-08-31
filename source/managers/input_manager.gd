@@ -60,6 +60,15 @@ func mouse_pan(e: InputEventMouse) -> void:
 			if world_pos is Vector3:
 				CameraManager.main.set_desired_pan(CameraManager.main.get_actual_pan()-world_pos+_grip_position)
 
+func get_controllable_at_point(pos: Vector2) -> Controllable:
+	var hits: Array = CameraManager.main.colliders_at_screen_pos(pos, Colliders.CHAR_MASK)
+	for hit in hits:
+		var col = hit.collider as StaticBody3D
+		var con = col.get_parent_node_3d() as Controllable
+		if con && GameMode.main.can_control(con):
+			return con
+	return null
+
 func mouse_select(e: InputEventMouse) -> void:
 	if not _can_select:
 		return
@@ -70,19 +79,20 @@ func mouse_select(e: InputEventMouse) -> void:
 				if acts.size() > 0:
 					if _hovering is Controllable and GameMode.main.can_control(_hovering):
 						acts.insert(0, ActionSelectable.new(_hovering, _select_action, Colors.CHAR_SELECTED))
+					else:
+						var con = get_controllable_at_point(e.position)
+						if con:
+							acts.insert(0, ActionSelectable.new(con, _select_action, Colors.CHAR_SELECTED))
 					_is_panning = false
 					ActionMenu.main.open(e.position, InputManager.main.controlling, acts)
 				return
 			_is_dragging = false
 			if e.pressed:
-				var hits: Array = CameraManager.main.colliders_at_screen_pos(e.position, Colliders.CHAR_MASK)
-				for hit in hits:
-					var col = hit.collider as StaticBody3D
-					var con = col.get_parent_node_3d() as Controllable
-					if con && GameMode.main.can_control(con):
-						set_controlling(con)
-						#_is_dragging = true
-						return
+				var con = get_controllable_at_point(e.position)
+				if con:
+					set_controlling(con)
+					#_is_dragging = true
+					return
 				set_controlling(null)
 	elif e is InputEventMouseMotion:
 		update_hovering(e.position)
