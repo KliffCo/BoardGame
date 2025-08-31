@@ -7,8 +7,8 @@ var _enabled = true
 var _can_pan = true
 var _can_select = true
 
+var _is_clicking:= false
 var _is_panning:= false
-var _is_dragging:= false
 var _grip_position: Vector3
 var _selectables:Array[ActionSelectable] = []
 var _colliders:Array[PhysicsBody3D] = []
@@ -16,6 +16,9 @@ var _hovering: Selectable = null
 var _controlling: Controllable = null
 var _select_action: ActionSelect = ActionSelect.new()
 var _mouse_pos: Vector2
+var _mouse_touchdown_pos: Vector2
+
+const CLICK_THRESHOLD = 10
 
 var controlling: Controllable:
 	get: return _controlling
@@ -74,27 +77,32 @@ func mouse_select(e: InputEventMouse) -> void:
 		return
 	if e is InputEventMouseButton:
 		if e.button_index == MOUSE_BUTTON_LEFT:
-			if _hovering && (e.pressed || (not e.pressed && _is_dragging)):
-				var acts := get_actions_for(_hovering)
-				if acts.size() > 0:
-					if _hovering is Controllable and GameMode.main.can_control(_hovering):
-						acts.insert(0, ActionSelectable.new(_hovering, _select_action, Colors.CHAR_SELECTED))
-					else:
-						var con = get_controllable_at_point(e.position)
-						if con:
-							acts.insert(0, ActionSelectable.new(con, _select_action, Colors.CHAR_SELECTED))
-					_is_panning = false
-					ActionMenu.main.open(e.position, InputManager.main.controlling, acts)
-				return
-			_is_dragging = false
 			if e.pressed:
+				_is_clicking = true
+				_mouse_touchdown_pos = e.position
+			elif _is_clicking:
+				_is_clicking = false
+				if _hovering:
+					var acts := get_actions_for(_hovering)
+					if acts.size() > 0:
+						if _hovering is Controllable and GameMode.main.can_control(_hovering):
+							acts.insert(0, ActionSelectable.new(_hovering, _select_action, Colors.CHAR_SELECTED))
+						else:
+							var con = get_controllable_at_point(e.position)
+							if con:
+								acts.insert(0, ActionSelectable.new(con, _select_action, Colors.CHAR_SELECTED))
+						_is_panning = false
+						ActionMenu.main.open(e.position, InputManager.main.controlling, acts)
+					return
 				var con = get_controllable_at_point(e.position)
 				if con:
 					set_controlling(con)
-					#_is_dragging = true
 					return
 				set_controlling(null)
 	elif e is InputEventMouseMotion:
+		if _is_clicking:
+			if (e.position - _mouse_touchdown_pos).length_squared() > CLICK_THRESHOLD*CLICK_THRESHOLD:
+				_is_clicking = false
 		update_hovering(e.position)
 
 func update_hovering(_position: Vector2):
