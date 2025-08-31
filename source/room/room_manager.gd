@@ -150,25 +150,6 @@ func find_path_with_distance_array(start_index: int, end_index: int, distances_f
 	path.append(end_index)
 	return path
 
-#func find_path(start_index: int, end_index: int) -> Array[int]:
-	#var distances:= get_distance_array(start_index)
-	#if distances[end_index] >= rooms.size():
-		#return []
-	#var path: Array[int] = []
-	#path.append(end_index)
-	#var dist := distances[end_index] - 1
-	#var room := rooms[end_index]
-	#while dist != 0:
-		#for exit in room.exits:
-			#if distances[exit.room.id] == dist:
-				#room = exit.room
-				#path.append(room.id)
-				#dist -= 1
-				#break
-	##path.append(start_pos)
-	#path.reverse()
-	#return path
-
 func find_path2(start_index: int, end_index: int, distances_from_end: PackedInt32Array) -> Array[int]:
 	var path: Array[int] = []
 	var current_exits: Array[int] = []

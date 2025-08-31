@@ -5,7 +5,7 @@ static var main: InputManager
 
 var _enabled = true
 var _can_pan = true
-var _can_select = true
+var _can_click = true
 
 var _is_clicking:= false
 var _is_panning:= false
@@ -23,10 +23,6 @@ const CLICK_THRESHOLD = 10
 var controlling: Controllable:
 	get: return _controlling
 
-#var can_select: bool:
-	#get: return _can_select
-	#set(value): _can_select = value
-
 func _ready() -> void:
 	main = self
 
@@ -39,7 +35,7 @@ func _unhandled_input(e: InputEvent) -> void:
 		return
 	if e is InputEventMouse:
 		mouse_pan(e)
-		mouse_select(e)
+		mouse_click(e)
 
 func mouse_pan(e: InputEventMouse) -> void:
 	if not _can_pan:
@@ -63,6 +59,38 @@ func mouse_pan(e: InputEventMouse) -> void:
 			if world_pos is Vector3:
 				CameraManager.main.set_desired_pan(CameraManager.main.get_actual_pan()-world_pos+_grip_position)
 
+func mouse_click(e: InputEventMouse) -> void:
+	if not _can_click:
+		return
+	if e is InputEventMouseButton:
+		if e.pressed:
+			_is_clicking = true
+			_mouse_touchdown_pos = e.position
+		if e.button_index == MOUSE_BUTTON_LEFT:
+			if not e.pressed and _is_clicking:
+				if _hovering:
+					var acts := get_actions_for(_hovering)
+					if _hovering is Controllable and GameMode.main.can_control(_hovering):
+						acts.insert(0, ActionSelectable.new(_hovering, _select_action, Colors.CHAR_SELECTED))
+					else:
+						var con = get_controllable_at_point(e.position)
+						if con:
+							acts.insert(0, ActionSelectable.new(con, _select_action, Colors.CHAR_SELECTED))
+					_is_panning = false
+					ActionMenu.main.open(e.position, InputManager.main.controlling, acts)
+				else:
+					set_controlling(get_controllable_at_point(e.position))
+		if e.button_index == MOUSE_BUTTON_RIGHT:
+			if not e.pressed and _is_clicking:
+				set_controlling(null)
+		if not e.pressed:
+			_is_clicking = false
+	elif e is InputEventMouseMotion:
+		if _is_clicking:
+			if (e.position - _mouse_touchdown_pos).length_squared() > CLICK_THRESHOLD*CLICK_THRESHOLD:
+				_is_clicking = false
+		update_hovering(e.position)
+
 func get_controllable_at_point(pos: Vector2) -> Controllable:
 	var hits: Array = CameraManager.main.colliders_at_screen_pos(pos, Colliders.CHAR_MASK)
 	for hit in hits:
@@ -71,49 +99,6 @@ func get_controllable_at_point(pos: Vector2) -> Controllable:
 		if con && GameMode.main.can_control(con):
 			return con
 	return null
-
-func mouse_select(e: InputEventMouse) -> void:
-	if not _can_select:
-		return
-	if e is InputEventMouseButton:
-		if e.button_index == MOUSE_BUTTON_LEFT:
-			if e.pressed:
-				_is_clicking = true
-				_mouse_touchdown_pos = e.position
-			elif _is_clicking:
-				_is_clicking = false
-				if _hovering:
-					var acts := get_actions_for(_hovering)
-					if acts.size() > 0:
-						if _hovering is Controllable and GameMode.main.can_control(_hovering):
-							acts.insert(0, ActionSelectable.new(_hovering, _select_action, Colors.CHAR_SELECTED))
-						else:
-							var con = get_controllable_at_point(e.position)
-							if con:
-								acts.insert(0, ActionSelectable.new(con, _select_action, Colors.CHAR_SELECTED))
-						_is_panning = false
-						ActionMenu.main.open(e.position, InputManager.main.controlling, acts)
-					return
-				var con = get_controllable_at_point(e.position)
-				if con:
-					set_controlling(con)
-					return
-				set_controlling(null)
-	elif e is InputEventMouseMotion:
-		if _is_clicking:
-			if (e.position - _mouse_touchdown_pos).length_squared() > CLICK_THRESHOLD*CLICK_THRESHOLD:
-				_is_clicking = false
-		update_hovering(e.position)
-
-func update_hovering(_position: Vector2):
-	if len(_colliders) > 0:
-		var hit := CameraManager.main.collider_at_screen_pos_in(_position, _colliders)
-		var sel: Selectable = null
-		if hit:
-			var index = _colliders.find(hit.collider as PhysicsBody3D)
-			if index != -1:
-				sel = _selectables[index].selectable
-		set_hovering(sel)
 
 func set_controlling(con: Controllable) -> void:
 	ActionMenu.main.close()
@@ -143,12 +128,15 @@ func set_selectables(list: Array[ActionSelectable]) -> void:
 			_colliders.append(col)
 	update_hovering(_mouse_pos)
 
-func get_actions_for(sel) -> Array[ActionSelectable]:
-	var list: Array[ActionSelectable] = []
-	for act in _selectables:
-		if act.selectable == sel:
-			list.append(act)
-	return list
+func update_hovering(_position: Vector2):
+	if len(_colliders) > 0:
+		var hit := CameraManager.main.collider_at_screen_pos_in(_position, _colliders)
+		var sel: Selectable = null
+		if hit:
+			var index = _colliders.find(hit.collider as PhysicsBody3D)
+			if index != -1:
+				sel = _selectables[index].selectable
+		set_hovering(sel)
 
 func set_hovering(value: Selectable) -> void:
 	if _hovering == value:
@@ -160,10 +148,15 @@ func set_hovering(value: Selectable) -> void:
 		else:
 			sel.selectable.set_fill(false, Color.TRANSPARENT);
 
+func get_actions_for(sel) -> Array[ActionSelectable]:
+	var list: Array[ActionSelectable] = []
+	for act in _selectables:
+		if act.selectable == sel:
+			list.append(act)
+	return list
+
 func pause() -> void:
-	_can_select = false
-	#_enabled = false
+	_can_click = false
 
 func resume() -> void:
-	_can_select = true
-	#_enabled = true
+	_can_click = true

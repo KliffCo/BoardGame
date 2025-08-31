@@ -33,8 +33,9 @@ func open(pos: Vector2, con: Controllable, list: Array[ActionSelectable]) -> voi
 	visible = true
 	var view_size := get_viewport().get_visible_rect().size
 	var cell_size:= prefab.get_rect().size
-	size = Vector2(cell_size.x, cell_size.y * _list.size())
-	position = (pos - Vector2(size.x / 2.0, 0.0)).clamp(Vector2(0.0, 0.0), Vector2(view_size.x - size.x, view_size.y - size.y))
+	var spacing = container.get_theme_constant("separation")
+	size = Vector2(cell_size.x, (cell_size.y + spacing) * _list.size() - spacing)
+	position = (pos - Vector2(size.x / 2.0, 5.0)).clamp(Vector2(0.0, 0.0), Vector2(view_size.x - size.x, view_size.y - size.y))
 
 func close() -> void:
 	for child in container.get_children():

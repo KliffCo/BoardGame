@@ -14,11 +14,11 @@ func get_selectables(con: Controllable) -> Array[ActionSelectable]:
 	var list : Array[ActionSelectable] = []
 	var rooms := RoomManager.main.rooms
 	var start = chr.room.id
-	var distances := RoomManager.main.get_distance_array(start)
+	var distances := RoomManager.main.get_distance_array(start, _max)
 	for i in range(rooms.size()):
 		var room := rooms[i]
 		var distance := distances[i]
-		if distance <= _max && distance >= _min && room.has_empty_slot():
+		if distance >= _min && room.has_empty_slot():
 			var action_sel := ActionSelectable.new(room, self, Colors.ROOM_WALKABLE)
 			list.append(action_sel);
 	return list
