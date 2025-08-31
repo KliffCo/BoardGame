@@ -1,5 +1,5 @@
 class_name GameModeLastSurvivor
-extends GameMode
+extends GameModePlayers
 
 @export_file("*.tres") var _char_set_file: String
 @export var _map_settings: MapSettings
@@ -19,11 +19,11 @@ func map_loaded() -> void:
 		if empty_slots.size() > 0:
 			var data: CharData = load(char_set.get_random(rng))
 			char_man.new_char(data, empty_slots[0])
-	PlayerManager.main.first_player()
+	GameMode.main.start_game()
 
 func turn_finished() -> void:
 	try_shrink_map()
-	PlayerManager.main.next_player()
+	super.turn_finished()
 
 func try_shrink_map() -> void:
 	var alive := CharManager.main.get_alive_list()

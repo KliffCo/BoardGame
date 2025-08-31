@@ -33,18 +33,18 @@ func load_map() -> void:
 func map_loaded() -> void:
 	pass
 
-#func try_control(sel: Selectable) -> void:
-	#if not sel or can_control(sel):
+func start_game() -> void:
+	pass
 
-func can_control(sel: Selectable) -> bool:
-	var chr = sel as Char
+func can_control(con: Controllable) -> bool:
+	var chr = con as Char
 	if chr:
 		return chr.is_alive()
 	return false
 
 func controlling_changed() -> void:
 	var con := InputManager.main.controlling
-	if con:
+	if con and PlayerManager.main.is_my_turn():
 		var selectables := con.get_selectables()
 		InputManager.main.set_selectables(selectables)
 	else:
@@ -65,6 +65,9 @@ func on_char_moved() -> void:
 	pass
 
 func on_char_died() -> void:
+	pass
+
+func turn_started() -> void:
 	pass
 
 func action_finished() -> void:
