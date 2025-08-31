@@ -8,7 +8,9 @@ extends Resource
 @export var health: int = 1
 @export_file("*.tres") var _action_files: Array[String] = []
 var _loaded = false
-var _actions : Array[GameAction] = []
+var _actions: Array[GameAction] = []
+
+@export var actions2: Array[GameAction] = []
 
 var actions: Array[GameAction]:
 	get:

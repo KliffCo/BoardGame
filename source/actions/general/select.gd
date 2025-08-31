@@ -1,7 +1,7 @@
 class_name ActionSelect
 extends GameAction
 
-func _init():
+func _init() -> void:
 	name = "Select"
 
 func get_selectables(_con: Controllable) -> Array[ActionSelectable]:
