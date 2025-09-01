@@ -9,4 +9,4 @@ func _ready() -> void:
 	on_size_changed()
 
 func on_size_changed() -> void:
-	PlayerManager.main.on_size_changed()
+	TurnOrder.main.on_size_changed()

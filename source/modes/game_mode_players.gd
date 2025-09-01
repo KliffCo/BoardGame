@@ -14,11 +14,13 @@ var current_player: Player:
 			_current_player.my_turn = true
 			turn_started()
 			_current_player.turn_started()
+		TurnOrder.main.on_turn_changed()
 
 func start_game() -> void:
-	current_player = PlayerManager.main.list[0]
+	TurnOrder.main.set_style(TurnOrder.Style.Player)
+	current_player = Lobby.main.players[0]
 
 func turn_finished() -> void:
-	var list:= PlayerManager.main.list
+	var list:= Lobby.main.players
 	var index:= list.find(_current_player)
 	current_player = list[(index+1)%list.size()]

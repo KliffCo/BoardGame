@@ -5,13 +5,13 @@
 [ext_resource type="Script" uid="uid://bnuijdbm3307i" path="res://source/room/room_manager.gd" id="1_vasa2"]
 [ext_resource type="Script" uid="uid://br4hmohaqxuvj" path="res://source/managers/camera_manager.gd" id="2_dxrkv"]
 [ext_resource type="Script" uid="uid://bna7lhqviwq2f" path="res://source/managers/input_manager.gd" id="4_4fuuu"]
-[ext_resource type="Script" uid="uid://dokmq0jplwd2q" path="res://source/managers/player_manager.gd" id="7_j8tme"]
 [ext_resource type="Script" uid="uid://bekjfdh5rfjoy" path="res://source/managers/ui_manager.gd" id="7_u5opy"]
-[ext_resource type="Script" uid="uid://cca1q7lb7decf" path="res://source/ui/lobby_control.gd" id="7_vsp63"]
-[ext_resource type="Script" uid="uid://b58xmm6rt8acu" path="res://source/ui/player_ui.gd" id="8_3vho3"]
+[ext_resource type="Script" uid="uid://cca1q7lb7decf" path="res://source/ui/lobby.gd" id="7_vsp63"]
+[ext_resource type="Script" uid="uid://b58xmm6rt8acu" path="res://source/ui/turn_order/player_ui.gd" id="8_3vho3"]
+[ext_resource type="Script" uid="uid://br8i3xri8ogkj" path="res://source/ui/turn_order/turn_order.gd" id="8_vsp63"]
 [ext_resource type="Texture2D" uid="uid://q1hmgainf5mw" path="res://icon.svg" id="9_qf6n1"]
-[ext_resource type="Script" uid="uid://c2n56ex0rjimo" path="res://source/ui/action_menu.gd" id="10_3vho3"]
-[ext_resource type="Script" uid="uid://b8bk6t45eo6wu" path="res://source/ui/action_menu_cell.gd" id="11_qf6n1"]
+[ext_resource type="Script" uid="uid://c2n56ex0rjimo" path="res://source/ui/action_menu/action_menu.gd" id="10_3vho3"]
+[ext_resource type="Script" uid="uid://b8bk6t45eo6wu" path="res://source/ui/action_menu/action_menu_cell.gd" id="11_qf6n1"]
 [ext_resource type="Script" uid="uid://by140cfiiily6" path="res://source/managers/debug_manager.gd" id="12_qf6n1"]
 
 [node name="game_man" type="Node3D"]
@@ -49,11 +49,13 @@ metadata/_custom_type_script = "uid://bna7lhqviwq2f"
 script = ExtResource("7_u5opy")
 metadata/_custom_type_script = "uid://bekjfdh5rfjoy"
 
-[node name="lobby_control" type="Control" parent="ui_man"]
+[node name="lobby" type="Control" parent="ui_man"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 258.0
-offset_bottom = 135.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("7_vsp63")
 metadata/_custom_type_script = "uid://cca1q7lb7decf"
 
@@ -65,8 +67,8 @@ offset_left = -25.344
 offset_right = 24.656
 offset_bottom = 70.0
 grow_horizontal = 2
-script = ExtResource("7_j8tme")
-metadata/_custom_type_script = "uid://dokmq0jplwd2q"
+script = ExtResource("8_vsp63")
+metadata/_custom_type_script = "uid://br8i3xri8ogkj"
 
 [node name="player" type="Control" parent="ui_man/player_man"]
 clip_contents = true

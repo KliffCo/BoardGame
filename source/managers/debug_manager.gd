@@ -2,7 +2,7 @@ class_name DebugManager
 extends Node
 
 static var main: DebugManager = null
-enum State { None, Lobby, Bots, Load }
+enum State { None, Lobby, Load }
 @export var state := State.None
 @export_file("*.tres") var _game_mode: String
 @export var bot_count := 0
@@ -13,17 +13,17 @@ func _ready() -> void:
 func on_ready() -> void:
 	if state < State.Lobby:
 		return
-	LobbyControl.main.host()
+	Lobby.main.host()
 
 func on_lobby_open() -> void:
-	if state < State.Bots:
+	if state < State.Load:
 		return
-	PlayerManager.main.add_human()
-	for i in range(bot_count):
-		PlayerManager.main.add_bot()
-	PlayerManager.main.set_me(1)
+	Lobby.main.add_human()
+	Lobby.main.set_me(1)
 
 	if state < State.Load or not _game_mode:
 		return
 	var game_mode := load(_game_mode) as GameMode
+	for i in range(bot_count):
+		Lobby.main.add_bot()
 	game_mode.load_map()

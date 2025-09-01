@@ -1,5 +1,5 @@
 class_name PlayerUI
-extends Control
+extends TurnToken
 
 var player: Player = null
 @onready var selected: Control = $selected
@@ -15,7 +15,6 @@ func set_player(value: Player) -> void:
 		var image = find_child("image") as TextureRect
 		label.text = player.name
 		image.texture = player.avatar
-		set_active(false)
 
-func set_active(value: bool) -> void:
-	selected.visible = value
+func on_turn_changed() -> void:
+	selected.visible = player.my_turn

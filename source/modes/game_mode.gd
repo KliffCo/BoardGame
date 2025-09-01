@@ -11,6 +11,9 @@ var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 func get_player_limit() -> int:
 	return 4
 
+func turn_order_style() -> TurnOrder.Style:
+	return TurnOrder.Style.None
+
 func has_bots() -> bool:
 	return false
 
@@ -50,7 +53,7 @@ func can_control(con: Controllable) -> bool:
 
 func controlling_changed() -> void:
 	var con := InputManager.main.controlling
-	if con and PlayerManager.main.is_my_turn():
+	if con and Lobby.main.me.my_turn:
 		var selectables := con.get_selectables()
 		InputManager.main.set_selectables(selectables)
 	else:
