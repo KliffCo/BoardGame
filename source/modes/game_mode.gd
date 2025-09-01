@@ -1,12 +1,21 @@
 class_name GameMode
 extends Resource
 
-static var main: GameMode
+static var main: GameMode = null
 
 @export_file("*.tscn") var _char_slot_file
 var _char_slot_prefab: Resource = null
 var _last_chr_to_act: Controllable = null
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
+
+func get_player_limit() -> int:
+	return 4
+
+func has_bots() -> bool:
+	return false
+
+func new_bot() -> BotPlayer:
+	return null
 
 func has_char_slots() -> bool:
 	if _char_slot_file == null:
@@ -28,9 +37,6 @@ func _init() -> void:
 	_rng.randomize()
 
 func load_map() -> void:
-	pass
-
-func map_loaded() -> void:
 	pass
 
 func start_game() -> void:

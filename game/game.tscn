@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d1mp6fgrsmrxw"]
+[gd_scene load_steps=14 format=3 uid="uid://d1mp6fgrsmrxw"]
 
 [ext_resource type="Script" uid="uid://bqea3vgu1idh1" path="res://source/managers/game_manager.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://p7bergsb7t2p" path="res://source/chars/char_manager.gd" id="1_l1rk1"]
@@ -7,14 +7,15 @@
 [ext_resource type="Script" uid="uid://bna7lhqviwq2f" path="res://source/managers/input_manager.gd" id="4_4fuuu"]
 [ext_resource type="Script" uid="uid://dokmq0jplwd2q" path="res://source/managers/player_manager.gd" id="7_j8tme"]
 [ext_resource type="Script" uid="uid://bekjfdh5rfjoy" path="res://source/managers/ui_manager.gd" id="7_u5opy"]
+[ext_resource type="Script" uid="uid://cca1q7lb7decf" path="res://source/ui/lobby_control.gd" id="7_vsp63"]
 [ext_resource type="Script" uid="uid://b58xmm6rt8acu" path="res://source/ui/player_ui.gd" id="8_3vho3"]
 [ext_resource type="Texture2D" uid="uid://q1hmgainf5mw" path="res://icon.svg" id="9_qf6n1"]
 [ext_resource type="Script" uid="uid://c2n56ex0rjimo" path="res://source/ui/action_menu.gd" id="10_3vho3"]
 [ext_resource type="Script" uid="uid://b8bk6t45eo6wu" path="res://source/ui/action_menu_cell.gd" id="11_qf6n1"]
+[ext_resource type="Script" uid="uid://by140cfiiily6" path="res://source/managers/debug_manager.gd" id="12_qf6n1"]
 
 [node name="game_man" type="Node3D"]
 script = ExtResource("1_h7iqs")
-_game_mode = "uid://sav2rxd100lq"
 metadata/_custom_type_script = "uid://bqea3vgu1idh1"
 
 [node name="camera_man" type="Camera3D" parent="."]
@@ -44,11 +45,19 @@ metadata/_custom_type_script = "uid://p7bergsb7t2p"
 script = ExtResource("4_4fuuu")
 metadata/_custom_type_script = "uid://bna7lhqviwq2f"
 
-[node name="UIManager" type="CanvasLayer" parent="."]
+[node name="ui_man" type="CanvasLayer" parent="."]
 script = ExtResource("7_u5opy")
 metadata/_custom_type_script = "uid://bekjfdh5rfjoy"
 
-[node name="player_man" type="Control" parent="UIManager"]
+[node name="lobby_control" type="Control" parent="ui_man"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 258.0
+offset_bottom = 135.0
+script = ExtResource("7_vsp63")
+metadata/_custom_type_script = "uid://cca1q7lb7decf"
+
+[node name="player_man" type="Control" parent="ui_man"]
 layout_mode = 3
 anchor_left = 0.522
 anchor_right = 0.522
@@ -59,7 +68,7 @@ grow_horizontal = 2
 script = ExtResource("7_j8tme")
 metadata/_custom_type_script = "uid://dokmq0jplwd2q"
 
-[node name="player" type="Control" parent="UIManager/player_man"]
+[node name="player" type="Control" parent="ui_man/player_man"]
 clip_contents = true
 custom_minimum_size = Vector2(50, 70)
 layout_mode = 2
@@ -70,7 +79,7 @@ grow_horizontal = 2
 script = ExtResource("8_3vho3")
 metadata/_custom_type_script = "uid://b58xmm6rt8acu"
 
-[node name="selected" type="TextureRect" parent="UIManager/player_man/player"]
+[node name="selected" type="TextureRect" parent="ui_man/player_man/player"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -80,7 +89,7 @@ grow_vertical = 2
 texture = ExtResource("9_qf6n1")
 expand_mode = 1
 
-[node name="name" type="Label" parent="UIManager/player_man/player"]
+[node name="name" type="Label" parent="ui_man/player_man/player"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -94,7 +103,7 @@ text = "Name"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="image" type="TextureRect" parent="UIManager/player_man/player"]
+[node name="image" type="TextureRect" parent="ui_man/player_man/player"]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -107,7 +116,7 @@ grow_horizontal = 2
 grow_vertical = 2
 expand_mode = 1
 
-[node name="action_menu" type="Control" parent="UIManager"]
+[node name="action_menu" type="Control" parent="ui_man"]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 100.0
@@ -115,7 +124,7 @@ offset_bottom = 50.0
 script = ExtResource("10_3vho3")
 metadata/_custom_type_script = "uid://c2n56ex0rjimo"
 
-[node name="background" type="ColorRect" parent="UIManager/action_menu"]
+[node name="background" type="ColorRect" parent="ui_man/action_menu"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -124,15 +133,22 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.399181, 0.43688, 0.6015, 1)
 
-[node name="container" type="VBoxContainer" parent="UIManager/action_menu"]
+[node name="container" type="VBoxContainer" parent="ui_man/action_menu"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 50.0
 grow_horizontal = 2
 
-[node name="button" type="Button" parent="UIManager/action_menu/container"]
+[node name="button" type="Button" parent="ui_man/action_menu/container"]
 layout_mode = 2
 text = "Action1"
 script = ExtResource("11_qf6n1")
 metadata/_custom_type_script = "uid://b8bk6t45eo6wu"
+
+[node name="debug_man" type="Node" parent="."]
+script = ExtResource("12_qf6n1")
+state = 3
+_game_mode = "uid://sav2rxd100lq"
+bot_count = 2
+metadata/_custom_type_script = "uid://by140cfiiily6"

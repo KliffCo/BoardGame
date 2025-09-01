@@ -1,7 +1,7 @@
 class_name UIManager
 extends CanvasLayer
 
-static var main: UIManager
+static var main: UIManager = null
 
 func _ready() -> void:
 	main = self

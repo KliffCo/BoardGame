@@ -35,8 +35,6 @@ func count() -> int:
 func load(settings: MapSettings) -> void:
 	MapGenerator.generate(settings)
 	update_range()
-	if GameMode.main:
-		GameMode.main.map_loaded()
 
 func add_room(room: Room) -> void:
 	rooms.append(room)

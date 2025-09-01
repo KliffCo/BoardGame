@@ -1,7 +1,7 @@
 class_name CameraManager
 extends Camera3D
 
-static var main: CameraManager
+static var main: CameraManager = null
 
 var _actual_pan: Vector3
 var _desired_pan: Vector3

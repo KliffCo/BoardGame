@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://kdheiaahier2" path="res://source/chars/char_data.gd" id="1_w1i2e"]
 [ext_resource type="Script" uid="uid://ceowpvc4ncwn0" path="res://source/actions/last_survivor/walk.gd" id="2_328qo"]
 
-[sub_resource type="Resource" id="Resource_ejomo"]
+[sub_resource type="Resource" id="Resource_bpv0t"]
 script = ExtResource("2_328qo")
 _min = 1
 _max = 1
@@ -20,5 +20,5 @@ col_height = 0.25
 col_radius = 0.12
 health = 1
 _action_files = Array[String](["uid://cb74emu6o42cb", "uid://dkemcyp28uh21"])
-actions2 = Array[ExtResource("1_bpv0t")]([SubResource("Resource_ejomo")])
+actions2 = Array[ExtResource("1_bpv0t")]([SubResource("Resource_bpv0t")])
 metadata/_custom_type_script = "uid://kdheiaahier2"

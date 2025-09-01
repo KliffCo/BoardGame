@@ -4,10 +4,14 @@ extends GameModePlayers
 @export_file("*.tres") var _char_set_file: String
 @export var _map_settings: MapSettings
 
+func has_bots() -> bool:
+	return false
+
+func new_bot() -> BotPlayer:
+	return LastSurvivorBot.new()
+
 func load_map() -> void:
 	RoomManager.main.load(_map_settings)
-
-func map_loaded() -> void:
 	var room_man := RoomManager.main
 	var char_man := CharManager.main
 	var char_set: FileOddsList = load(_char_set_file)
@@ -19,7 +23,7 @@ func map_loaded() -> void:
 		if empty_slots.size() > 0:
 			var data: CharData = load(char_set.get_random(rng))
 			char_man.new_char(data, empty_slots[0])
-	GameMode.main.start_game()
+	start_game()
 
 func turn_finished() -> void:
 	try_shrink_map()

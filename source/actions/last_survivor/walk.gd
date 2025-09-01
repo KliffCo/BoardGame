@@ -4,8 +4,16 @@ extends GameAction
 @export var _min:= 1
 @export var _max:= 1
 
-func _init() -> void:
-	name = "Walk"
+func _property_can_revert(property: StringName) -> bool:
+	if property == "name":
+		return true
+	return false
+
+func _property_get_revert(property: StringName) -> Variant:
+	if property == "name":
+		return "Walk"
+	return null
+	#return super._property_get_revert(property)
 
 func get_color() -> Color:
 	return Colors.ROOM_WALKABLE if advanced else Colors.ROOM_WALKABLE
@@ -18,11 +26,11 @@ func get_selectables(con: Controllable) -> Array[ActionSelectable]:
 	var rooms := RoomManager.main.rooms
 	var start = chr.room.id
 	var distances := RoomManager.main.get_distance_array(start, _max)
-	distances = max(distances, RoomManager.main.rooms.size()-1)
+	var __max : int = max(_max, RoomManager.main.rooms.size()-1)
 	for i in range(rooms.size()):
 		var room := rooms[i]
 		var distance := distances[i]
-		if distance <= _max and distance >= _min and room.has_empty_slot():
+		if distance <= __max and distance >= _min and room.has_empty_slot():
 			var action_sel := ActionSelectable.new(room, self, Colors.ROOM_WALKABLE)
 			list.append(action_sel);
 	return list

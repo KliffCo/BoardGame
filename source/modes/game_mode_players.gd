@@ -12,7 +12,7 @@ var current_player: Player:
 		_current_player = value
 		if _current_player:
 			_current_player.my_turn = true
-			GameMode.main.turn_started()
+			turn_started()
 			_current_player.turn_started()
 
 func start_game() -> void:

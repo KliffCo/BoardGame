@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="LSActionWalk" load_steps=2 format=3 uid="uid://vxdxksmpuy85"]
+
+[ext_resource type="Script" uid="uid://ceowpvc4ncwn0" path="res://source/actions/last_survivor/walk.gd" id="1_4xaep"]
+
+[resource]
+script = ExtResource("1_4xaep")
+_min = 1
+_max = 1
+name = ""
+advanced = false
+metadata/_custom_type_script = "uid://ceowpvc4ncwn0"

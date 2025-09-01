@@ -15,9 +15,6 @@ func _ready() -> void:
 	main = self
 	prefab = get_child(0)
 	remove_child(prefab)
-	add_human()	# TODO temporary
-	add_bot()	# TODO temporary
-	set_me(1)
 
 func set_me(index: int) -> void:
 	_me = null

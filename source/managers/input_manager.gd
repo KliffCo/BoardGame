@@ -1,7 +1,7 @@
 class_name InputManager
 extends Node3D
 
-static var main: InputManager
+static var main: InputManager = null
 
 var _enabled = true
 var _can_pan = true
