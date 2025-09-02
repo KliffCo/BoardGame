@@ -1,6 +1,7 @@
 class_name CharData
 extends Resource
 
+var id: int
 @export var name: String
 @export var sprites: String
 @export var col_height: float = 0.3

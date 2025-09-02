@@ -8,6 +8,13 @@ var _char_slot_prefab: Resource = null
 var _last_chr_to_act: Controllable = null
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 
+func _init() -> void:
+	main = self
+	_rng.randomize()
+
+func _init_char_sets() -> void:
+	pass
+
 func get_player_limit() -> int:
 	return 4
 
@@ -29,15 +36,12 @@ func has_char_slots() -> bool:
 			_char_slot_file = null
 	return _char_slot_prefab != null
 
-func new_char_slot(node: Node3D) -> RoomCharSlot:
+func new_char_slot(node: Node3D, id) -> RoomCharSlot:
 	var slot = _char_slot_prefab.instantiate()
-	slot.name = node.name
+	slot.id = id
+	slot.name = "slot_"+str(id)
 	slot.position = node.position# + Vector3(0, 0.01, 0)
 	return slot
-
-func _init() -> void:
-	main = self
-	_rng.randomize()
 
 func load_map() -> void:
 	pass
@@ -53,7 +57,7 @@ func can_control(con: Controllable) -> bool:
 
 func controlling_changed() -> void:
 	var con := InputManager.main.controlling
-	if con and Lobby.main.me.my_turn:
+	if con and Lobby.main.is_my_turn():
 		var selectables := con.get_selectables()
 		InputManager.main.set_selectables(selectables)
 	else:
@@ -87,3 +91,19 @@ func turn_finished() -> void:
 
 func end_game() -> void:
 	pass
+
+func random_int_list(size: int, rng: RandomNumberGenerator = null) -> Array[int]:
+	var list : Array[int] = []
+	list.resize(size)
+	for i in range(size):
+		list[i] = i
+	if rng == null:
+		rng = RandomNumberGenerator.new()
+		rng.randomize()
+	var temp: int
+	for i in range(size - 1, 0, -1):
+		var j = rng.randi() % (i + 1)
+		temp = list[i]
+		list[i] = list[j]
+		list[j] = temp
+	return list

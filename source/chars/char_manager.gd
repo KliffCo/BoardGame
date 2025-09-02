@@ -9,7 +9,9 @@ static var main: CharManager = null
 var _stand_material: ShaderMaterial
 var _outline_material: ShaderMaterial
 
+var _char_sets: Array[FileOddsList] = []
 var chars: Array[Char] = []
+var next_id:= 1
 
 func _ready() -> void:
 	main = self
@@ -41,10 +43,24 @@ func get_alive_list() -> Array[Char]:
 			list.append(chr)
 	return list
 
-func new_char(data: CharData, slot: RoomCharSlot) -> Char:
+func append_char_set(file: String) -> FileOddsList:
+	var char_set : FileOddsList = load(file)
+	char_set.id = _char_sets.size()
+	_char_sets.append(char_set)
+	return char_set
+
+func get_char_set(id: int) -> FileOddsList:
+	return _char_sets[id]
+
+func new_char(from_set: int, pos: int, slot: RoomCharSlot) -> Char:
+	var char_set := _char_sets[from_set]
+	var data: CharData = load(char_set.file_at(pos))
+	data.id = pos
+	
 	var chr: Char = _prefab.instantiate()
-	chr.init(self, count(), data, slot);
+	chr.init(self, next_id, data, slot);
 	chars.append(chr)
+	next_id += 1
 	return chr
 
 func new_shadow_material() -> StandardMaterial3D:

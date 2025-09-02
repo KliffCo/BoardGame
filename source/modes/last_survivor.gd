@@ -4,26 +4,55 @@ extends GameModePlayers
 @export_file("*.tres") var _char_set_file: String
 @export var _map_settings: MapSettings
 
+func _init_char_sets() -> void:
+	CharManager.main.append_char_set(_char_set_file)
+
 func has_bots() -> bool:
 	return false
 
 func new_bot() -> BotPlayer:
 	return LastSurvivorBot.new()
 
+#func load_char(char_set: FileOddsList, pos: int) -> CharData:
+	#var data: CharData = load(char_set.file_at(pos))
+	#data.id = pos
+	#char_man.new_char(data, empty_slots[0])
+
 func load_map() -> void:
 	RoomManager.main.load(_map_settings)
+	add_chars_to_rooms();
+	assign_chars()
+	start_game()
+
+func add_chars_to_rooms() -> void:
 	var room_man := RoomManager.main
 	var char_man := CharManager.main
-	var char_set: FileOddsList = load(_char_set_file)
-	var rng: RandomNumberGenerator = RandomNumberGenerator.new()
-	rng.randomize()
+	var char_set: FileOddsList = char_man.get_char_set(0)
+	var char_set2: FileOddsList = char_set.duplicate(true)
+	var char_set3: FileOddsList = char_set.duplicate(false)
+	char_set2._list.remove_at(1)
+	char_set3._list.remove_at(0)
+	
+	var order : Array[int] = random_int_list(char_man.get_char_set(0).size())
 	for i in range(room_man.count()):
 		var room := room_man.get_room(i)
 		var empty_slots = room.get_empty_slots()
 		if empty_slots.size() > 0:
-			var data: CharData = load(char_set.get_random(rng))
-			char_man.new_char(data, empty_slots[0])
-	start_game()
+			char_man.new_char(0, order[i%order.size()], empty_slots[0])
+
+func assign_chars() -> void:
+	var chars := CharManager.main.chars
+	var players := Lobby.main.players
+	var chars_per_player := 1
+	var order : Array[int] = random_int_list(chars.size())
+	
+	var c := 0
+	for p in players:
+		for i in chars_per_player:
+			chars[order[c]].player_id = p.id
+	#Lobby.main.server.all_peers(func(p):
+		#p.send_my_chars()
+	#)
 
 func turn_finished() -> void:
 	try_shrink_map()
@@ -34,7 +63,7 @@ func try_shrink_map() -> void:
 	if alive.size() > 0 and alive.size() <= 3:
 		for i in range(alive.size() - 1, 0, -1):
 			var j = _rng.randi() % (i + 1)
-			var temp = alive[i]
+			var temp := alive[i]
 			alive[i] = alive[j]
 			alive[j] = temp
 		

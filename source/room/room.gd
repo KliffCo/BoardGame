@@ -56,7 +56,7 @@ func _init_char_slots() -> void:
 	add_child(_char_slot_holder)
 	for c in _model.get_children(false):
 		if c.name.begins_with("CharSlot_"):
-			var slot: RoomCharSlot = GameMode.main.new_char_slot(c)
+			var slot: RoomCharSlot = GameMode.main.new_char_slot(c, _char_slots.size())
 			_char_slots.append(slot)
 			_char_slot_holder.add_child(slot)
 

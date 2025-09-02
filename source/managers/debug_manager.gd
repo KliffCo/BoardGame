@@ -18,12 +18,11 @@ func on_ready() -> void:
 func on_lobby_open() -> void:
 	if state < State.Load:
 		return
-	Lobby.main.add_human()
-	Lobby.main.set_me(1)
-
+	
 	if state < State.Load or not _game_mode:
 		return
 	var game_mode := load(_game_mode) as GameMode
+	game_mode._init_char_sets()
 	for i in range(bot_count):
 		Lobby.main.add_bot()
 	game_mode.load_map()

@@ -5,12 +5,14 @@ enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack }
 
 const WALK_SPEED = 1.0
 
+var id: int
 var data: CharData
 var mesh: CharMesh
 var anim: CharAnimator
 var _slot: RoomCharSlot
 
 var health: int = 1
+var player_id: int = 0
 #var team: int
 #var items: []
 
@@ -20,6 +22,7 @@ var _walk_points: Array[Vector3]
 var _walk_callback: Callable = Null.CALLABLE
 
 func init(parent: Node3D, index: int, _data: CharData, __slot: RoomCharSlot) -> void:
+	id = index
 	name = "char_"+str(index)
 	data = _data
 	slot = __slot

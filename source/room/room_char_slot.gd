@@ -4,6 +4,7 @@ extends Selectable
 @export var _size = 0.25
 @export_file("*.tres") var _material_file: String
 
+var id: int = 0
 var _mat: ShaderMaterial = null
 var _char: Char = null
 var noise: bool = false
