@@ -7,7 +7,6 @@ static var main: CharManager = null
 @export_file("*.tres") var _outline_material_file: String
 @onready var _prefab: Resource = load(_prefab_file)
 var _stand_material: ShaderMaterial
-var _outline_material: ShaderMaterial
 
 var _char_sets: Array[FileOddsList] = []
 var chars: Array[Char] = []
@@ -18,8 +17,6 @@ func _ready() -> void:
 	_stand_material = load(_stand_material_file) as ShaderMaterial
 	_stand_material.set_shader_parameter("tex_albedo", null)
 	_stand_material.set_shader_parameter("emmision", 0.0)
-	_outline_material = load(_outline_material_file) as ShaderMaterial
-	_outline_material.set_shader_parameter("tex_albedo", null)
 
 func clear() -> void:
 	for chr in chars:
@@ -70,12 +67,3 @@ func new_shadow_material() -> StandardMaterial3D:
 
 func new_stand_material() -> ShaderMaterial:
 	return _stand_material.duplicate()
-
-func new_outline_material() -> ShaderMaterial:
-	return _outline_material.duplicate()
-
-#func try_select(chr: Char) -> bool:
-	#if GameMode.main.can_select_char(chr):
-		#select(chr)
-		#return true
-	#return false

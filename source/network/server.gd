@@ -65,7 +65,7 @@ func on_connect(udp: PacketPeerUDP, buf: PackedByteArray, pos: int, length: int)
 	for p in peers:
 		p.send_new_player(player)
 	peers.append(con)
-	con.send_player_id()
+	con.send_connect()
 	for p in Lobby.main.players:
 		con.send_new_player(p)
 	#for c in CharManager.main.chars:

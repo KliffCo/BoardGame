@@ -7,8 +7,8 @@ var _shadow_mesh: MeshInstance3D
 var _shadow_mat: Material
 var _stand_mesh: MeshInstance3D
 var _stand_mat: ShaderMaterial
-var _outline_mesh: MeshInstance3D
-var _outline_mat: ShaderMaterial
+#var _outline_mesh: MeshInstance3D
+#var _outline_mat: ShaderMaterial
 
 var _angle : float = -30
 var _size := Vector2(0.5, 0.5)
@@ -26,7 +26,7 @@ func _ready() -> void:
 	_holder = find_child("holder");
 	_shadow_mesh = find_child("shadow");
 	_stand_mesh = find_child("stand");
-	_outline_mesh = find_child("outline");
+	#_outline_mesh = find_child("outline");
 	if not _stand_plane:
 		_stand_plane = MeshGen.shared_plane()
 	
@@ -40,13 +40,13 @@ func _ready() -> void:
 	_stand_mat = CharManager.main.new_stand_material()
 	_stand_mesh.material_override = _stand_mat
 	
-	_outline_mesh.visible = false
-	_outline_mesh.mesh = _stand_plane;
-	_outline_mat = CharManager.main.new_outline_material()
-	_outline_mesh.material_override = _outline_mat
+	#_outline_mesh.visible = false
+	#_outline_mesh.mesh = _stand_plane;
+	#_outline_mat = CharManager.main.new_outline_material()
+	#_outline_mesh.material_override = _outline_mat
 	
 	translate_stand()
-	unset_outline()
+	#unset_outline()
 	
 func translate_stand() -> void:
 	var size := _size * 0.5
@@ -58,16 +58,16 @@ func translate_stand() -> void:
 
 func set_stand_texture(tex: Texture2D) -> void:
 	_stand_mat.set_shader_parameter("tex_albedo", tex)
-	_outline_mat.set_shader_parameter("tex_albedo", tex)
+	#_outline_mat.set_shader_parameter("tex_albedo", tex)
 
 func set_shadow_texture(tex: Texture2D) -> void:
 	_shadow_mat.albedo_texture = tex
 
-func set_outline(color: Color, glow: float) -> void:
-	_outline_mesh.visible = true
-	_stand_mat.set_shader_parameter("emission", glow)
-	_outline_mat.set_shader_parameter("outline_color", color)
-
-func unset_outline() -> void:
-	_outline_mesh.visible = false
-	_stand_mat.set_shader_parameter("emission", 0.0)
+#func set_outline(color: Color, glow: float) -> void:
+	#_outline_mesh.visible = true
+	#_stand_mat.set_shader_parameter("emission", glow)
+	#_outline_mat.set_shader_parameter("outline_color", color)
+#
+#func unset_outline() -> void:
+	#_outline_mesh.visible = false
+	#_stand_mat.set_shader_parameter("emission", 0.0)

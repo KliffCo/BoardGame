@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode cull_disabled, depth_test_disabled, depth_draw_never;
+render_mode cull_disabled, depth_test_disabled, depth_draw_always;
 
 uniform sampler2D tex_noise : source_color, repeat_enable, filter_linear;
 uniform vec4 stroke_color : source_color = vec4(1.0, 1.0, 0.0, 1.0);

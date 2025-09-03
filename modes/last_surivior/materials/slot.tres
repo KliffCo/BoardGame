@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://mg4nkft613wi" path="res://images/noise_combined.png" id="2_pbnf8"]
 
 [resource]
-render_priority = 0
+render_priority = 6
 shader = ExtResource("1_erid3")
 shader_parameter/tex_noise = ExtResource("2_pbnf8")
 shader_parameter/stroke_color = Color(1, 1, 0, 1)

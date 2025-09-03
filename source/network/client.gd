@@ -13,7 +13,7 @@ static func init_actions():
 	add_action(UDP.PONG, on_ping)
 	add_action(UDP.PING, on_pong)
 	add_action(UDP.CONNECT, on_connect)
-	add_action(UDP.PLAYER_ID, on_player_id)
+	#add_action(UDP.PLAYER_ID, on_player_id)
 	add_action(UDP.NEW_PLAYER, on_new_player)
 	add_action(UDP.NEW_CHAR, on_new_char)
 
@@ -64,13 +64,11 @@ static func on_pong(client: Client, buf: PackedByteArray, pos: int, length: int)
 	pass
 
 static func on_connect(client: Client, buf: PackedByteArray, pos: int, length: int) -> void:
-	pass
-	#if Lobby.main.is_host:
-
-static func on_player_id(client: Client, buf: PackedByteArray, pos: int, length: int) -> void:
 	if length != 2:
 		return
 	Lobby.main.set_me(buf.decode_u16(pos))
+	if Lobby.main.is_host:
+		DebugManager.main.on_connected()
 
 static func on_new_player(client: Client, buf: PackedByteArray, pos: int, length: int) -> void:
 	if Lobby.main.is_host or length != 2:

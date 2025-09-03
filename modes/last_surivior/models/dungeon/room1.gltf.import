@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://sy4bvori8se6"
-path="res://.godot/imported/char_slot.fbx-058cae1c30d9d8c50f3e564a0f7417ff.scn"
+uid="uid://dyflt5ij38yfx"
+path="res://.godot/imported/room1.gltf-c31f6eba9e10be9063e772794da41c7c.scn"
 
 [deps]
 
-source_file="res://modes/last_surivior/models/char_slot.fbx"
-dest_files=["res://.godot/imported/char_slot.fbx-058cae1c30d9d8c50f3e564a0f7417ff.scn"]
+source_file="res://modes/last_surivior/models/dungeon/room1.gltf"
+dest_files=["res://.godot/imported/room1.gltf-c31f6eba9e10be9063e772794da41c7c.scn"]
 
 [params]
 
@@ -28,11 +28,10 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=true
+animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
 _subresources={}
-fbx/importer=0
-fbx/allow_geometry_helper_nodes=false
-fbx/embedded_image_handling=1
+gltf/naming_version=1
+gltf/embedded_image_handling=1

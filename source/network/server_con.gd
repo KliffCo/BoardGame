@@ -39,9 +39,9 @@ func _new_packet(size: int) -> PackedByteArray:
 func _send(buffer: PackedByteArray):
 	udp.put_packet(buffer)
 
-func send_player_id() -> void:
+func send_connect() -> void:
 	var buffer := _new_packet(3)
-	buffer[0] = UDP.PLAYER_ID
+	buffer[0] = UDP.CONNECT
 	buffer.encode_u16(1, player.id)
 	_send(buffer)
 

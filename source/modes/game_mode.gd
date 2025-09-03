@@ -65,13 +65,14 @@ func controlling_changed() -> void:
 
 func do_action(con: Controllable, action: Callable) -> void:
 	_last_chr_to_act = con
+	var controlling := InputManager.main.controlling
 	InputManager.main.pause()
 	InputManager.main.set_selectables([]);
 	InputManager.main.set_controlling(null)
 	action.call(func():
 		InputManager.main.resume()
 		action_finished()
-		InputManager.main.set_controlling(con)
+		InputManager.main.set_controlling(controlling)
 	)
 
 func on_char_moved() -> void:
@@ -81,7 +82,7 @@ func on_char_died() -> void:
 	pass
 
 func turn_started() -> void:
-	pass
+	InputManager.main.set_controlling(InputManager.main.controlling)
 
 func action_finished() -> void:
 	turn_finished()

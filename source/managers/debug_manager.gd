@@ -18,7 +18,8 @@ func on_ready() -> void:
 func on_lobby_open() -> void:
 	if state < State.Load:
 		return
-	
+
+func on_connected() -> void:
 	if state < State.Load or not _game_mode:
 		return
 	var game_mode := load(_game_mode) as GameMode
