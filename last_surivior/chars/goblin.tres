@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="CharData" load_steps=7 format=3 uid="uid://dal1a3mg8lfxi"]
+
+[ext_resource type="Script" uid="uid://bwvw2v605bn62" path="res://source/actions/general/game_action.gd" id="1_bpv0t"]
+[ext_resource type="Script" uid="uid://kdheiaahier2" path="res://source/chars/char_data.gd" id="1_w1i2e"]
+[ext_resource type="Script" uid="uid://ceowpvc4ncwn0" path="res://source/actions/last_survivor/walk.gd" id="2_328qo"]
+[ext_resource type="Script" uid="uid://di810l7x3b58q" path="res://source/actions/last_survivor/attack.gd" id="3_hqjdn"]
+
+[sub_resource type="Resource" id="Resource_wiw2j"]
+script = ExtResource("2_328qo")
+_min = 1
+_max = 1
+_name = ""
+advanced = false
+metadata/_custom_type_script = "uid://ceowpvc4ncwn0"
+
+[sub_resource type="Resource" id="Resource_j006e"]
+script = ExtResource("3_hqjdn")
+min_range = 0
+max_range = 0
+_name = ""
+advanced = false
+metadata/_custom_type_script = "uid://di810l7x3b58q"
+
+[resource]
+script = ExtResource("1_w1i2e")
+name = "Goblin"
+sprites = "goblin"
+col_height = 0.25
+col_radius = 0.12
+health = 1
+actions = Array[ExtResource("1_bpv0t")]([SubResource("Resource_wiw2j"), SubResource("Resource_j006e")])
+metadata/_custom_type_script = "uid://kdheiaahier2"

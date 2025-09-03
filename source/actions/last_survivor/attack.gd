@@ -4,6 +4,9 @@ extends GameAction
 @export var min_range:= 0
 @export var max_range:= 0
 
+func default_name() -> String:
+	return "Attack"
+
 #func get_color() -> Color:
 	#return Colors.CHAR_ATTACKABLE_ENEMY
 

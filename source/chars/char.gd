@@ -1,6 +1,8 @@
 class_name Char
 extends Controllable
 
+static var IMAGE_PATH = "res://char_images/"
+
 enum Action { Idle, Walk, Dodge, Hurt, Die, Dead, Attack }
 
 const WALK_SPEED = 1.0

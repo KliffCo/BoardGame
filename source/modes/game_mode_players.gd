@@ -16,7 +16,7 @@ var current_player: Player:
 			_current_player.turn_started()
 		TurnOrder.main.on_turn_changed()
 
-func start_game() -> void:
+func start_level() -> void:
 	TurnOrder.main.set_style(TurnOrder.Style.Player)
 	current_player = Lobby.main.players[0]
 

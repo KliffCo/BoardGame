@@ -2,9 +2,10 @@ class_name GameModeLastSurvivor
 extends GameModePlayers
 
 @export_file("*.tres") var _char_set_file: String
+@export_file("*.tscn") var _your_chars_popup_file: String
 @export var _map_settings: MapSettings
 
-func _init_char_sets() -> void:
+func init() -> void:
 	CharManager.main.append_char_set(_char_set_file)
 
 func has_bots() -> bool:
@@ -18,11 +19,18 @@ func new_bot() -> BotPlayer:
 	#data.id = pos
 	#char_man.new_char(data, empty_slots[0])
 
+func start_game() -> void:
+	load_map()
+
 func load_map() -> void:
 	RoomManager.main.load(_map_settings)
 	add_chars_to_rooms();
 	assign_chars()
-	start_game()
+	start_level()
+	
+	var _popup: Resource = load(_your_chars_popup_file)
+	var popup: LSYourCharsPopup = _popup.instantiate()
+	UIManager.main.add_child(popup)
 
 func add_chars_to_rooms() -> void:
 	var room_man := RoomManager.main

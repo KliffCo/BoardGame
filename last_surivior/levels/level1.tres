@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="MapSettings" load_steps=2 format=3 uid="uid://btewcncgyn2qg"]
+
+[ext_resource type="Script" uid="uid://ds1fo4xoj7tu7" path="res://source/game/map_settings.gd" id="1_xxlom"]
+
+[resource]
+script = ExtResource("1_xxlom")
+tile_set = "uid://0slpryrcs5d7"
+map_seed = 123
+rooms = 3
+extend_odds = 1.5
+metadata/_custom_type_script = "uid://ds1fo4xoj7tu7"

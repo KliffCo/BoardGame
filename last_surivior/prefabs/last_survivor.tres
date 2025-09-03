@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="GameModeLastSurvivor" load_steps=3 format=3 uid="uid://sav2rxd100lq"]
+
+[ext_resource type="Resource" uid="uid://btewcncgyn2qg" path="res://last_surivior/levels/level1.tres" id="1_co5v4"]
+[ext_resource type="Script" uid="uid://btm6j7gut2ya2" path="res://source/modes/last_survivor.gd" id="2_1k0yd"]
+
+[resource]
+script = ExtResource("2_1k0yd")
+_char_set_file = "uid://q2wd7nqx7l77"
+_your_chars_popup_file = "uid://bpqyckksu7ec1"
+_map_settings = ExtResource("1_co5v4")
+_char_slot_file = "uid://dsiothaij81ep"
+metadata/_custom_type_script = "uid://btm6j7gut2ya2"

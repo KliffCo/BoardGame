@@ -8,8 +8,8 @@ func setup(con: Controllable, act: ActionSelectable):
 	_con = con
 	_act = act
 	#var btn = find_child("button", false, false)
-	#btn.text = act.action.name
-	text = act.action.name
+	#btn.text = act.action.action_name()
+	text = act.action.action_name()
 
 func _ready() -> void:
 	gui_input.connect(_on_gui_input)

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6rf07cwojqns"]
+
+[ext_resource type="Material" uid="uid://dm5niw7dumxpo" path="res://materials/slot.tres" id="2_2l4bj"]
+[ext_resource type="Material" uid="uid://ctxu4ynasu0dm" path="res://materials/ground.tres" id="2_n88ym"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_2l4bj"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("PlaneMesh_2l4bj")
+surface_material_override/0 = ExtResource("2_n88ym")
+
+[node name="CharSlot" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_2l4bj")
+surface_material_override/0 = ExtResource("2_2l4bj")

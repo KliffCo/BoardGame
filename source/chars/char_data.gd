@@ -7,19 +7,20 @@ var id: int
 @export var col_height: float = 0.3
 @export var col_radius: float = 0.12
 @export var health: int = 1
-@export_file("*.tres") var _action_files: Array[String] = []
-var _loaded = false
-var _actions: Array[GameAction] = []
+@export var actions: Array[GameAction] = []
 
-@export var actions2: Array[GameAction] = []
+#@export_file("*.tres") var _action_files: Array[String] = []
+#var _loaded = false
+#var _actions: Array[GameAction] = []
 
-var actions: Array[GameAction]:
-	get:
-		if not _loaded:
-			_loaded = true
-			for file in _action_files:
-				_actions.append(load(file))
-		return _actions
+
+#var actions: Array[GameAction]:
+	#get:
+		#if not _loaded:
+			#_loaded = true
+			#for file in _action_files:
+				#_actions.append(load(file))
+		#return _actions
 
 #@export var actions: Array[GameAction] = []
 	#set(new_value):

@@ -1,7 +1,6 @@
 class_name CharFrames
 extends Resource
 
-static var _PATH = "res://char_images/"
 static var _keys = null
 var _shadow: Texture2D
 var _textures: Array = []
@@ -15,7 +14,7 @@ func _init(name: String) -> void:
 	for i in range(_keys.size()):
 		_textures[i] = []
 	
-	var path = _PATH+name
+	var path = Char.IMAGE_PATH+name
 	var dir = DirAccess.open(path)
 	if dir:
 		for file in dir.get_files():

@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://dy3ixs8rdyggl"]
+
+[ext_resource type="Script" uid="uid://cbmm1kwhq3ip7" path="res://source/room/square_room_tile.gd" id="1_ly75h"]
+[ext_resource type="Script" uid="uid://cr0u2peptestq" path="res://source/room/room_exit.gd" id="2_hfn11"]
+[ext_resource type="PackedScene" uid="uid://dyflt5ij38yfx" path="res://last_surivior/models/dungeon/room1.gltf" id="3_qdqyc"]
+
+[sub_resource type="Resource" id="Resource_qdqyc"]
+script = ExtResource("2_hfn11")
+name = "N"
+position = Vector2i(0, 0)
+direction = Vector2i(0, -1)
+
+[sub_resource type="Resource" id="Resource_wuvcq"]
+script = ExtResource("2_hfn11")
+name = "E"
+position = Vector2i(0, 0)
+direction = Vector2i(1, 0)
+
+[sub_resource type="Resource" id="Resource_yrhw5"]
+script = ExtResource("2_hfn11")
+name = "S"
+position = Vector2i(0, 0)
+direction = Vector2i(0, 1)
+
+[sub_resource type="Resource" id="Resource_12dxn"]
+script = ExtResource("2_hfn11")
+name = "W"
+position = Vector2i(0, 0)
+direction = Vector2i(-1, 0)
+
+[node name="room1" type="Node3D"]
+script = ExtResource("1_ly75h")
+file = "uid://dyflt5ij38yfx"
+exits = Array[ExtResource("2_hfn11")]([SubResource("Resource_qdqyc"), SubResource("Resource_wuvcq"), SubResource("Resource_yrhw5"), SubResource("Resource_12dxn")])
+metadata/_custom_type_script = "uid://cbmm1kwhq3ip7"
+
+[node name="room1" parent="." instance=ExtResource("3_qdqyc")]

@@ -4,6 +4,9 @@ extends GameAction
 @export var _min:= 1
 @export var _max:= 1
 
+func default_name() -> String:
+	return "Walk"
+
 func _property_can_revert(property: StringName) -> bool:
 	if property == "name":
 		return true

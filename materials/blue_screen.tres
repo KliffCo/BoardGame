@@ -1,0 +1,7 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cons6337j88vn"]
+
+[ext_resource type="Shader" uid="uid://dqm2p8veb53al" path="res://materials/blur_screen.gdshader" id="1_csogy"]
+
+[resource]
+shader = ExtResource("1_csogy")
+shader_parameter/lod = 2.0

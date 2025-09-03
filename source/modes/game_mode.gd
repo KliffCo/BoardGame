@@ -12,7 +12,7 @@ func _init() -> void:
 	main = self
 	_rng.randomize()
 
-func _init_char_sets() -> void:
+func init() -> void:
 	pass
 
 func get_player_limit() -> int:
@@ -43,10 +43,13 @@ func new_char_slot(node: Node3D, id) -> RoomCharSlot:
 	slot.position = node.position# + Vector3(0, 0.01, 0)
 	return slot
 
+func start_game() -> void:
+	pass
+
 func load_map() -> void:
 	pass
 
-func start_game() -> void:
+func start_level() -> void:
 	pass
 
 func can_control(con: Controllable) -> bool:
