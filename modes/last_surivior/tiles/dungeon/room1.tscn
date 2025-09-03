@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://byqe5wn1xrayo" path="res://source/room/room_tile.gd" id="1_77m67"]
 [ext_resource type="Script" uid="uid://cr0u2peptestq" path="res://source/room/room_exit.gd" id="2_hfn11"]
-[ext_resource type="PackedScene" uid="uid://nigb4a1xrqcc" path="res://rooms/models/room1.fbx" id="3_4f6m6"]
+[ext_resource type="PackedScene" uid="uid://dyflt5ij38yfx" path="res://modes/last_surivior/rooms/room1.gltf" id="3_qdqyc"]
 
 [sub_resource type="Resource" id="Resource_3ng42"]
 script = ExtResource("2_hfn11")
@@ -28,9 +28,9 @@ name = "W"
 position = Vector2i(0, 0)
 direction = Vector2i(-1, 0)
 
-[node name="Room1" type="Node3D"]
+[node name="room1" type="Node3D"]
 script = ExtResource("1_77m67")
 file = "uid://nigb4a1xrqcc"
 exits = Array[ExtResource("2_hfn11")]([SubResource("Resource_3ng42"), SubResource("Resource_4hjvw"), SubResource("Resource_q3jjr"), SubResource("Resource_mhtgy")])
 
-[node name="room1" parent="." instance=ExtResource("3_4f6m6")]
+[node name="room1" parent="." instance=ExtResource("3_qdqyc")]
