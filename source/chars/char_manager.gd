@@ -58,6 +58,7 @@ func new_char(from_set: int, pos: int, slot: RoomCharSlot) -> Char:
 	chr.init(self, next_id, data, slot);
 	chars.append(chr)
 	next_id += 1
+	Lobby.main.send_new_char(chr)
 	return chr
 
 func new_shadow_material() -> StandardMaterial3D:

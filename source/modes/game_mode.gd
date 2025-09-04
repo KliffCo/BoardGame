@@ -3,10 +3,12 @@ extends Resource
 
 static var main: GameMode = null
 
+@export_file("*.tscn") var _interface_file: String
 @export_file("*.tscn") var _char_slot_file
 var _char_slot_prefab: Resource = null
 var _last_chr_to_act: Controllable = null
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
+var _interface: Control = null
 
 func _init() -> void:
 	main = self
@@ -40,11 +42,19 @@ func new_char_slot(node: Node3D, id) -> RoomCharSlot:
 	var slot = _char_slot_prefab.instantiate()
 	slot.id = id
 	slot.name = "slot_"+str(id)
-	slot.position = node.position# + Vector3(0, 0.01, 0)
+	slot.position = node.position
 	return slot
 
 func start_game() -> void:
-	pass
+	if _interface_file:
+		var _interface_res: Resource = load(_interface_file)
+		_interface = _interface_res.instantiate() as Control
+		UIManager.main.add_child(_interface)
+
+func finish_game() -> void:
+	if _interface:
+		UIManager.main.remove_child(_interface)
+		_interface = null
 
 func load_map() -> void:
 	pass
@@ -86,6 +96,12 @@ func on_char_died() -> void:
 
 func turn_started() -> void:
 	InputManager.main.set_controlling(InputManager.main.controlling)
+
+func on_start_level() -> void:
+	pass
+
+func on_set_turn(id: int) -> void:
+	pass
 
 func action_finished() -> void:
 	turn_finished()

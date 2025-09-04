@@ -12,6 +12,15 @@ var my_turn: bool:
 		if _my_turn != value:
 			_my_turn = value
 
+func send_my_chars() -> void:
+	pass
+
+func send_start_level() -> void:
+	pass
+
+func send_set_turn(id: int) -> void:
+	pass
+
 func turn_started() -> void:
 	pass
 

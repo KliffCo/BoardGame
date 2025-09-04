@@ -1,8 +1,8 @@
 class_name GameModeLastSurvivor
-extends GameModePlayers
+extends GameModePlayerTurn
 
 @export_file("*.tres") var _char_set_file: String
-@export_file("*.tscn") var _your_chars_popup_file: String
+#@export_file("*.tscn") var _your_chars_popup_file: String
 @export var _map_settings: MapSettings
 
 func init() -> void:
@@ -20,6 +20,7 @@ func new_bot() -> BotPlayer:
 	#char_man.new_char(data, empty_slots[0])
 
 func start_game() -> void:
+	super.start_game()
 	load_map()
 
 func load_map() -> void:
@@ -27,10 +28,6 @@ func load_map() -> void:
 	add_chars_to_rooms();
 	assign_chars()
 	start_level()
-	
-	var _popup: Resource = load(_your_chars_popup_file)
-	var popup: LSYourCharsPopup = _popup.instantiate()
-	UIManager.main.add_child(popup)
 
 func add_chars_to_rooms() -> void:
 	var room_man := RoomManager.main
@@ -53,14 +50,19 @@ func assign_chars() -> void:
 	var players := Lobby.main.players
 	var chars_per_player := 1
 	var order : Array[int] = random_int_list(chars.size())
-	
 	var c := 0
 	for p in players:
 		for i in chars_per_player:
 			chars[order[c]].player_id = p.id
-	#Lobby.main.server.all_peers(func(p):
-		#p.send_my_chars()
-	#)
+			c += 1
+	Lobby.main.send_my_chars()
+
+func on_start_level() -> void:
+	super.on_start_level()
+	LSInterface.main.show_my_chars()
+	#var _popup: Resource = load(_your_chars_popup_file)
+	#var popup: LSYourCharsPopup = _popup.instantiate()
+	#UIManager.main.add_child(popup)
 
 func turn_finished() -> void:
 	try_shrink_map()

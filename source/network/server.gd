@@ -31,11 +31,6 @@ func process() -> void:
 		var udp := server.take_connection()
 		process_udp(udp)
 	for p in peers:
-		#var buffer : PackedByteArray = p.udp.get_packet()
-		#if buffer.size() > 0:
-			#var action = buffer[0]
-			#if action < UDP.INSTANT and has_actions[action]:
-				#actions[action].call(self, buffer, 1, buffer.size()-1)
 		p.process()
 
 func process_udp(udp: PacketPeerUDP) -> void:
@@ -43,23 +38,23 @@ func process_udp(udp: PacketPeerUDP) -> void:
 		var buffer : PackedByteArray = udp.get_packet()
 		if buffer.size() > 0:
 			var action = buffer[0]
-			if action < UDP.INSTANT and has_actions[action]:
-				actions[action].call(udp, buffer, 1, buffer.size()-1)
+			if action >= 0 and action < UDP.INSTANT and has_actions[action]:
+				actions[action].call(udp, buffer.slice(1, buffer.size()))
 
 func all_peers(action: Callable) -> void:
 	for p in peers:
 		action.call(p)
 
-func on_ping(udp: PacketPeerUDP, buf: PackedByteArray, pos: int, length: int) -> void:
-	if length != 4:
+func on_ping(udp: PacketPeerUDP, buf: PackedByteArray) -> void:
+	if buf.size() != 4:
 		return
 	var buffer := PackedByteArray()
 	buffer.resize(5)
 	buffer[0] = UDP.PONG
-	Connection.encode_copy(buffer, 1, buf, pos, 4)
+	Connection.encode_copy(buffer, 1, buf, 0, 4)
 	udp.put_packet(buffer)
 
-func on_connect(udp: PacketPeerUDP, buf: PackedByteArray, pos: int, length: int) -> void:
+func on_connect(udp: PacketPeerUDP, buf: PackedByteArray) -> void:
 	var player := Lobby.main.add_human()
 	var con := ServerCon.new(udp, player)
 	for p in peers:

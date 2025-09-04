@@ -92,4 +92,20 @@ func init_player(p: Player, id: int) -> void:
 func load_game_mode(file: String) -> void:
 	var game_mode := load(file) as GameMode
 	game_mode.init()
-	
+
+func send_new_char(chr: Char) -> void:
+	for p in players:
+		if p is HumanPlayer:
+			p.send_new_char(chr)
+
+func send_my_chars() -> void:
+	for p in players:
+		p.send_my_chars()
+
+func send_start_level() -> void:
+	for p in players:
+		p.send_start_level()
+
+func send_set_turn(id: int) -> void:
+	for p in players:
+		p.send_set_turn(id)

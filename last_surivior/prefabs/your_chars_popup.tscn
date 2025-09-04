@@ -4,19 +4,7 @@
 [ext_resource type="Material" uid="uid://cons6337j88vn" path="res://materials/blue_screen.tres" id="2_0nrt1"]
 
 [sub_resource type="Animation" id="Animation_ee6o4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("blur:material:shader_parameter/lod")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [2.0]
-}
+length = 0.3
 
 [sub_resource type="Animation" id="Animation_hb504"]
 resource_name = "blur"
@@ -33,6 +21,18 @@ tracks/0/keys = {
 "update": 0,
 "values": [0.0, 2.0]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4cobl"]
 _data = {
@@ -41,6 +41,7 @@ _data = {
 }
 
 [node name="your_chars_popup" type="Control" node_paths=PackedStringArray("container")]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://d1mp6fgrsmrxw"]
+[gd_scene load_steps=16 format=3 uid="uid://d1mp6fgrsmrxw"]
 
 [ext_resource type="Script" uid="uid://bqea3vgu1idh1" path="res://source/managers/game_manager.gd" id="1_h7iqs"]
 [ext_resource type="Script" uid="uid://p7bergsb7t2p" path="res://source/chars/char_manager.gd" id="1_l1rk1"]
@@ -13,6 +13,8 @@
 [ext_resource type="Script" uid="uid://c2n56ex0rjimo" path="res://source/ui/action_menu/action_menu.gd" id="10_3vho3"]
 [ext_resource type="Script" uid="uid://b8bk6t45eo6wu" path="res://source/ui/action_menu/action_menu_cell.gd" id="11_qf6n1"]
 [ext_resource type="Script" uid="uid://by140cfiiily6" path="res://source/managers/debug_manager.gd" id="12_qf6n1"]
+[ext_resource type="Script" uid="uid://r7l2xj4df5u2" path="res://ls_interface.gd" id="13_b686c"]
+[ext_resource type="PackedScene" uid="uid://bpqyckksu7ec1" path="res://last_surivior/prefabs/your_chars_popup.tscn" id="14_hb504"]
 
 [node name="game_man" type="Node3D"]
 script = ExtResource("1_h7iqs")
@@ -149,9 +151,40 @@ text = "Action1"
 script = ExtResource("11_qf6n1")
 metadata/_custom_type_script = "uid://b8bk6t45eo6wu"
 
+[node name="ls_interface" type="Control" parent="ui_man" node_paths=PackedStringArray("your_chars")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("13_b686c")
+your_chars = NodePath("your_chars_popup")
+
+[node name="btn_show_my_chars" type="Button" parent="ui_man/ls_interface"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -36.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Chars"
+
+[node name="your_chars_popup" parent="ui_man/ls_interface" instance=ExtResource("14_hb504")]
+layout_mode = 1
+
 [node name="debug_man" type="Node" parent="."]
 script = ExtResource("12_qf6n1")
 state = 4
 _game_mode = "uid://sav2rxd100lq"
 bot_count = 2
 metadata/_custom_type_script = "uid://by140cfiiily6"
+
+[connection signal="pressed" from="ui_man/ls_interface/btn_show_my_chars" to="ui_man/ls_interface" method="show_my_chars"]
