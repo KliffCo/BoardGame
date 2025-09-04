@@ -122,7 +122,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="popup"]
+[node name="title" type="Label" parent="popup"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0

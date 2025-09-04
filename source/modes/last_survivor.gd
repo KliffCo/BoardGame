@@ -5,6 +5,7 @@ extends GameModePlayerTurn
 @export var _map_settings: MapSettings
 
 func init() -> void:
+	super.init()
 	CharManager.main.append_char_set(_char_set_file)
 
 func has_bots() -> bool:

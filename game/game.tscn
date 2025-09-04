@@ -16,6 +16,7 @@
 
 [node name="game_man" type="Node3D"]
 script = ExtResource("1_h7iqs")
+_game_mode_files = Array[String](["uid://sav2rxd100lq"])
 metadata/_custom_type_script = "uid://bqea3vgu1idh1"
 
 [node name="camera_man" type="Camera3D" parent="."]

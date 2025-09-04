@@ -3,6 +3,7 @@ extends Resource
 
 static var main: GameMode = null
 
+@export var name: String = ""
 @export_file("*.tscn") var _interface_file: String
 @export_file("*.tscn") var _char_slot_file
 var _char_slot_prefab: Resource = null
@@ -10,12 +11,9 @@ var _last_chr_to_act: Controllable = null
 var _rng: RandomNumberGenerator = RandomNumberGenerator.new()
 var _interface: Control = null
 
-func _init() -> void:
+func init() -> void:
 	main = self
 	_rng.randomize()
-
-func init() -> void:
-	pass
 
 func get_player_limit() -> int:
 	return 4

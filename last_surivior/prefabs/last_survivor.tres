@@ -7,6 +7,7 @@
 script = ExtResource("2_1k0yd")
 _char_set_file = "uid://q2wd7nqx7l77"
 _map_settings = ExtResource("1_co5v4")
+name = "Last Survivor"
 _interface_file = "uid://c5thtnw23qo6m"
 _char_slot_file = "uid://dsiothaij81ep"
 metadata/_custom_type_script = "uid://btm6j7gut2ya2"

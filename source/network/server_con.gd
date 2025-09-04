@@ -57,6 +57,11 @@ func send_connect() -> void:
 	buffer.encode_u8(UDP.HEADER_SIZE, player.id)
 	send(buffer)
 
+func send_game_mode(hash: int) -> void:
+	var buffer := new_packet(UDP.GAME_MODE, 4)
+	buffer.encode_u32(UDP.HEADER_SIZE, hash)
+	send(buffer)
+
 func send_new_player(p: Player) -> void:
 	var buffer := new_packet(UDP.NEW_PLAYER, 6)
 	buffer.encode_u16(UDP.HEADER_SIZE, p.id)

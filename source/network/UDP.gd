@@ -7,9 +7,11 @@ const CONNECT := 3
 const PING := 10
 const PONG := 11
 
-const NEW_PLAYER := 16
-const NEW_CHAR := 20
-const CHAR_PLAYER_IDS := 25
+const GAME_MODE := 15
+
+const NEW_PLAYER := 20
+const NEW_CHAR := 21
+const CHAR_PLAYER_IDS := 22
 
 const START_LEVEL := 30
 const SET_TURN := 35

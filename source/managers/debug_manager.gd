@@ -22,7 +22,10 @@ func on_lobby_open() -> void:
 func on_connected() -> void:
 	if state < State.Load or not _game_mode:
 		return
-	Lobby.main.load_game_mode(_game_mode)
+	var game_mode := load(_game_mode) as GameMode
+	Lobby.main.send_game_mode(game_mode.name.hash())
+
+func on_game_mode() -> void:
 	if state < State.Bots or not _game_mode:
 		return
 	for i in range(bot_count):

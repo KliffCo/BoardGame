@@ -13,6 +13,9 @@ func get_my_chars() -> Array[Char]:
 			list.append(c)
 	return list
 
+func send_game_mode(hash: int) -> void:
+	con.send_game_mode(hash)
+
 func send_new_char(chr: Char) -> void:
 	con.send_new_char(chr)
 

@@ -22,6 +22,7 @@ func init_actions():
 	add_action(UDP.PING, on_ping)
 	add_action(UDP.PONG, on_pong)
 	add_action(UDP.CONNECT, on_connect)
+	add_action(UDP.GAME_MODE, on_game_mode)
 	add_action(UDP.NEW_PLAYER, on_new_player)
 	add_action(UDP.NEW_CHAR, on_new_char)
 	add_action(UDP.START_LEVEL, on_start_level)
@@ -97,6 +98,12 @@ func on_connect(buf: PackedByteArray) -> void:
 	#send_ping()
 	if Lobby.main.is_host:
 		DebugManager.main.on_connected()
+
+func on_game_mode(buf: PackedByteArray) -> void:
+	if buf.size() != 4:
+		return
+	var hash := buf.decode_u32(0)
+	GameManager.main.set_game_mode(hash)
 
 func on_new_player(buf: PackedByteArray) -> void:
 	if Lobby.main.is_host or buf.size() != 1:

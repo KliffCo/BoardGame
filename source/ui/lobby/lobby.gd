@@ -89,6 +89,11 @@ func load_game_mode(file: String) -> void:
 	var game_mode := load(file) as GameMode
 	game_mode.init()
 
+func send_game_mode(hash: int) -> void:
+	for p in players:
+		if p is HumanPlayer:
+			p.send_game_mode(hash)
+
 func send_new_char(chr: Char) -> void:
 	for p in players:
 		if p is HumanPlayer:
