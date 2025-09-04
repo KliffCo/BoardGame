@@ -16,12 +16,10 @@ var current_player: Player:
 			_current_player.turn_started()
 		TurnOrder.main.on_turn_changed()
 
-func start_level() -> void:
-	#TurnOrder.main.set_style(TurnOrder.Style.Player)
+func level_loaded() -> void:
 	if Lobby.main.is_host:
 		Lobby.main.send_start_level()
 		Lobby.main.send_set_turn(Lobby.main.players[0].id)
-		#current_player = Lobby.main.players[0]
 
 func on_start_level() -> void:
 	TurnOrder.main.set_style(TurnOrder.Style.Player)
@@ -31,7 +29,6 @@ func turn_finished() -> void:
 	var index:= list.find(_current_player)
 	var player:= Lobby.main.players[(index+1)%list.size()]
 	Lobby.main.send_set_turn(player.id)
-	#current_player = list[(index+1)%list.size()]
 
 func on_set_turn(id: int) -> void:
 	var player:= Lobby.main.find_player(id)

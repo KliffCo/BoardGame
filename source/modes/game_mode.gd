@@ -46,20 +46,21 @@ func new_char_slot(node: Node3D, id) -> RoomCharSlot:
 	return slot
 
 func start_game() -> void:
-	if _interface_file:
+	if not _interface and _interface_file:
 		var _interface_res: Resource = load(_interface_file)
 		_interface = _interface_res.instantiate() as Control
 		UIManager.main.add_child(_interface)
+	load_level()
 
 func finish_game() -> void:
 	if _interface:
 		UIManager.main.remove_child(_interface)
 		_interface = null
 
-func load_map() -> void:
-	pass
+func load_level() -> void:
+	level_loaded()
 
-func start_level() -> void:
+func level_loaded() -> void:
 	pass
 
 func can_control(con: Controllable) -> bool:

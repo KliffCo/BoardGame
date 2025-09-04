@@ -47,7 +47,7 @@ func new_packet(action: int, size: int) -> PackedByteArray:
 	return buffer
 
 func send(buffer: PackedByteArray):
-	print_debug("snd: "+str(buffer[0]))
+	#print_debug("snd: "+str(buffer[0]))
 	udp.put_packet(buffer)
 
 

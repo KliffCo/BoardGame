@@ -13,20 +13,11 @@ func has_bots() -> bool:
 func new_bot() -> BotPlayer:
 	return LastSurvivorBot.new()
 
-#func load_char(char_set: FileOddsList, pos: int) -> CharData:
-	#var data: CharData = load(char_set.file_at(pos))
-	#data.id = pos
-	#char_man.new_char(data, empty_slots[0])
-
-func start_game() -> void:
-	super.start_game()
-	load_map()
-
-func load_map() -> void:
+func load_level() -> void:
 	RoomManager.main.load(_map_settings)
 	add_chars_to_rooms();
 	assign_chars()
-	start_level()
+	level_loaded()
 
 func add_chars_to_rooms() -> void:
 	var room_man := RoomManager.main

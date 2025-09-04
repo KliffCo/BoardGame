@@ -50,7 +50,7 @@ func process() -> void:
 		var buffer : PackedByteArray = udp.get_packet()
 		if buffer.size() > 0:
 			var action = buffer[0]
-			print_debug("rcv: "+str(buffer[0]))
+			#print_debug("rcv: "+str(buffer[0]))
 			if action >= 0 and action < UDP.MAX and has_actions[action]:
 				actions[action].call(buffer.slice(UDP.HEADER_SIZE, buffer.size()))
 
