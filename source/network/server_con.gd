@@ -17,9 +17,9 @@ static func init_actions():
 		return
 	has_actions.resize(UDP.MAX)
 	actions.resize(UDP.MAX)
-	add_action(UDP.PONG, on_ping)
-	add_action(UDP.PING, on_pong)
-	add_action(UDP.CONNECT, on_connect)
+	add_action(UDP.PING, on_ping)
+	add_action(UDP.PONG, on_pong)
+	#add_action(UDP.CONNECT, on_connect)
 
 static func add_action(id: int, action: Callable) -> void:
 	has_actions[id] = true
@@ -47,6 +47,7 @@ func new_packet(action: int, size: int) -> PackedByteArray:
 	return buffer
 
 func send(buffer: PackedByteArray):
+	print_debug("snd: "+str(buffer[0]))
 	udp.put_packet(buffer)
 
 
@@ -71,8 +72,8 @@ func send_new_char(chr: Char) -> void:
 
 func send_my_chars() -> void:
 	var chars := player.get_my_chars()
-	var buffer := new_packet(UDP.CHAR_PLAYER_IDS, 1 + chars.size() * 2)
-	var i := 0
+	var buffer := new_packet(UDP.CHAR_PLAYER_IDS, chars.size() * 2)
+	var i := UDP.HEADER_SIZE
 	for c in chars:
 		if c.player_id == player.id:
 			buffer.encode_u8(i, c.id)
@@ -86,7 +87,7 @@ func send_start_level() -> void:
 
 func send_set_turn(id: int) -> void:
 	var buffer := new_packet(UDP.SET_TURN, 1)
-	buffer.encode_u8(0, id)
+	buffer.encode_u8(UDP.HEADER_SIZE, id)
 	send(buffer)
 
 
@@ -94,13 +95,10 @@ func send_set_turn(id: int) -> void:
 static func on_ping(con: ServerCon, buf: PackedByteArray) -> void:
 	if buf.size() != 4:
 		return
-	var buffer := con.new_packet(UDP.PONG, 9)
+	var buffer := con.new_packet(UDP.PONG, 8)
 	encode_copy(buffer, 0, buf, 0, 4)
 	buffer.encode_s32(4, server_time)
 	con.send(buffer)
 
-static func on_pong(con: ServerCon, buf: PackedByteArray) -> void:
-	pass
-
-static func on_connect(con: ServerCon, buf: PackedByteArray) -> void:
+static func on_pong(_con: ServerCon, _buf: PackedByteArray) -> void:
 	pass

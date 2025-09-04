@@ -19,12 +19,13 @@ func init_actions():
 		return
 	has_actions.resize(UDP.MAX)
 	actions.resize(UDP.MAX)
-	add_action(UDP.PONG, on_ping)
-	add_action(UDP.PING, on_pong)
+	add_action(UDP.PING, on_ping)
+	add_action(UDP.PONG, on_pong)
 	add_action(UDP.CONNECT, on_connect)
 	add_action(UDP.NEW_PLAYER, on_new_player)
 	add_action(UDP.NEW_CHAR, on_new_char)
 	add_action(UDP.START_LEVEL, on_start_level)
+	add_action(UDP.SET_TURN, on_set_turn)
 
 func add_action(id: int, action: Callable) -> void:
 	has_actions[id] = true
@@ -49,6 +50,7 @@ func process() -> void:
 		var buffer : PackedByteArray = udp.get_packet()
 		if buffer.size() > 0:
 			var action = buffer[0]
+			print_debug("rcv: "+str(buffer[0]))
 			if action >= 0 and action < UDP.MAX and has_actions[action]:
 				actions[action].call(buffer.slice(UDP.HEADER_SIZE, buffer.size()))
 
@@ -92,6 +94,7 @@ func on_connect(buf: PackedByteArray) -> void:
 	if buf.size() != 1:
 		return
 	Lobby.main.set_me(buf.decode_u8(0))
+	#send_ping()
 	if Lobby.main.is_host:
 		DebugManager.main.on_connected()
 
@@ -114,7 +117,6 @@ func on_start_level(buf: PackedByteArray) -> void:
 	GameMode.main.on_start_level()
 
 func on_set_turn(buf: PackedByteArray) -> void:
-	#if Lobby.main.is_host or buf.size() != 1:
 	if buf.size() != 1:
 		return
 	var id:= buf.decode_u8(0)

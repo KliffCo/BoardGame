@@ -18,7 +18,7 @@ func init_actions():
 		return
 	has_actions.resize(UDP.INSTANT)
 	actions.resize(UDP.INSTANT)
-	add_action(UDP.PONG, on_ping)
+	add_action(UDP.FAST_PING, on_fast_ping)
 	add_action(UDP.CONNECT, on_connect)
 
 func add_action(id: int, action: Callable) -> void:
@@ -39,20 +39,17 @@ func process_udp(udp: PacketPeerUDP) -> void:
 		if buffer.size() > 0:
 			var action = buffer[0]
 			if action >= 0 and action < UDP.INSTANT and has_actions[action]:
-				actions[action].call(udp, buffer.slice(1, buffer.size()))
+				actions[action].call(udp, buffer)
 
 func all_peers(action: Callable) -> void:
 	for p in peers:
 		action.call(p)
 
-func on_ping(udp: PacketPeerUDP, buf: PackedByteArray) -> void:
-	if buf.size() != 4:
+func on_fast_ping(udp: PacketPeerUDP, buf: PackedByteArray) -> void:
+	if buf.size() != 5:
 		return
-	var buffer := PackedByteArray()
-	buffer.resize(5)
-	buffer[0] = UDP.PONG
-	Connection.encode_copy(buffer, 1, buf, 0, 4)
-	udp.put_packet(buffer)
+	buf[0] = UDP.FAST_PONG
+	udp.put_packet(buf)
 
 func on_connect(udp: PacketPeerUDP, buf: PackedByteArray) -> void:
 	var player := Lobby.main.add_human()

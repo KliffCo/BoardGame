@@ -32,10 +32,6 @@ func host() -> void:
 	server = Server.new()
 	client = Client.new("127.0.0.1", Server.PORT)
 	DebugManager.main.on_lobby_open()
-	await GameManager.main.get_tree().create_timer(1.5).timeout
-	client.send_ping()
-	await GameManager.main.get_tree().create_timer(1.5).timeout
-	client.send_ping()
 
 func join() -> void:
 	connected = true
@@ -108,4 +104,5 @@ func send_start_level() -> void:
 
 func send_set_turn(id: int) -> void:
 	for p in players:
-		p.send_set_turn(id)
+		if p is HumanPlayer:
+			p.send_set_turn(id)

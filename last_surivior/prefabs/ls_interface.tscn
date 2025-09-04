@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dshcxtkdr0w6s"]
+[gd_scene load_steps=7 format=3 uid="uid://c5thtnw23qo6m"]
 
-[ext_resource type="Script" uid="uid://dabdks7n1obqj" path="res://source/ui/last_survivor/ls_your_chars_popup.gd" id="1_lxt3s"]
-[ext_resource type="Material" uid="uid://cons6337j88vn" path="res://materials/blue_screen.tres" id="2_0nrt1"]
+[ext_resource type="Script" uid="uid://r7l2xj4df5u2" path="res://source/ui/last_survivor/ls_interface.gd" id="1_2mlyl"]
+[ext_resource type="Script" uid="uid://dabdks7n1obqj" path="res://source/ui/last_survivor/ls_your_chars_popup.gd" id="2_xuajn"]
+[ext_resource type="Material" uid="uid://cons6337j88vn" path="res://materials/blue_screen.tres" id="3_fmuqf"]
 
 [sub_resource type="Animation" id="Animation_ee6o4"]
 length = 0.3
@@ -40,24 +41,51 @@ _data = {
 &"blur": SubResource("Animation_hb504")
 }
 
-[node name="your_chars_popup" type="Control" node_paths=PackedStringArray("container")]
-modulate = Color(1, 1, 1, 0)
+[node name="ls_interface" type="Control" node_paths=PackedStringArray("your_chars")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_lxt3s")
+mouse_filter = 2
+script = ExtResource("1_2mlyl")
+your_chars = NodePath("your_chars_popup")
+
+[node name="btn_show_my_chars" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -36.0
+offset_right = -5.0
+offset_bottom = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Chars"
+
+[node name="your_chars_popup" type="Control" parent="." node_paths=PackedStringArray("container")]
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_xuajn")
 container = NodePath("popup/container")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="your_chars_popup"]
 libraries = {
 &"": SubResource("AnimationLibrary_4cobl")
 }
 
-[node name="blur" type="ColorRect" parent="."]
-material = ExtResource("2_0nrt1")
+[node name="blur" type="ColorRect" parent="your_chars_popup"]
+material = ExtResource("3_fmuqf")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -65,7 +93,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="popup" type="Control" parent="."]
+[node name="popup" type="Control" parent="your_chars_popup"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -79,7 +107,7 @@ offset_bottom = 125.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="background" type="ColorRect" parent="popup"]
+[node name="background" type="ColorRect" parent="your_chars_popup/popup"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -88,7 +116,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.501961)
 
-[node name="container" type="HBoxContainer" parent="popup"]
+[node name="container" type="HBoxContainer" parent="your_chars_popup/popup"]
 layout_mode = 1
 anchors_preset = 14
 anchor_top = 0.5
@@ -101,11 +129,11 @@ grow_vertical = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="your_char" type="Control" parent="popup/container"]
+[node name="your_char" type="Control" parent="your_chars_popup/popup/container"]
 custom_minimum_size = Vector2(100, 150)
 layout_mode = 2
 
-[node name="background" type="ColorRect" parent="popup/container/your_char"]
+[node name="background" type="ColorRect" parent="your_chars_popup/popup/container/your_char"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -114,7 +142,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.501961)
 
-[node name="image" type="TextureRect" parent="popup/container/your_char"]
+[node name="image" type="TextureRect" parent="your_chars_popup/popup/container/your_char"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -122,7 +150,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="popup"]
+[node name="Label" type="Label" parent="your_chars_popup/popup"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -132,3 +160,5 @@ theme_override_font_sizes/font_size = 25
 text = "Your Characters"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="pressed" from="btn_show_my_chars" to="." method="show_my_chars"]

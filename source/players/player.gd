@@ -18,9 +18,6 @@ func send_my_chars() -> void:
 func send_start_level() -> void:
 	pass
 
-func send_set_turn(id: int) -> void:
-	pass
-
 func turn_started() -> void:
 	pass
 

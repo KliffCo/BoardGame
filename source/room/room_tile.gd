@@ -17,5 +17,5 @@ extends Node3D
 func _max_exit_count() -> int:
 	return 1
 
-func _new_room_exit(index: int) -> RoomExit:
+func _new_room_exit(_id: int) -> RoomExit:
 	return RoomExit.new()

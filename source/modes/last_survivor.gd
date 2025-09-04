@@ -2,7 +2,6 @@ class_name GameModeLastSurvivor
 extends GameModePlayerTurn
 
 @export_file("*.tres") var _char_set_file: String
-#@export_file("*.tscn") var _your_chars_popup_file: String
 @export var _map_settings: MapSettings
 
 func init() -> void:
@@ -60,9 +59,6 @@ func assign_chars() -> void:
 func on_start_level() -> void:
 	super.on_start_level()
 	LSInterface.main.show_my_chars()
-	#var _popup: Resource = load(_your_chars_popup_file)
-	#var popup: LSYourCharsPopup = _popup.instantiate()
-	#UIManager.main.add_child(popup)
 
 func turn_finished() -> void:
 	try_shrink_map()
